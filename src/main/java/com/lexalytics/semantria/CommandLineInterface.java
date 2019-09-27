@@ -133,7 +133,7 @@ public class CommandLineInterface {
 			return true;
 		}
 
-		Dispatcher<SemantriaSDK> dispatcher = new Dispatcher<>();
+		Dispatcher<Map<String, Object>> dispatcher = new Dispatcher<>();
 		dispatcher.add(this::accountsAccountPasswordRulesGet, "account", "password-rules");
 		dispatcher.add(this::accountsAccountDetailsGet, "account", "details");
 		dispatcher.add(this::accountsPasswordRulesGet, "password-rules", "<rule_id>");
@@ -194,7 +194,7 @@ public class CommandLineInterface {
 
 		try {
 			sdk = config.connect();
-			dispatcher.dispatch(this.cmdOptions, sdk);
+			dispatcher.dispatch(this.cmdOptions, cmdOptions);
 			return true;
 		} catch (CommandFailed e) {
 			error(e.getMessage());
@@ -208,44 +208,44 @@ public class CommandLineInterface {
 		return false;
 	}
 
-	private void health(SemantriaSDK sdk) {
+	private void health(Map<String, Object> cmdOptions) {
 		throw new CommandFailed("Not implemented");
 	}
 
-	private void dumpConfig(SemantriaSDK sdk) {
+	private void dumpConfig(Map<String, Object> cmdOptions) {
 		output(config);
 	}
 
-	private void accountsHelp(SemantriaSDK sdk) {
+	private void accountsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("accounts");
 	}
 
-	private void accountsAccountPasswordRulesGet(SemantriaSDK sdk){
+	private void accountsAccountPasswordRulesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAccountPasswordRules());
 	}
 
-	private void accountsAccountDetailsGet(SemantriaSDK sdk){
+	private void accountsAccountDetailsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAccountDetails());
 	}
 
-	private void accountsPasswordRulesGet(SemantriaSDK sdk){
+	private void accountsPasswordRulesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String ruleId = getStringOption(cmdOptions, "<rule_id>");
 		output(sdk.getPasswordRules(ruleId));
 	}
 
-	private void accountsPasswordRulesTypesGet(SemantriaSDK sdk){
+	private void accountsPasswordRulesTypesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getPasswordRuleTypes());
 	}
 
-	private void authHelp(SemantriaSDK sdk) {
+	private void authHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("auth");
 	}
 
-	private void authSessionCreate(SemantriaSDK sdk) {
+	private void authSessionCreate(Map<String, Object> cmdOptions) {
 		UserCredentials userCreds = getUserCredentials();
 		String policy = getStringOption(cmdOptions, "--expiration");
 		if (policy.toLowerCase().contentEquals("custom")) {
@@ -256,35 +256,35 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void authSessionRenew(SemantriaSDK sdk) {
+	private void authSessionRenew(Map<String, Object> cmdOptions) {
 	    connectWithAuth();
 	    output(sdk.renewSession());
     }
 
-	private void authSessionsList(SemantriaSDK sdk) {
+	private void authSessionsList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
         output(sdk.getSessions());
 	}
 
-	private void authSessionGet(SemantriaSDK sdk) {
+	private void authSessionGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String sessionId = getStringOption(cmdOptions, "<session_id>");
 		output(sdk.getSession(sessionId));
 	}
 
-	private void authSessionDelete(SemantriaSDK sdk) {
+	private void authSessionDelete(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String sessionId = getStringOption(cmdOptions, "<session_id>");
 		sdk.deleteSession(sessionId);
 	}
 
-	private void authUsersSessionsGet(SemantriaSDK sdk) {
+	private void authUsersSessionsGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.getUserSessions(userId));
 	}
 
-	private void authUsersSessionsClear(SemantriaSDK sdk) {
+	private void authUsersSessionsClear(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		AllSessionInfo response = sdk.getUserSessions(userId);
@@ -300,13 +300,13 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void authAccountsSessionsGet(SemantriaSDK sdk) {
+	private void authAccountsSessionsGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String accountId = getStringOption(cmdOptions, "<account_id>");
 		output(sdk.getAccountSessions(accountId));
 	}
 
-   private void authAccountsSessionsClear(SemantriaSDK sdk) {
+   private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
         connectWithAuth();
         String accountId = getStringOption(cmdOptions, "<account_id>");
         AllSessionInfo response = sdk.getAccountSessions(accountId);
@@ -325,42 +325,42 @@ public class CommandLineInterface {
         }
     }
 
-	private void configsHelp(SemantriaSDK sdk) {
+	private void configsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("configs");
 	}
 
-	private void configsConfigurationList(SemantriaSDK sdk) {
+	private void configsConfigurationList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		output(sdk.getAllConfigurations());
 	}
 
-	private void configsConfigurationGet(SemantriaSDK sdk) {
+	private void configsConfigurationGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		output(sdk.getConfiguration(configurationId));
 	}
 
-	private void configsConfigurationCreate(SemantriaSDK sdk) {
+	private void configsConfigurationCreate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		Map<String,Object> item = getDataFromOptions();
 		output(sdk.createConfiguration(item));
 	}
 
-	private void configsConfigurationUpdate(SemantriaSDK sdk) {
+	private void configsConfigurationUpdate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		Map<String, Object> item = getDataFromOptions();
 		output(sdk.updateConfiguration(configurationId, item));
 	}
 
-	private void configsConfigurationDelete(SemantriaSDK sdk) {
+	private void configsConfigurationDelete(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		sdk.deleteConfiguration(configurationId);
 	}
 
 
-	private void configsNlpFeatureList(SemantriaSDK sdk) {
+	private void configsNlpFeatureList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -412,7 +412,7 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void configsNlpFeatureDelete(SemantriaSDK sdk) {
+	private void configsNlpFeatureDelete(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -447,7 +447,7 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void configsNlpFeatureGet(SemantriaSDK sdk) {
+	private void configsNlpFeatureGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -484,7 +484,7 @@ public class CommandLineInterface {
 		output(data);
 	}
 
-	private void configsNlpFeatureUpdate(SemantriaSDK sdk) {
+	private void configsNlpFeatureUpdate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -528,7 +528,7 @@ public class CommandLineInterface {
 		output(data);
 	}
 
-	private void configsNlpFeatureCreate(SemantriaSDK sdk) {
+	private void configsNlpFeatureCreate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -571,11 +571,11 @@ public class CommandLineInterface {
 		output(data);
 	}
 
-	private void docsHelp(SemantriaSDK sdk) {
+	private void docsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("docs");
 	}
 
-	private void docsDocumentsSend(SemantriaSDK sdk) {
+	private void docsDocumentsSend(Map<String, Object> cmdOptions) {
 	    connectWithAuth();
 	    List<Document> documents = getDocumentsFromOptions();
 		DocumentsRequest docRequest = new DocumentsRequest();
@@ -592,7 +592,7 @@ public class CommandLineInterface {
 	    output(sdk.sendDocumentsBatch(documents, docRequest));
 	}
 
-	private void docsDocumentsReceive(SemantriaSDK sdk){
+	private void docsDocumentsReceive(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		DocumentsRequest docRequest = new DocumentsRequest();
 		if (hasAllOptions(cmdOptions, "--configuration-id")) {
@@ -618,7 +618,7 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void docsCollectionsSend(SemantriaSDK sdk) {
+	private void docsCollectionsSend(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		List<String> documents = getCollectionTextFromOptions();
 		Collection collection = new Collection();
@@ -634,7 +634,7 @@ public class CommandLineInterface {
 		output(sdk.sendCollections(collection, request));
 	}
 
-	private void docsCollectionsReceive(SemantriaSDK sdk){
+	private void docsCollectionsReceive(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		boolean flag = false;
 		CollectionsRequest request = new CollectionsRequest();
@@ -655,78 +655,78 @@ public class CommandLineInterface {
 		}
 	}
 
-	private void featuresAllFeaturesGet(SemantriaSDK sdk){
+	private void featuresAllFeaturesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAllFeatures());
 	}
 
-	private void featuresConfigurationSettingsGet(SemantriaSDK sdk){
+	private void featuresConfigurationSettingsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getConfigurationSettings());
 	}
 
-	private void featuresIndustryPacksGet(SemantriaSDK sdk){
+	private void featuresIndustryPacksGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getIndustryPacks());
 	}
 
-	private void featuresLimitTypesGet(SemantriaSDK sdk){
+	private void featuresLimitTypesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getLimitTypes());
 	}
 
-	private void featuresLanguagesGet(SemantriaSDK sdk){
+	private void featuresLanguagesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getLanguages());
 	}
 
-	private void featuresLanguageTemplatesGet(SemantriaSDK sdk){
+	private void featuresLanguageTemplatesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getLanguageTemplates());
 	}
 
-	private void statsHelp(SemantriaSDK sdk) {
+	private void statsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("stats");
 	}
 
-	private void statsCustomStatisticsGet(SemantriaSDK sdk){
+	private void statsCustomStatisticsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		StatisticsRequest statsRequest = getStatisticsRequestForOptions();
 		output(sdk.getCustomStatistics(statsRequest));
 	}
 
-	private void usersHelp(SemantriaSDK sdk) {
+	private void usersHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("users");
 	}
 
-	private void usersGroupPermissionsDelete(SemantriaSDK sdk){
+	private void usersGroupPermissionsDelete(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		String permissionId = getStringOption(cmdOptions, "<permission_id>");
 		sdk.deleteAccountGroupPermission(groupId, permissionId);
 	}
 
-	private void usersGroupPermissionsCreate(SemantriaSDK sdk){
+	private void usersGroupPermissionsCreate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		Map<String, Object> item = getDataFromOptions();
 		output(sdk.createAccountGroupPermissions(item, groupId));
 	}
 
-	private void usersGroupPermissionsGet(SemantriaSDK sdk){
+	private void usersGroupPermissionsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		output(sdk.getAccountGroupPermissions(groupId));
 	}
 
-	private void usersUserPermissionsDelete(SemantriaSDK sdk){
+	private void usersUserPermissionsDelete(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		String permissionId = getStringOption(cmdOptions, "<permission_id>");
 		sdk.deleteUserPermissions(userId, permissionId);
 	}
 
-	private void usersUserPermissionsCreate(SemantriaSDK sdk){
+	private void usersUserPermissionsCreate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		String data = getDataOption();
@@ -734,101 +734,101 @@ public class CommandLineInterface {
 		output(sdk.addUserPermission(permission, userId));
 	}
 
-	private void usersUserPermissionsGet(SemantriaSDK sdk){
+	private void usersUserPermissionsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.getUserPermissions(userId));
 	}
 
-	private void usersAllPermissionsGet(SemantriaSDK sdk){
+	private void usersAllPermissionsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAllPermissions());
 	}
 
-	private void usersGroupsUserDelete(SemantriaSDK sdk){
+	private void usersGroupsUserDelete(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		sdk.deleteUserFromGroup(groupId, userId);
 	}
 
-	private void usersGroupsUserAssign(SemantriaSDK sdk){
+	private void usersGroupsUserAssign(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.assignUserToGroup(groupId, userId));
 	}
 
-	private void usersGroupsUsersGet(SemantriaSDK sdk){
+	private void usersGroupsUsersGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		output(sdk.getAllAccountMembers(groupId));
 	}
 
-	private void usersGroupsUpdate(SemantriaSDK sdk){
+	private void usersGroupsUpdate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		Map<String, Object> item = getDataFromOptions();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		output(sdk.updateAccountGroup(item, groupId));
 	}
 
-	private void usersGroupsDelete(SemantriaSDK sdk){
+	private void usersGroupsDelete(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		sdk.deleteAccountGroup(groupId);
 	}
 
-	private void usersGroupsGet(SemantriaSDK sdk){
+	private void usersGroupsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String groupId = getStringOption(cmdOptions, "<group_id>");
 		output(sdk.getAccountGroup(groupId));
 	}
 
-	private void usersGroupsCreate(SemantriaSDK sdk){
+	private void usersGroupsCreate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		Map<String, Object> item = getDataFromOptions();
 		output(sdk.createAccountGroup(item));
 	}
 
-	private void usersAllGroupsGet(SemantriaSDK sdk){
+	private void usersAllGroupsGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAllAccountGroups());
 	}
 
-	private void usersUserPasswordUpdate(SemantriaSDK sdk){
+	private void usersUserPasswordUpdate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		Map<String, Object> item = getDataFromOptions();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.updateUserPassword(item, userId));
 	}
 
-	private void usersUsersUpdate(SemantriaSDK sdk){
+	private void usersUsersUpdate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		Map<String, Object> item = getDataFromOptions();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.updateUser(item,userId));
 	}
 
-	private void usersUsersDelete(SemantriaSDK sdk){
+	private void usersUsersDelete(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		sdk.deleteUser(userId);
 	}
 
-	private void usersUsersGet(SemantriaSDK sdk){
+	private void usersUsersGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String userId = getStringOption(cmdOptions, "<user_id>");
 		output(sdk.getUser(userId));
 	}
 
-	private void usersUsersCreate(SemantriaSDK sdk){
+	private void usersUsersCreate(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		String data = getDataOption();
 		User user = new DataConverter<User>().convert(data, User.class);
 		output(sdk.createUser(user));
 	}
 
-	private void usersAllUsersGet(SemantriaSDK sdk){
+	private void usersAllUsersGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getAllUsers());
 	}
