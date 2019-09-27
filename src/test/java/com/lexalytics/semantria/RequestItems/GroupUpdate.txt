@@ -1,0 +1,4 @@
+{
+  "group_name": "group-update-test",
+  "external_id": "84"
+}

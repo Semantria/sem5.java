@@ -1,0 +1,39 @@
+Users Service:
+The users service allows customers to manage details and permissions on individual users and groups of users.
+Groups are a convenient way to keep track of and edit permissions for a collection of users under an account. To get details on all of the permissions options in Semantria, use the ""users all-permissions"" command.
+For more information, see http://api-20.semantria.com/users/swagger-ui.html#/
+
+USAGE:
+users status        Test the connection to the users service and get the health of the service. API call: /users/health
+users all-permissions        Get a list of all permissions. API call: GET /users/permissions/
+users permissions type <permission_type>        Get a list of all the permissions of a specific type. API call: GET /users/permissions/{permissionsType}
+users group-permissions group <group_id>        Get a list of all the permissions for a group. API call: GET /users/groups/{groupId}/permissions/
+users group-permissions group <group_id> create        Create/add a permission to a group. API call: POST /users/groups/{groupId}/permissions/
+users group-permissions group <group_id> permission <permission_id> delete        Revoke a permission from a group. API call: DELETE /users/groups/{groupId}/permissions/{permissionId}
+users user-permissions user <user_id>        Get a list of all the permissions for a specific user. API call: GET /users/users/{userId}/permissions/
+users user-permissions user <user_id> create        Create/add a permission for a user. API call: POST /users/users/{userId}/permissions/
+users user-permissions user <user_id> permission <permission_id> delete        Revoke a permission for a user. API call: DELETE /users/users/{userId}/permissions/{permissionId}
+users all-groups        Get a list of all groups for an account.  API call: GET /users/groups/
+users groups create        Create a new group for an account.  API call: POST /users/groups/
+users groups <group_id>        Get a specific group by ID. API call: GET /users/groups/{groupId}
+users groups <group_id> update        Update information or permissions for a group. API call: PUT /users/groups/{groupId}
+users groups <group_id> delete        Delete a group. API call: DELETE /users/groups/{groupId}
+users groups <group_id> members        Get a list of all the users in an account that are in a group. API call: GET /users/groups/{groupId}/members/
+users groups <group_id> members <user_id> assign        Add an existing user to a group. API call: POST /users/groups/{groupId}/members/
+users groups <group_id> members <user_id> delete        Remove a user from a group. API call: DELETE /users/groups/{groupId}/members/{userId}
+users all-users         Get a list of all users in an account. API call: GET /users/users/
+users user create        Create a new user in an account. API call: POST /users/users/
+users user <user_id>        Get information about a specific user. API call: GET /users/users/{userId}
+users user <user_id> update         Update information/permissions for a user. API call: PUT /users/users/{userId}
+users user <user_id> delete         Delete a user from an account. API call: DELETE /users/users/{userId}
+users user <user_id> password update          Update the password for a user.  API call: PUT /users/users/{userId}/password
+users service-users create        Create a new service user. API call: POST /users/service-users/
+
+USERS OPTIONS:
+--data S                         Data to be uploaded. Can either be a file path (which is preceded by the @ symbol) or a JSON.
+
+PARAMETERS:
+<permission_type>        What type of permission to filter by. Types can be found looking at ""permission_type"" properties of permissions returned by ""users all-permissions""
+<group_id>        Unique identifier for a group. Can be found using ""users all-groups"".
+<permission_id>        Unique identifier for a permission. Can be found using either ""users all-permissions"" or ""users permissions type <permission_type>""
+<user_id>        Unique identifier for a user in an account.

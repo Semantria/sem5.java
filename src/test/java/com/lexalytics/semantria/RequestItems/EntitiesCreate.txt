@@ -1,0 +1,6 @@
+{
+  "label": "Sharks",
+  "name": "Sharks",
+  "normalized": "Sharks",
+  "type": "Animal"
+}

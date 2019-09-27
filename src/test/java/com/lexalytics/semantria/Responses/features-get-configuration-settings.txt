@@ -1,0 +1,164 @@
+[
+    {
+        "setting": "ANAPHORA_RESOLUTION"
+    },
+    {
+        "setting": "ATTRIBUTES",
+        "dependsFromOneOf": [
+            "BASE_NLP"
+        ]
+    },
+    {
+        "setting": "AUTO_CATEGORIES",
+        "dependsFromOneOf": [
+            "CONCEPT_TOPICS"
+        ]
+    },
+    {
+        "setting": "BLACKLISTS",
+        "dependsFromOneOf": [
+            "BLACKLISTS"
+        ]
+    },
+    {
+        "setting": "CONCEPT_TOPICS",
+        "dependsFromOneOf": [
+            "CONCEPT_TOPICS"
+        ]
+    },
+    {
+        "setting": "DETECT_LANGUAGE",
+        "dependsFromOneOf": [
+            "BASE_NLP"
+        ]
+    },
+    {
+        "setting": "DETECT_PHRASES",
+        "dependsFromOneOf": [
+            "SENTIMENT"
+        ]
+    },
+    {
+        "setting": "DOC_CLASSIFICATION",
+        "dependsFromOneOf": [
+            "MODEL_MANAGEMENT"
+        ]
+    },
+    {
+        "setting": "ENTITIES_STEMMING",
+        "dependsFromOneOf": [
+            "ENTITIES"
+        ]
+    },
+    {
+        "setting": "ENTITY_OVERLAP",
+        "dependsFromOneOf": [
+            "ENTITIES"
+        ]
+    },
+    {
+        "setting": "FACETS",
+        "dependsFromOneOf": [
+            "BASE_NLP"
+        ]
+    },
+    {
+        "setting": "FACETS_STEMMING",
+        "dependsFromOneOf": [
+            "BASE_NLP"
+        ]
+    },
+    {
+        "setting": "FAIL_ON_LONG_SENTENCES"
+    },
+    {
+        "setting": "FLATTEN_ALL_UPPER_CASE"
+    },
+    {
+        "setting": "INTENTIONS",
+        "dependsFromOneOf": [
+            "INTENTIONS"
+        ]
+    },
+    {
+        "setting": "MENTIONS",
+        "dependsFromOneOf": [
+            "ENTITIES",
+            "QUERY_TOPICS"
+        ]
+    },
+    {
+        "setting": "MODEL_SENTIMENT",
+        "dependsFromOneOf": [
+            "SENTIMENT"
+        ]
+    },
+    {
+        "setting": "NAMED_ENTITIES",
+        "dependsFromOneOf": [
+            "ENTITIES"
+        ]
+    },
+    {
+        "setting": "ONE_SENTENCE_MODE"
+    },
+    {
+        "setting": "OPINIONS",
+        "dependsFromOneOf": [
+            "BASE_NLP"
+        ]
+    },
+    {
+        "setting": "OVERRIDE_SENTIMENT_DICTIONARY"
+    },
+    {
+        "setting": "PROCESS_HTML"
+    },
+    {
+        "setting": "QUERY_TOPICS",
+        "dependsFromOneOf": [
+            "QUERY_TOPICS"
+        ]
+    },
+    {
+        "setting": "RELATIONS",
+        "dependsFromOneOf": [
+            "ENTITIES"
+        ]
+    },
+    {
+        "setting": "RETURN_SOURCE_TEXT"
+    },
+    {
+        "setting": "SENTIMENT_PHRASES",
+        "dependsFromOneOf": [
+            "SENTIMENT"
+        ]
+    },
+    {
+        "setting": "TAXONOMY",
+        "dependsFromOneOf": [
+            "TAXONOMY"
+        ]
+    },
+    {
+        "setting": "THEMES",
+        "description": "Themes description",
+        "dependsFromOneOf": [
+            "THEMES"
+        ]
+    },
+    {
+        "setting": "TOPIC_STEMMING",
+        "dependsFromOneOf": [
+            "QUERY_TOPICS",
+            "CONCEPT_TOPICS"
+        ]
+    },
+    {
+        "setting": "USER_ENTITIES",
+        "dependsFromOneOf": [
+            "ENTITIES"
+        ]
+    }
+]

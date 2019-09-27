@@ -1,0 +1,72 @@
+[
+    {
+        "user_id": "643a4bea-da39-44ba-924a-d0ef772c2642",
+        "login": "TrialAccountUser",
+        "account_id": "87842522-303d-4b60-8645-358c8018417b",
+        "email": "",
+        "first_name": "Lego",
+        "last_name": "MaeEggo",
+        "title": "",
+        "company_name": "",
+        "freshbooksId": "",
+        "eloquaId": "",
+        "packageCode": "",
+        "password_modified": "2018-08-20",
+        "lastLogin": "2018-10-24T22:32:12.684",
+        "user_groups": [],
+        "permissions": []
+    },
+    {
+        "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+        "login": "TrialAccountAdmin",
+        "account_id": "87842522-303d-4b60-8645-358c8018417b",
+        "email": "testemail@example.com",
+        "first_name": "Joelle",
+        "last_name": "Rollo-Koster",
+        "title": "",
+        "company_name": "",
+        "freshbooksId": "",
+        "eloquaId": "",
+        "packageCode": "",
+        "password_modified": "2018-10-09",
+        "lastLogin": "2018-10-28T17:34:36.818",
+        "user_groups": [],
+        "permissions": [
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "permission_type": "ACCOUNT_ADMIN",
+                "permission_id": "92cd25ef-f826-4095-bc4a-8dd0c2d6de20"
+            },
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "configId": "40384dcf-c6dc-4b32-b1dc-40332be0c0c9",
+                "permission_type": "CONFIGURATION_WRITE",
+                "permission_id": "5e446788-32a9-48a1-a869-7d4acb02efa9"
+            },
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "configId": "14975c76-950b-499e-911b-99242281881f",
+                "permission_type": "CONFIGURATION_WRITE",
+                "permission_id": "74781b4a-e763-4578-9a0b-a3de2dd22cf7"
+            },
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "configId": "b6c669c1-d57a-4565-95e6-ebf2033b7718",
+                "permission_type": "CONFIGURATION_WRITE",
+                "permission_id": "69f8ad90-7f29-4042-9aa6-2985e23bde98"
+            },
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "configId": "18392ff6-9d9b-464e-adaf-ae33cbfdfbf7",
+                "permission_type": "CONFIGURATION_WRITE",
+                "permission_id": "eadd66ce-eeec-41a0-9355-0dcc2d0c3047"
+            },
+            {
+                "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+                "configId": "e7aa427e-ffcf-4682-a4db-1a2fd90b67df",
+                "permission_type": "CONFIGURATION_WRITE",
+                "permission_id": "31c7ce4a-c808-4221-9ed2-a5befed09d54"
+            }
+        ]
+    }
+]

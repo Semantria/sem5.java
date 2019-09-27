@@ -1,0 +1,89 @@
+[
+    {
+        "feature": "AI_ASSEMBLER"
+    },
+    {
+        "feature": "BASE_NLP",
+        "settings": [
+            "OPINIONS",
+            "FACETS_STEMMING",
+            "ATTRIBUTES",
+            "FACETS",
+            "DETECT_LANGUAGE"
+        ],
+        "description": "Includes facets, attributes, language detection, opinions, pos tagging, summary"
+    },
+    {
+        "feature": "BLACKLISTS",
+        "settings": [
+            "BLACKLISTS"
+        ]
+    },
+    {
+        "feature": "CONCEPT_TOPICS",
+        "settings": [
+            "AUTO_CATEGORIES",
+            "CONCEPT_TOPICS"
+        ],
+        "description": "a.k.a. categories. Also includes auto categories"
+    },
+    {
+        "feature": "ENTITIES",
+        "settings": [
+            "MENTIONS",
+            "ENTITIES_STEMMING",
+            "USER_ENTITIES",
+            "NAMED_ENTITIES",
+            "RELATIONS",
+            "ENTITY_OVERLAP"
+        ],
+        "description": "Includes named entities, user entities, relations"
+    },
+    {
+        "feature": "INTENTIONS",
+        "settings": [
+            "INTENTIONS"
+        ],
+        "description": "Intentions"
+    },
+    {
+        "feature": "MODEL_MANAGEMENT",
+        "settings": [
+            "DOC_CLASSIFICATION"
+        ],
+        "description": "Model management and doc classification"
+    },
+    {
+        "feature": "QUERY_TOPICS",
+        "settings": [
+            "MENTIONS",
+            "QUERY_TOPICS",
+            "TOPIC_STEMMING"
+        ]
+    },
+    {
+        "feature": "RTS",
+        "description": "Real time search"
+    },
+    {
+        "feature": "SENTIMENT",
+        "settings": [
+            "SENTIMENT_PHRASES",
+            "DETECT_PHRASES",
+            "MODEL_SENTIMENT"
+        ],
+        "description": "Includes sentiment, sentiment phrases, model sentiment"
+    },
+    {
+        "feature": "TAXONOMY",
+        "settings": [
+            "TAXONOMY"
+        ]
+    },
+    {
+        "feature": "THEMES",
+        "settings": [
+            "THEMES"
+        ]
+    }
+]

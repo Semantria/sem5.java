@@ -1,0 +1,4 @@
+{
+  "query": "Animals",
+  "topic": "Whales"
+}

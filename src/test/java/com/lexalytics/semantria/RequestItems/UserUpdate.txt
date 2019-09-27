@@ -1,0 +1,11 @@
+{
+  "user_id": "5a10bc2d-f6ad-46a2-8558-8788a360232d",
+  "login": "KillerMike",
+  "account_id": "87842522-303d-4b60-8645-358c8018417b",
+  "first_name": "ElP",
+  "last_name": "Mike",
+  "company_name": "Run the Jewels",
+  "password_modified": "2018-10-10",
+  "user_groups": [],
+  "permissions": []
+}

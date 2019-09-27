@@ -1,0 +1,78 @@
+{
+    "id": "87842522-303d-4b60-8645-358c8018417b",
+    "email": "trailaccount@example.com",
+    "state": "CONFIRMED",
+    "languages": [
+        {
+            "id": "enprm",
+            "name": "English Premium"
+        },
+        {
+            "id": "en",
+            "name": "English"
+        },
+        {
+            "id": "fr",
+            "name": "French"
+        }
+    ],
+    "features": [
+        "BLACKLISTS",
+        "ENTITIES",
+        "BASE_NLP",
+        "THEMES",
+        "CONCEPT_TOPICS",
+        "INTENTIONS",
+        "AI_ASSEMBLER",
+        "QUERY_TOPICS",
+        "MODEL_MANAGEMENT",
+        "RTS",
+        "TAXONOMY",
+        "SENTIMENT"
+    ],
+    "limits": {
+        "DOCUMENT_LENGTH": 2048,
+        "CONCEPT_TOPIC_SAMPLES_LIMIT": 20,
+        "SETTINGS_CALLS_LIMIT": 100,
+        "TAXONOMY_LIMIT": 100,
+        "SENTIMENT_PHRASES_LIMIT": 100,
+        "STORAGE_DOCS_LIMIT": 100000,
+        "QUERY_DEPTH_LEVEL": 100,
+        "COLLECTION_LIMIT": 100,
+        "NEAR_OPERATOR_DISTANCE": 10,
+        "TAXONOMY_TOPICS_LIMIT": 100,
+        "MAX_EXECUTION_TIME": 0,
+        "SESSION_EXPIRATION": 60,
+        "SUMMARY_SIZE_LIMIT": 20,
+        "QUERY_LENGTH_LIMIT": 12000,
+        "TAXONOMY_DEPTH_LIMIT": 10,
+        "SESSION_LIMIT": 5,
+        "CONCEPT_TOPICS_LIMIT": 100,
+        "NUMBER_OF_SEATS": 1,
+        "BATCH_SIZE_LIMIT": 100,
+        "RETAINED_DATA_INTERVAL": 43200,
+        "USER_ENTITIES_LIMIT": 100,
+        "CONFIGURATIONS_LIMIT": 20,
+        "DATA_CALLS_LIMIT": 100,
+        "METADATA_LIMIT": 2000,
+        "QUERY_TOPICS_LIMIT": 100,
+        "BLACKLISTS_LIMIT": 100,
+        "NEAR_OPERATOR_LIMIT": 5
+    },
+    "license_id": "3d0cccff-d36d-49c3-90a9-9cb4fcac2f70",
+    "name": "TrialAccount",
+    "edition_name": "No Name",
+    "edition_id": "trial",
+    "registration_date": "2018-08-20",
+    "expiration_date": "2020-01-01",
+    "current_balance": 184521,
+    "industry_packs": [
+        {
+            "id": "en-it",
+            "name": "English Industry",
+            "language_id": "en",
+            "language_name": "English",
+            "updated": "2018-09-03T11:59:55.966"
+        }
+    ]
+}

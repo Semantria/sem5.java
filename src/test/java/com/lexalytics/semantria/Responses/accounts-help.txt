@@ -1,0 +1,16 @@
+Accounts Service:
+The accounts service allows administrators the ability to get information about account-level features such as account details and password rules.
+Only Semantria administrators or account administrators have access to these endpoints.
+For more information, see http://api-20.semantria.com/accounts/swagger-ui.html#/
+
+USAGE:
+accounts status           Test the connection to the accounts service and get the health of the service. API call: /accounts/health
+accounts all-accounts     Get a list of all accounts. API call: /accounts/accounts/
+accounts account details   Get details about the account the Semantria session was created by. API call: /accounts/details/
+accounts account <account_id> password-rules        Get a list of the password rules for an account. API call: /accounts/password/{accountId}/rules/
+accounts password rules-types        Get a list of the different types of rules for Semantria account passwords. API call: /accounts/password/rules/types/
+accounts password rules <rule_id>        Get details about a specific password rule for Semantria account passwords. API call: /accounts/password/rules/{ruleId}
+
+PARAMETERS:
+<account_id>               Unique identifier for an account. This is different from your account key.
+<rule_id>                  Unique identifier for a Semantria password rule.

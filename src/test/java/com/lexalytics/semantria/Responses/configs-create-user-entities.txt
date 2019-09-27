@@ -1,0 +1,8 @@
+{
+    "id": "221ce6e1-9005-4efc-aadf-c79adef67ac5",
+    "name": "Sharks",
+    "type": "Animal",
+    "label": "Sharks",
+    "normalized": "Sharks",
+    "updated": "2018-10-28T19:30:10.596"
+}

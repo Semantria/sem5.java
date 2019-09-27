@@ -1,0 +1,12 @@
+Statistics Service:
+The statistics service is for getting information and statistics about how an account is interacting with Semantria.
+For more information, see http://api-20.semantria.com/stats/swagger-ui.html#/
+
+USAGE:
+stats status              Test the connection to the statistics service and get the health of the service. API call: /stats/health
+stats statistics          Get statistics for an account. These can be filtered by configuration or by time interval. API Call: /stats/statistics/
+
+STATISTICS OPTIONS:
+  --configuration-id S    Filter statistics results to only see usage for a specific configuration.
+  --interval S            Filter statistics to only see usage within a specific time interval.
+

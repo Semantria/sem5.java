@@ -1,0 +1,15 @@
+{
+  "login": "KillerMike",
+  "password": "fuck",
+  "account_id": "87842522-303d-4b60-8645-358c8018417b",
+  "email": "",
+  "first_name": "Killer",
+  "last_name": "Mike",
+  "title": "",
+  "company_name": "Run the Jewels",
+  "freshbooks_id": "",
+  "eloqua_id": "",
+  "user_groups": [],
+  "permissions": [
+  ]
+}

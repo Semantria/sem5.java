@@ -1,0 +1,179 @@
+[
+    {
+        "limit_type": "BATCH_SIZE_LIMIT",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "BLACKLISTS_LIMIT",
+        "dependency": "BLACKLISTS",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "COLLECTION_LIMIT",
+        "minValue": 0,
+        "maxValue": 100000
+    },
+    {
+        "limit_type": "CONCEPT_TOPICS_LIMIT",
+        "dependency": "CONCEPT_TOPICS",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "CONCEPT_TOPIC_SAMPLES_LIMIT",
+        "description": "Count of sample allowed per one concept topic",
+        "dependency": "CONCEPT_TOPICS",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "CONFIGURATIONS_LIMIT",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "DATA_CALLS_LIMIT",
+        "minValue": 0,
+        "maxValue": 100000
+    },
+    {
+        "limit_type": "DOCUMENT_LENGTH",
+        "minValue": 0,
+        "maxValue": 104857600
+    },
+    {
+        "limit_type": "JOB_ID_LIMIT",
+        "description": "Count of concurrent job IDs per account.",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "MAX_EXECUTION_TIME",
+        "minValue": 0,
+        "maxValue": 3600000
+    },
+    {
+        "limit_type": "METADATA_LIMIT",
+        "minValue": 0,
+        "maxValue": 1048576
+    },
+    {
+        "limit_type": "MODEL_COUNT_LIMIT",
+        "description": "Model Management",
+        "dependency": "MODEL_MANAGEMENT",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "NEAR_OPERATOR_DISTANCE",
+        "dependency": "QUERY_TOPICS",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "NEAR_OPERATOR_LIMIT",
+        "dependency": "QUERY_TOPICS",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "NUMBER_OF_SEATS",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "QUERY_DEPTH_LEVEL",
+        "dependency": "QUERY_TOPICS",
+        "minValue": 0,
+        "maxValue": 5
+    },
+    {
+        "limit_type": "QUERY_LENGTH_LIMIT",
+        "dependency": "QUERY_TOPICS",
+        "minValue": 0,
+        "maxValue": 10000
+    },
+    {
+        "limit_type": "QUERY_TOPICS_LIMIT",
+        "dependency": "QUERY_TOPICS",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "RETAINED_DATA_INTERVAL",
+        "minValue": 0,
+        "maxValue": 604800
+    },
+    {
+        "limit_type": "RTS_GNIP_LIMIT",
+        "description": "Real time search",
+        "dependency": "RTS",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "RTS_SOCIALGIST_LIMIT",
+        "dependency": "RTS",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "SENTIMENT_PHRASES_LIMIT",
+        "dependency": "SENTIMENT",
+        "minValue": 0,
+        "maxValue": 1000000
+    },
+    {
+        "limit_type": "SESSION_EXPIRATION",
+        "minValue": 0,
+        "maxValue": 1440
+    },
+    {
+        "limit_type": "SESSION_LIMIT",
+        "description": "Count of concurrent active sessions per user.",
+        "minValue": 0,
+        "maxValue": 10
+    },
+    {
+        "limit_type": "SETTINGS_CALLS_LIMIT",
+        "minValue": 0,
+        "maxValue": 100
+    },
+    {
+        "limit_type": "STORAGE_DOCS_LIMIT",
+        "minValue": 0,
+        "maxValue": 10000000000
+    },
+    {
+        "limit_type": "SUMMARY_SIZE_LIMIT",
+        "dependency": "BASE_NLP",
+        "minValue": 0,
+        "maxValue": 10
+    },
+    {
+        "limit_type": "TAXONOMY_DEPTH_LIMIT",
+        "dependency": "TAXONOMY",
+        "minValue": 0,
+        "maxValue": 10
+    },
+    {
+        "limit_type": "TAXONOMY_LIMIT",
+        "dependency": "TAXONOMY",
+        "minValue": 0,
+        "maxValue": 1000
+    },
+    {
+        "limit_type": "TAXONOMY_TOPICS_LIMIT",
+        "dependency": "TAXONOMY",
+        "minValue": 0,
+        "maxValue": 100000
+    },
+    {
+        "limit_type": "USER_ENTITIES_LIMIT",
+        "dependency": "ENTITIES",
+        "minValue": 0,
+        "maxValue": 100000
+    }
+]

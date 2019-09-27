@@ -1,0 +1,38 @@
+[
+    {
+        "group_id": "7f006e13-0408-4bc7-87e1-91b4a412c935",
+        "group_name": "group1",
+        "external_id": "",
+        "account_id": "87842522-303d-4b60-8645-358c8018417b",
+        "permissions": [],
+        "owner": {
+            "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+            "login": "TrialAccountAdmin",
+            "account_id": "87842522-303d-4b60-8645-358c8018417b",
+            "email": "testemail@example.com",
+            "first_name": "Joelle",
+            "last_name": "Rollo-Koster",
+            "title": "",
+            "company_name": ""
+        },
+        "members": []
+    },
+    {
+        "group_id": "90d2283e-7351-4d41-839b-7a1763cb45dd",
+        "group_name": "group-create-test",
+        "external_id": "",
+        "account_id": "87842522-303d-4b60-8645-358c8018417b",
+        "permissions": [],
+        "owner": {
+            "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+            "login": "TrialAccountAdmin",
+            "account_id": "87842522-303d-4b60-8645-358c8018417b",
+            "email": "testemail@example.com",
+            "first_name": "Joelle",
+            "last_name": "Rollo-Koster",
+            "title": "",
+            "company_name": ""
+        },
+        "members": []
+    }
+]

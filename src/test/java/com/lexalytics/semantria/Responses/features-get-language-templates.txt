@@ -1,0 +1,60 @@
+[
+    {
+        "id": "00354fd1-5ea0-4217-8c25-bd705af30fbf",
+        "name": "de-default",
+        "language_id": "de",
+        "language_name": "German",
+        "updated": "2018-10-17T14:45:04.064",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55
+    },
+    {
+        "id": "en-default",
+        "name": "English Template",
+        "language_id": "en",
+        "language_name": "English",
+        "updated": "2018-02-08T13:10:07.76",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55
+    },
+    {
+        "id": "ruprm-default",
+        "name": "Russian Premium Default Template",
+        "language_id": "ruprm",
+        "language_name": "Russian Premium",
+        "updated": "2018-05-29T12:14:34.952051",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 4
+    },
+    {
+        "id": "ru-default",
+        "name": "Russian Template",
+        "language_id": "ru",
+        "language_name": "Russian",
+        "updated": "2018-02-08T13:10:07.76",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 4
+    },
+    {
+        "id": "enprm-default",
+        "name": "English Premium Default Template",
+        "version": "v2",
+        "settings": [
+            "AUTO_CATEGORIES",
+            "CONCEPT_TOPICS"
+        ],
+        "language_id": "enprm",
+        "language_name": "English Premium",
+        "updated": "2018-09-20T10:52:05.533",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 4
+    }
+]

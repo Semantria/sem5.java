@@ -1,0 +1,6 @@
+{
+  "label": "Sharks",
+  "name": "Great White Sharks",
+  "normalized": "Sharks",
+  "type": "Animal"
+}

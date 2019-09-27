@@ -1,0 +1,4 @@
+{
+  "title": "Sharks",
+  "weight": 0.5
+}

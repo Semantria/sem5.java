@@ -1,0 +1,58 @@
+[
+    {
+        "id": "pack2",
+        "name": "Second Pack",
+        "language_id": "en",
+        "language_name": "English",
+        "updated": "2018-02-23T11:18:28.006",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 4
+    },
+    {
+        "id": "en-it",
+        "name": "English Industry",
+        "settings": [
+            "FLATTEN_ALL_UPPER_CASE",
+            "DETECT_PHRASES",
+            "CONCEPT_TOPICS",
+            "FACETS",
+            "ENTITY_OVERLAP",
+            "MENTIONS",
+            "FACETS_STEMMING",
+            "ATTRIBUTES",
+            "ENTITIES_STEMMING",
+            "AUTO_CATEGORIES",
+            "BLACKLISTS",
+            "FAIL_ON_LONG_SENTENCES",
+            "INTENTIONS",
+            "ANAPHORA_RESOLUTION",
+            "NAMED_ENTITIES",
+            "DETECT_LANGUAGE",
+            "MODEL_SENTIMENT"
+        ],
+        "language_id": "en",
+        "language_name": "English",
+        "updated": "2018-09-03T11:59:55.966",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 0
+    },
+    {
+        "id": "p3",
+        "name": "Pack #3",
+        "settings": [
+            "AUTO_CATEGORIES",
+            "ATTRIBUTES"
+        ],
+        "language_id": "en",
+        "language_name": "English",
+        "updated": "2018-09-14T10:00:59.087",
+        "alphanumeric_threshold": 80,
+        "concept_topics_threshold": 0.45,
+        "entities_threshold": 55,
+        "summary_size": 4
+    }
+]

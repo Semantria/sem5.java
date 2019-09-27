@@ -1,0 +1,5 @@
+{
+    "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+    "permission_type": "BILLING",
+    "permission_id": "af0b4cc7-bf12-4ad5-a9cb-46906e90463e"
+}

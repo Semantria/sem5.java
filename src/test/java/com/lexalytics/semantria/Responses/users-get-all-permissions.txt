@@ -1,0 +1,64 @@
+[
+    {
+        "permission_type": "BILLING",
+        "description": "allows access to the billing service",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "STORAGE",
+        "description": "allows access to storage",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "EXTERNAL_WRITE",
+        "description": "allows to use/modify the external resource",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "EXTERNAL_READ",
+        "description": "allows to read the external resource",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "CONFIGURATION_WRITE",
+        "description": "allows to modify/use the configuration",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "CONFIGURATION_READ",
+        "description": "allows to view/use the configuration",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": false
+    },
+    {
+        "permission_type": "ACCOUNT_ADMIN",
+        "description": "denotes an administrator of an account.  Can perform all actions for account",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": true
+    },
+    {
+        "permission_type": "UPDATE_ACCOUNT_GROUP",
+        "description": "allows to get account groups",
+        "permission_category": "",
+        "system_admin": false,
+        "account_admin": true
+    },
+    {
+        "permission_type": "CREATE_CONFIGURATION",
+        "description": "Allows a user to create configurations.",
+        "system_admin": false,
+        "account_admin": true
+    }
+]

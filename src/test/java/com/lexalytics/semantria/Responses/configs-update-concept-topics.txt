@@ -1,0 +1,14 @@
+{
+    "id": "c6361c5c-0b48-4f98-82ef-986bf59ec815",
+    "name": "Sharks",
+    "weight": 0.5,
+    "samples": [
+        "Whale",
+        "Sharks",
+        "Great White",
+        "Hammerhead",
+        "Bull",
+        "Tiger"
+    ],
+    "updated": "2018-10-28T19:19:55.665"
+}

@@ -1,0 +1,18 @@
+{
+    "group_id": "e5cd281d-60df-4d76-ac5a-0897fe675300",
+    "group_name": "group-create-test-home",
+    "external_id": "",
+    "account_id": "87842522-303d-4b60-8645-358c8018417b",
+    "permissions": [],
+    "owner": {
+        "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+        "login": "TrialAccountAdmin",
+        "account_id": "87842522-303d-4b60-8645-358c8018417b",
+        "email": "testemail@example.com",
+        "first_name": "Joelle",
+        "last_name": "Rollo-Koster",
+        "title": "",
+        "company_name": ""
+    },
+    "members": []
+}

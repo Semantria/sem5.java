@@ -1,0 +1,12 @@
+{
+  "name": "Sharks",
+  "samples": [
+    "Sharks",
+	"Great White",
+	"Hammerhead",
+	"Bull",
+	"Tiger",
+	"Whale"
+  ],
+  "weight": 0.5
+}

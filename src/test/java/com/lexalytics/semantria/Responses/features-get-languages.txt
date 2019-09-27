@@ -1,0 +1,160 @@
+[
+    {
+        "id": "ar",
+        "name": "Arabic",
+        "features": []
+    },
+    {
+        "id": "arprm",
+        "name": "Arabic Premium",
+        "features": []
+    },
+    {
+        "id": "zh",
+        "name": "Chinese",
+        "features": []
+    },
+    {
+        "id": "da",
+        "name": "Danish",
+        "features": []
+    },
+    {
+        "id": "nl",
+        "name": "Dutch",
+        "features": []
+    },
+    {
+        "id": "en",
+        "name": "English",
+        "features": [
+            "QUERY_TOPICS",
+            "BASE_NLP",
+            "MODEL_MANAGEMENT",
+            "SENTIMENT",
+            "BLACKLISTS",
+            "CONCEPT_TOPICS",
+            "AI_ASSEMBLER",
+            "TAXONOMY",
+            "ENTITIES",
+            "THEMES",
+            "INTENTIONS"
+        ]
+    },
+    {
+        "id": "enprm",
+        "name": "English Premium",
+        "features": [
+            "QUERY_TOPICS",
+            "BASE_NLP",
+            "SENTIMENT",
+            "BLACKLISTS",
+            "CONCEPT_TOPICS",
+            "AI_ASSEMBLER",
+            "TAXONOMY",
+            "ENTITIES",
+            "THEMES",
+            "INTENTIONS"
+        ]
+    },
+    {
+        "id": "fr",
+        "name": "French",
+        "features": [
+            "QUERY_TOPICS",
+            "BASE_NLP",
+            "MODEL_MANAGEMENT",
+            "CONCEPT_TOPICS"
+        ]
+    },
+    {
+        "id": "de",
+        "name": "German",
+        "features": []
+    },
+    {
+        "id": "heprm",
+        "name": "Hebrew Premium",
+        "features": []
+    },
+    {
+        "id": "it",
+        "name": "Italian",
+        "features": []
+    },
+    {
+        "id": "ja",
+        "name": "Japanese",
+        "features": []
+    },
+    {
+        "id": "ko",
+        "name": "Korean",
+        "features": []
+    },
+    {
+        "id": "ms",
+        "name": "Malay",
+        "features": []
+    },
+    {
+        "id": "no",
+        "name": "Norwegian",
+        "features": []
+    },
+    {
+        "id": "plprm",
+        "name": "Polish Premium",
+        "features": []
+    },
+    {
+        "id": "pt",
+        "name": "Portuguese",
+        "features": []
+    },
+    {
+        "id": "ru",
+        "name": "Russian",
+        "features": [
+            "QUERY_TOPICS",
+            "BASE_NLP",
+            "SENTIMENT",
+            "BLACKLISTS",
+            "CONCEPT_TOPICS",
+            "TAXONOMY",
+            "ENTITIES",
+            "THEMES",
+            "INTENTIONS"
+        ]
+    },
+    {
+        "id": "ruprm",
+        "name": "Russian Premium",
+        "features": []
+    },
+    {
+        "id": "es",
+        "name": "Spanish",
+        "features": []
+    },
+    {
+        "id": "sv",
+        "name": "Swedish",
+        "features": []
+    },
+    {
+        "id": "thprm",
+        "name": "Thai Premium",
+        "features": []
+    },
+    {
+        "id": "trprm",
+        "name": "Turkish Premium",
+        "features": []
+    },
+    {
+        "id": "viprm",
+        "name": "Vietnamese Premium",
+        "features": []
+    }
+]

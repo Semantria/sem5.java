@@ -1,0 +1,19 @@
+Docs Service:
+The documents service is for sending documents to be analyzed by Semantria and retreiving the results.
+There are two ways documents can be uploaded to Semantria, both use the --data option. The first is to give the file path name preceded with the @ symbol.
+The second is to pass a single  document as a string.
+For more information, see http://api-20.semantria.com/docs/swagger-ui.html#
+
+USAGE:
+docs status              Test the connection to the Documents service and get the health of the service. API call: /docs/health
+docs documents send      Send a document or a batch of documents to be analyzed by Semantria. API call: /docs/documents
+docs documents receive   Check for available documents that have been processed by Semantria. If nothing is returned, wait a few seconds for documents to processes before trying again. API call: /docs/documents
+docs collections send    Send a collection of documents to be analyzed by Semantria. API call: /docs/collections
+docs collections receive     Check for a completed collection returned from Semantria. If nothing is returned, wait a few seconds for the collection to process before trying again. API call: /docs/collections
+
+DOCUMENTS OPTIONS:
+--data S                         Data to be uploaded. Can either be a file path (which is preceded by the @ symbol) or a JSON.
+--configuration-id S     Configuration to be used when processing or receiving documents.
+--job-id S               Identifier for a job.
+--request-limit N        Set a limit on how many documents are returned in a batch. Useful for sets of long documents or with a lot of metadata.
+

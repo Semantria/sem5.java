@@ -1,0 +1,9 @@
+{
+    "live_session_count": 2,
+    "user_sessions": {
+        "262fa31c-da71-4328-9ac5-46691975e39a": [
+            "25c77111-bf3e-4cf9-aad7-77708c5f26e8",
+            "65797fe7-10b6-4a0e-866d-e0119b7f96e2"
+        ]
+    }
+}

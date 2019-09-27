@@ -1,0 +1,6 @@
+{
+    "basePermissions": [],
+    "configurationPermissions": [],
+    "modelPermissions": [],
+    "externalPermissions": []
+}

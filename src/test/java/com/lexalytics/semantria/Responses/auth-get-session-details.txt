@@ -1,0 +1,28 @@
+{
+    "access_token": "25c77111-bf3e-4cf9-aad7-77708c5f26e8",
+    "account_id": "87842522-303d-4b60-8645-358c8018417b",
+    "user_login": "TrialAccountAdmin",
+    "user_id": "262fa31c-da71-4328-9ac5-46691975e39a",
+    "authenticated": "2018-10-24T17:23:59.416Z",
+    "permissions": [
+        {
+            "permission_type": "ACCOUNT_ADMIN",
+            "permission_id": "92cd25ef-f826-4095-bc4a-8dd0c2d6de20"
+        },
+        {
+            "permission_type": "CONFIGURATION_WRITE",
+            "permission_id": "31c7ce4a-c808-4221-9ed2-a5befed09d54",
+            "config_id": "e7aa427e-ffcf-4682-a4db-1a2fd90b67df"
+        },
+        {
+            "permission_type": "CONFIGURATION_WRITE",
+            "permission_id": "eadd66ce-eeec-41a0-9355-0dcc2d0c3047",
+            "config_id": "18392ff6-9d9b-464e-adaf-ae33cbfdfbf7"
+        },
+        {
+            "permission_type": "CONFIGURATION_WRITE",
+            "permission_id": "69f8ad90-7f29-4042-9aa6-2985e23bde98",
+            "config_id": "b6c669c1-d57a-4565-95e6-ebf2033b7718"
+        }
+    ]
+}

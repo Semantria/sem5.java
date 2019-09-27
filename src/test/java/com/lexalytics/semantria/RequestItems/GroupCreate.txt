@@ -1,0 +1,4 @@
+{
+  "group_name": "group-create-test-home",
+  "external_id": ""
+}

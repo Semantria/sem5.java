@@ -1,0 +1,106 @@
+Semantria 5.0 Client.
+
+USAGE:
+  sem5 [options] account details [get]
+  sem5 [options] account password-rules [get]
+  sem5 [options] password-rules-types
+  sem5 [options] password-rules <rule_id> [get]
+  sem5 [options] auth renew-session
+  sem5 [options] auth sessions create
+  sem5 [options] auth sessions [get]
+  sem5 [options] auth sessions <session_id> [get]
+  sem5 [options] auth sessions <session_id> delete
+  sem5 [options] auth users <user_id> sessions [get]
+  sem5 [options] auth users <user_id> sessions clear
+  sem5 [options] auth accounts <account_id> sessions [get]
+  sem5 [options] auth accounts <account_id> sessions clear
+  sem5 [options] configs [get]
+  sem5 [options] configs create
+  sem5 [options] configs <configuration_id> [get]
+  sem5 [options] configs <configuration_id> update
+  sem5 [options] configs <configuration_id> delete
+  sem5 [options] configs <configuration_id> <feature_name> [get]
+  sem5 [options] configs <configuration_id> <feature_name> create
+  sem5 [options] configs <configuration_id> <feature_name> <feature_id> [get]
+  sem5 [options] configs <configuration_id> <feature_name> <feature_id> update
+  sem5 [options] configs <configuration_id> <feature_name> <feature_id> delete
+  sem5 [options] docs send
+  sem5 [options] docs receive
+  sem5 [options] collections send
+  sem5 [options] collections receive
+  sem5 [options] features all-features [get]
+  sem5 [options] features configuration-settings [get]
+  sem5 [options] features limit-types [get]
+  sem5 [options] features industry-packs [get]
+  sem5 [options] features languages [get]
+  sem5 [options] features language-templates [get]
+  sem5 [options] stats [get]
+  sem5 [options] all-permissions [get]
+  sem5 [options] group-permissions group <group_id> [get]
+  sem5 [options] group-permissions group <group_id> create
+  sem5 [options] group-permissions group <group_id> permission <permission_id> delete
+  sem5 [options] user-permissions user <user_id> [get]
+  sem5 [options] user-permissions user <user_id> create
+  sem5 [options] user-permissions user <user_id> permission <permission_id> delete
+  sem5 [options] all-groups [get]
+  sem5 [options] groups create
+  sem5 [options] groups <group_id> [get]
+  sem5 [options] groups <group_id> update
+  sem5 [options] groups <group_id> delete
+  sem5 [options] groups <group_id> members [get]
+  sem5 [options] groups <group_id> members <user_id> assign
+  sem5 [options] groups <group_id> members <user_id> delete
+  sem5 [options] all-users [get]
+  sem5 [options] user create
+  sem5 [options] user <user_id> [get]
+  sem5 [options] user <user_id> update
+  sem5 [options] user <user_id> delete
+  sem5 [options] user <user_id> password update
+  sem5 [options] service-users create
+  sem5 [options] health
+  sem5 [options] generate-config
+  sem5 -h | --help | --version
+
+GENERAL OPTIONS:
+  -h --help              Show this
+  --version              Print version
+  -v --verbose           Turn up the verbosity
+  --credentials CREDS    User credentials user:pass
+  --access-token TOKEN   Session token to reuse
+  --config-file FILE     Load configuration from this file (default uses SEM5_CONFIG env var)
+  --no-config-file       Don't load from a config file even if environment SEEM5_CONFIG exists
+  --api-endpoint URL     Semantria API endpoint
+  --debugcli             Output the command line flag values
+  --data S		         Data to be uploaded. Can either be a file path (which is preceded by the @ symbol) or a JSON.
+  --configuration-id S   Configuration to be used when processing or receiving documents.
+
+AUTH OPTIONS:
+  --expiration POLICY    Expiration policy- default|forever|custom. [default: default]
+  --expire-after-minutes N  For custom expiration policy, after how many minutes should the session expire.
+
+CONFIGURATIONS OPTIONS:
+
+DOCS OPTIONS:
+  --job-id S              Identifier for a job.
+  --request-limit N       Set a limit on how many documents are returned in a batch. Useful for sets of long documents or with a lot of metadata.
+
+USERS OPTIONS:
+
+STATISTICS OPTIONS:
+  --interval S            Time interval to pull statistics from.
+  --filter-by S           Comma separated list of fields to filter statistics by. Format: {field}={value},{field}={value}. Field options: consumer_id, consumer_name, config_id, config_name, user_id, user_email, edition_id, edition_name, language,app
+  --group-by S            Comma separated list of fields to group results by.  Format: {field}={value},{field}={value}. Field options: configuration, language, app, user, time intervals in ‘(0-9){1,2}(m|h|d) format.
+
+DESCRIPTION
+
+  The sem5 command allows you to work with the Semantria 5 SDK from the commandline.  Output
+  will be the JSON returned from Semantria.
+
+  For commands that require authentication, there are three options:
+
+    * Specify on command line with --credentials or --access-token
+    * Specify in a sem5 config file
+    * Otherwise the command will prompt you for the username and password
+
+  The SDK is broken up into several services.  To find out more of each you can use the
+  service ""help"" commands.  (e.g. sem5 rts help)
