@@ -30,7 +30,7 @@
     </developers>
     <scm>
         <connection>scm:git:git://github.com/Semantria/sem5.java.git</connection>
-        <developerConnection>scm:git:ssh://github.com:semantria/sem5.java.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/Semantria/sem5.java.git</developerConnection>
         <url>http://github.com/Semantria/sem5.java/tree/master</url>
     </scm>
 
