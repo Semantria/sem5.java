@@ -20,7 +20,7 @@ The simplest way to use the SDK is import from Maven Central
 
 These instructions show how to build the SDK using maven. You should be able to build and run the examples in your Java IDE as well.
 
-First, clone or download the SDK from [https://github.com/Semantria/sem5.java]()
+First, clone or download the SDK from [https://github.com/Semantria/sem5.java](https://github.com/Semantria/sem5.java)
 
 Change directory into the Java directory. Then compile and install the SDK and examples:
 
