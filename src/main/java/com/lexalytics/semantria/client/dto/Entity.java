@@ -23,9 +23,11 @@ public class Entity {
     private List<Mention> mentions;
     private String label;
     private String sentimentPolarity;
+    @JsonProperty("sentiment_phrases")
+    private List<SentimentMention> sentimentMentions;
 
     public static Entity create(Integer evidence, String normalized, Float sentiment, String type, String entityType, Boolean isAbout,
-                                Boolean confid, List<Mention> mentions, String label, String polarity) {
+                                Boolean confid, List<Mention> mentions, String label, String polarity, List<SentimentMention> sentimentMentions) {
         Entity entity = new Entity();
 
         entity.evidence = evidence;
@@ -38,6 +40,7 @@ public class Entity {
         entity.mentions = mentions;
         entity.label = label;
         entity.sentimentPolarity = polarity;
+        entity.sentimentMentions = sentimentMentions;
 
         return entity;
     }
@@ -136,5 +139,13 @@ public class Entity {
         }
 
         themes.add(theme);
+    }
+
+    public List<SentimentMention> getSentimentMentions() {
+        return sentimentMentions;
+    }
+
+    public void setSentimentMentions(List<SentimentMention> sentimentMentions) {
+        this.sentimentMentions = sentimentMentions;
     }
 }

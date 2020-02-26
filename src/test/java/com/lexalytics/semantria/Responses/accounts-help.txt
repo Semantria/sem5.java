@@ -1,7 +1,7 @@
 Accounts Service:
 The accounts service allows administrators the ability to get information about account-level features such as account details and password rules.
 Only Semantria administrators or account administrators have access to these endpoints.
-For more information, see http://api-20.semantria.com/accounts/swagger-ui.html#/
+For more information, see http://api5.semantria.com/accounts/swagger-ui.html#/
 
 USAGE:
 accounts status           Test the connection to the accounts service and get the health of the service. API call: /accounts/health

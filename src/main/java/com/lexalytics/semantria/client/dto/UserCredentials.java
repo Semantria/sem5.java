@@ -1,5 +1,7 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserCredentials {
     private String login;
     private String password;
@@ -27,4 +29,13 @@ public class UserCredentials {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * @return true if both login and password are not empty.
+     */
+    @JsonIgnore
+    public boolean isProvided() {
+        return (login != null) && (password != null) && !login.isEmpty() && !password.isEmpty();
+    }
+
 }

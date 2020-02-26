@@ -2,7 +2,7 @@ Docs Service:
 The documents service is for sending documents to be analyzed by Semantria and retreiving the results.
 There are two ways documents can be uploaded to Semantria, both use the --data option. The first is to give the file path name preceded with the @ symbol.
 The second is to pass a single  document as a string.
-For more information, see http://api-20.semantria.com/docs/swagger-ui.html#
+For more information, see http://api5.semantria.com/docs/swagger-ui.html#
 
 USAGE:
 docs status              Test the connection to the Documents service and get the health of the service. API call: /docs/health

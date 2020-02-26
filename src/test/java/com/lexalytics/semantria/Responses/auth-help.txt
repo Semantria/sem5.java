@@ -2,7 +2,7 @@ Authentication Service:
 Authentication service is used to facilitate username/password account validation in Semantria. Create a session using ""auth sessions create"" and use
 the authentication token that is returned to authenicate any call to Semantria after using the --access-token option.
 
-For more information, see http://api-20.semantria.com/auth/swagger-ui.html#/
+For more information, see http://api5.semantria.com/auth/swagger-ui.html#/
 
 USAGE:
 auth status              Test the connection to the authentication service and get the health of the service. API call: /auth/health

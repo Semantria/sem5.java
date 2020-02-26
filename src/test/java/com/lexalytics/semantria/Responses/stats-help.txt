@@ -1,6 +1,6 @@
 Statistics Service:
 The statistics service is for getting information and statistics about how an account is interacting with Semantria.
-For more information, see http://api-20.semantria.com/stats/swagger-ui.html#/
+For more information, see http://api5.semantria.com/stats/swagger-ui.html#/
 
 USAGE:
 stats status              Test the connection to the statistics service and get the health of the service. API call: /stats/health

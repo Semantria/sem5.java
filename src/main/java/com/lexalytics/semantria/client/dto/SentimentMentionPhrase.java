@@ -15,6 +15,8 @@ public class SentimentMentionPhrase {
     private int length;
     private int byteOffset;
     private int byteLength;
+    private int charOffset;
+    private int charLength;
     @JsonProperty("is_negated")
     private boolean negated;
     private String negator;
@@ -22,7 +24,7 @@ public class SentimentMentionPhrase {
     private int section;
 
     public static SentimentMentionPhrase create(String text, int document, int sentence, int word, int length, int byteOffset,
-                                                int byteLength, boolean isNegated, String negator, int type, int section) {
+                                                int byteLength, boolean isNegated, String negator, int type, int section, int charOffset, int charLength) {
         SentimentMentionPhrase phrase = new SentimentMentionPhrase();
         phrase.text = text;
         phrase.document = document;
@@ -35,6 +37,8 @@ public class SentimentMentionPhrase {
         phrase.negator = negator;
         phrase.type = type;
         phrase.section = section;
+        phrase.charLength = charLength;
+        phrase.charOffset = charOffset;
         return phrase;
     }
 
@@ -124,5 +128,21 @@ public class SentimentMentionPhrase {
 
     public void setSection(int section) {
         this.section = section;
+    }
+
+    public int getCharOffset() {
+        return charOffset;
+    }
+
+    public void setCharOffset(int charOffset) {
+        this.charOffset = charOffset;
+    }
+
+    public int getCharLength() {
+        return charLength;
+    }
+
+    public void setCharLength(int charLength) {
+        this.charLength = charLength;
     }
 }

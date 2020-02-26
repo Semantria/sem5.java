@@ -1,7 +1,7 @@
 Configurations Service
 The configuration service is how users create and tune configurations, and tune Natural Language Processing (NLP) features.
 When creating or updating a configuration or an NLP feature, the information should be stored in a file as a JSON, and the full path to the file passed as the --data option.
-For more information about, see api-20.semantria.com/configs/swagger-ui.html#/
+For more information about, see api5.semantria.com/configs/swagger-ui.html#/
 
 USAGE
 configs status        Test the connection to the configurations service and get the health of the service. API call: /configs/health

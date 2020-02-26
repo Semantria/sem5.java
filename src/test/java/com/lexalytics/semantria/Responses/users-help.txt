@@ -1,7 +1,7 @@
 Users Service:
 The users service allows customers to manage details and permissions on individual users and groups of users.
 Groups are a convenient way to keep track of and edit permissions for a collection of users under an account. To get details on all of the permissions options in Semantria, use the ""users all-permissions"" command.
-For more information, see http://api-20.semantria.com/users/swagger-ui.html#/
+For more information, see http://api5.semantria.com/users/swagger-ui.html#/
 
 USAGE:
 users status        Test the connection to the users service and get the health of the service. API call: /users/health

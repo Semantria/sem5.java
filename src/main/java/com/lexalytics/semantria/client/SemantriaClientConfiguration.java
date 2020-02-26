@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lexalytics.semantria.client.dto.AccessToken;
@@ -41,9 +43,14 @@ public class SemantriaClientConfiguration  implements Cloneable {
 
     public static SemantriaClientConfiguration fromFile(File configFile) throws SemantriaClientError {
         if (configFile == null) {
-            String sem2Config = System.getenv("SEM5_CONFIG");
-            if (sem2Config != null && sem2Config.length() > 0) {
-                configFile = new File(sem2Config);
+            String sem5Config = System.getenv("SEM5_CONFIG");
+            if (sem5Config != null && sem5Config.length() > 0) {
+                configFile = new File(sem5Config);
+            } else {
+                File file = Paths.get(System.getProperty("user.home"), ".sem5-config").toFile();
+                if (file.exists()) {
+                    configFile = file;
+                }
             }
         }
         if (configFile != null) {
@@ -61,10 +68,13 @@ public class SemantriaClientConfiguration  implements Cloneable {
     }
 
     public void setApiEndpoint(String apiEndpoint) {
+        if (! apiEndpoint.startsWith("http")) {
+            apiEndpoint = "https://" + apiEndpoint;
+        }
         try {
             new URL(apiEndpoint);
         } catch (MalformedURLException e) {
-            throw new SemantriaClientError("Environment should be correctly spelled URL");
+            throw new SemantriaClientError("Endpoint should be correctly spelled URL");
         }
 
         this.apiEndpoint = apiEndpoint;

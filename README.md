@@ -8,29 +8,22 @@ If you find a bug or have suggestions let us know: support@lexaltyics.com. Or fo
 
 ## Installation using Maven Central
 
-The simplest way to use the SDK is import from Maven Central
+The simplest way to use the SDK is import it from Maven Central via your `pom.xml`:
 
         <dependency>
             <groupId>com.lexalytics.semantria</groupId>
             <artifactId>sem5-sdk</artifactId>
-            <version>0.5.3</version>
         </dependency>
 
 ## Installation from source
 
-These instructions show how to build the SDK using maven. You should be able to build and run the examples in your Java IDE as well.
+Alternatively, you can download and build the SDK locally. These instructions show how to build the SDK using maven. You should be able to build and run the examples in your Java IDE as well.
 
 First, clone or download the SDK from [https://github.com/Semantria/sem5.java](https://github.com/Semantria/sem5.java)
 
-Change directory into the Java directory. Then compile and install the SDK and examples:
+Change directory into the that directory. Then compile and install the SDK and examples:
 
-    $ mvn package install
-
-### Testing
-
-Then run the tests:
-
-    $ mvn test
+    $ mvn install
 
 
 ## Command Line Application

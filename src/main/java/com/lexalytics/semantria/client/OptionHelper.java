@@ -25,8 +25,22 @@ public class OptionHelper {
         return true;
     }
 
+    public static String getStringOption(Map<String, Object> opts, String name, String defaultValue) {
+        String value = (String) opts.get(name);
+        return (value != null) ? value : defaultValue;
+    }
+
     public static String getStringOption(Map<String, Object> opts, String name) {
         return (String) opts.get(name);
+    }
+
+    public static int getIntOption(Map<String, Object> opts, String name, int defaultValue) {
+        String str = (String) opts.get(name);
+        if (str == null) {
+            return defaultValue;
+        } else {
+            return Integer.parseInt(str);
+        }
     }
 
     public static int getIntOption(Map<String, Object> opts, String name) {

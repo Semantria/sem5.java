@@ -147,14 +147,14 @@ public class CommandLineInterface {
 		dispatcher.add(this::authSessionCreate, "auth", "sessions", "create");
 		dispatcher.add(this::authSessionsList, "auth", "sessions");
 		dispatcher.add(this::authSessionRenew, "renew-session");
-		dispatcher.add(this::configsNlpFeatureCreate,    "configs", "<configuration_id>", "<feature_name>", "create");
-		dispatcher.add(this::configsNlpFeatureDelete,    "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "delete");
-		dispatcher.add(this::configsNlpFeatureUpdate,    "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "update");
-		dispatcher.add(this::configsNlpFeatureGet,       "configs", "<configuration_id>", "<feature_name>", "<feature_id>");
-		dispatcher.add(this::configsNlpFeatureList,      "configs", "<configuration_id>", "<feature_name>");
+		dispatcher.add(this::configsNlpFeatureCreate,	 "configs", "<configuration_id>", "<feature_name>", "create");
+		dispatcher.add(this::configsNlpFeatureDelete,	 "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "delete");
+		dispatcher.add(this::configsNlpFeatureUpdate,	 "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "update");
+		dispatcher.add(this::configsNlpFeatureGet,		 "configs", "<configuration_id>", "<feature_name>", "<feature_id>");
+		dispatcher.add(this::configsNlpFeatureList,		 "configs", "<configuration_id>", "<feature_name>");
 		dispatcher.add(this::configsConfigurationDelete, "configs", "<configuration_id>", "delete");
 		dispatcher.add(this::configsConfigurationUpdate, "configs", "<configuration_id>", "update");
-		dispatcher.add(this::configsConfigurationGet,    "configs", "<configuration_id>");
+		dispatcher.add(this::configsConfigurationGet,	 "configs", "<configuration_id>");
 		dispatcher.add(this::configsConfigurationCreate, "configs", "create");
 		dispatcher.add(this::configsConfigurationList, "configs");
 		dispatcher.add(this::docsDocumentsSend, "docs", "send");
@@ -178,7 +178,7 @@ public class CommandLineInterface {
 		dispatcher.add(this::usersGroupsUserDelete, "groups", "<group_id>", "members", "<user_id>", "delete");
 		dispatcher.add(this::usersGroupsUserAssign, "groups", "<group_id>", "members", "<user_id>", "assign");
 		dispatcher.add(this::usersGroupsUsersGet, "groups", "<group_id>", "members");
-		dispatcher.add(this::usersGroupsUpdate,  "groups", "<group_id>", "update");
+		dispatcher.add(this::usersGroupsUpdate,	 "groups", "<group_id>", "update");
 		dispatcher.add(this::usersGroupsDelete, "groups", "<group_id>", "delete");
 		dispatcher.add(this::usersGroupsGet, "groups", "<group_id>");
 		dispatcher.add(this::usersGroupsCreate, "groups", "create");
@@ -257,13 +257,13 @@ public class CommandLineInterface {
 	}
 
 	private void authSessionRenew(Map<String, Object> cmdOptions) {
-	    connectWithAuth();
-	    output(sdk.renewSession());
-    }
+		connectWithAuth();
+		output(sdk.renewSession());
+	}
 
 	private void authSessionsList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
-        output(sdk.getSessions());
+		output(sdk.getSessions());
 	}
 
 	private void authSessionGet(Map<String, Object> cmdOptions) {
@@ -306,24 +306,24 @@ public class CommandLineInterface {
 		output(sdk.getAccountSessions(accountId));
 	}
 
-   private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
-        connectWithAuth();
-        String accountId = getStringOption(cmdOptions, "<account_id>");
-        AllSessionInfo response = sdk.getAccountSessions(accountId);
-        Map<String, List<String>> sessions = response.getUserSessions();
-        verbose("There are " + response.getLiveSessionCount() + " live sessions");
-        verbose("Deleting...");
-        for (String user : sessions.keySet()) {
-            for(String session :sessions.get(user))
-            {
-                if (session.contentEquals(config.getAccessToken())) {
-                    continue;
-                }
-                verbose("  " + session);
-                sdk.deleteSession(session);
-            }
-        }
-    }
+	private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
+		connectWithAuth();
+		String accountId = getStringOption(cmdOptions, "<account_id>");
+		AllSessionInfo response = sdk.getAccountSessions(accountId);
+		Map<String, List<String>> sessions = response.getUserSessions();
+		verbose("There are " + response.getLiveSessionCount() + " live sessions");
+		verbose("Deleting...");
+		for (String user : sessions.keySet()) {
+			for(String session :sessions.get(user))
+			{
+				if (session.contentEquals(config.getAccessToken())) {
+					continue;
+				}
+				verbose("  " + session);
+				sdk.deleteSession(session);
+			}
+		}
+	}
 
 	private void configsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("configs");
@@ -576,8 +576,8 @@ public class CommandLineInterface {
 	}
 
 	private void docsDocumentsSend(Map<String, Object> cmdOptions) {
-	    connectWithAuth();
-	    List<Document> documents = getDocumentsFromOptions();
+		connectWithAuth();
+		List<Document> documents = getDocumentsFromOptions();
 		DocumentsRequest docRequest = new DocumentsRequest();
 		if (hasAllOptions(cmdOptions, "--configuration-id")) {
 			String configuration = getStringOption(cmdOptions, "--configuration-id");
@@ -589,7 +589,7 @@ public class CommandLineInterface {
 		if (hasAllOptions(cmdOptions, "--request-limit")) {
 			docRequest.setRequestLimit(getIntOption(cmdOptions, "--request-limit"));
 		}
-	    output(sdk.sendDocumentsBatch(documents, docRequest));
+		output(sdk.sendDocumentsBatch(documents, docRequest));
 	}
 
 	private void docsDocumentsReceive(Map<String, Object> cmdOptions){
