@@ -10,3 +10,4 @@ target
 .checkstyle
 bin
 http.log.*
+*.*~

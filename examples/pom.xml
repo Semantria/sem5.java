@@ -3,7 +3,7 @@
     <groupId>com.lexalytics.semantria</groupId>
     <artifactId>sem5-sdk-examples</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.7-SNAPSHOT</version>
+    <version>0.5.7</version>
     <name>Semantria Java SDK Examples - ${project.version}</name>
     <description>Simple examples of using the Semantria Java SDK</description>
     <url>https://github.com/Semantria/sem5.java/exmaples</url>
@@ -79,7 +79,7 @@
     </build>
 
     <properties>
-        <semantria.sdk.version>0.5.7-SNAPSHOT</semantria.sdk.version>
+        <semantria.sdk.version>0.5.7</semantria.sdk.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.1.11</logback.version>
         <commons.text.version>1.6</commons.text.version>
