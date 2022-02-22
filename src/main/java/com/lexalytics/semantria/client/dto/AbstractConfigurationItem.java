@@ -9,6 +9,9 @@ public class AbstractConfigurationItem {
     @JsonProperty("updated")
     private ZonedDateTime lastUpdated;
 
+    @JsonProperty("cloned_from")
+    private String clonedFrom;
+
     public String getId() {
         return id;
     }
@@ -23,5 +26,13 @@ public class AbstractConfigurationItem {
 
     public void setLastUpdated(ZonedDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public String getClonedFrom() {
+        return clonedFrom;
+    }
+
+    public void setClonedFrom(String clonedFrom) {
+        this.clonedFrom = clonedFrom;
     }
 }

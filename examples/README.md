@@ -12,13 +12,13 @@ First, clone or download the SDK from [https://github.com/Semantria/sem5.java](h
 
 Change directory into the `examples` directory. Then compile and package the example:
 
-    $ mvn compile package
+    $ mvn clean package
 
 ## Run the example
 
 To run the example:
 
-    $ java -cp 'target/sem5-sdk-examples-0.5.5-SNAPSHOT.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --credentials <username>:<password> ../example-data/tweets.txt
+    $ java -cp 'target/sem5-sdk-examples-6.2.1.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --credentials <username>:<password> ../example-data/tweets.txt
     Sending 100 docs...
     Retrieving processed results...
 
@@ -29,9 +29,9 @@ To run the example:
 
 To see the options supported:
 
-    $ java -cp 'target/sem5-sdk-examples-0.5.5-SNAPSHOT.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --help
+    $ java -cp 'target/sem5-sdk-examples-6.2.1.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --help
 
-    Semantria 5.0 detailed mode example
+    Semantria detailed mode example
 
     USAGE:
       DetailedModeExample [options] <file-or-text>
@@ -39,7 +39,7 @@ To see the options supported:
 
     OPTIONS:
       --credentials CREDS    User credentials user:pass
-      --access-token TOKEN   Session token to reuse
+      --access-token TOKEN   Session token to use
       --config-file FILE     Load configuration from this file (default uses SEM5_CONFIG env var)
       --api-endpoint URL     Semantria API endpoint [default: api5.semantria.com]
       --using CONFIG         Language or configuration to be used when processing documents

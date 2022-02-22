@@ -30,6 +30,15 @@ public interface SemantriaSDK {
         if (config == null) {
             config = SemantriaClientConfiguration.fromFile((File) null);
         }
+        return connect(config.getApiEndpoint(), config.getAccessToken(),
+                config.getApiVersion(), config.getAppName(), config.getLogfile());
+    }
+
+    static SemantriaSDK connect(String accessToken, String apiVersion, String appName) {
+        return connect("https://api5.semantria.com", accessToken, apiVersion, appName, null);
+    }
+
+    static SemantriaSDK connect(String apiEndpoint, String accessToken, String apiVersion, String appName, String logFile) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -38,10 +47,8 @@ public interface SemantriaSDK {
         mapper.registerModule(new Jdk8Module());
         JacksonDecoder decoder = new JacksonDecoder(mapper);
         JacksonEncoder encoder = new JacksonEncoder(mapper);
-        SemantriaRequestInterceptor requestInterceptor = new SemantriaRequestInterceptor(
-                config.getAccessToken(),
-                config.getApiVersion(),
-                config.getAppName());
+        SemantriaRequestInterceptor requestInterceptor =
+                new SemantriaRequestInterceptor(accessToken, apiVersion, appName);
         Feign.Builder builder = Feign.builder()
                 .client(new OkHttpClient())
                 .queryMapEncoder(new QueryMapEncoder())
@@ -49,12 +56,12 @@ public interface SemantriaSDK {
                 .errorDecoder(new SemantriaErrorDecoder())
                 .encoder(encoder)
                 .decoder(decoder);
-        if (config.getLogfile() != null) {
-            Logger.JavaLogger javaLogger = new Logger.JavaLogger().appendToFile(config.getLogfile());
+        if (logFile != null) {
+            Logger.JavaLogger javaLogger = new Logger.JavaLogger().appendToFile(logFile);
             builder = builder.logger(javaLogger).logLevel(Logger.Level.FULL);
         }
 
-        return builder.target(SemantriaSDK.class, config.getApiEndpoint());
+        return builder.target(SemantriaSDK.class, apiEndpoint);
     }
 
     // *********** AUTH **************
@@ -112,23 +119,91 @@ public interface SemantriaSDK {
 
     // *********** CONFIGS *************
 
-    @RequestLine("GET /configs/")
-    List<Configuration> getAllConfigurations();
+    @RequestLine("GET /configs/?group_id={groupId}")
+    List<Configuration> getAllConfigurations(@Param("groupId") String groupId);
 
     @RequestLine("GET /configs/{configurationId}")
     Configuration getConfiguration(@Param("configurationId") String configurationId);
 
-    @RequestLine("POST /configs/")
+    @RequestLine("POST /configs/?group_id={groupId}")
     @Headers("Content-Type: application/json")
-    JsonNode createConfiguration(Map<String,Object> configuration);
+    JsonNode createConfiguration(@Param("groupId") String groupId, Map<String,Object> configuration);
+
+    @RequestLine("POST /configs/?group_id={groupId}")
+    @Headers("Content-Type: application/json")
+    JsonNode createConfiguration(@Param("groupId") String groupId, Configuration configuration);
 
     @RequestLine("PUT /configs/{configurationId}")
     @Headers("Content-Type: application/json")
     JsonNode updateConfiguration(@Param("configurationId") String configurationId,
                                  Map<String,Object> configuration);
 
+    @RequestLine("PUT /configs/{configurationId}")
+    @Headers("Content-Type: application/json")
+    JsonNode updateConfiguration(@Param("configurationId") String configurationId,
+                                 Configuration configuration);
+
+    @RequestLine("PUT /configs/{configurationId}/tags/")
+    @Headers("Content-Type: application/json")
+    JsonNode setConfigTags(@Param("configurationId") String configurationId,
+                                 List<String> tags);
+
+    @RequestLine("PATCH /configs/{configurationId}/tags?action=add")
+    @Headers("Content-Type: application/json")
+    JsonNode addConfigTags(@Param("configurationId") String configurationId,
+                              List<String> tags);
+
+    @RequestLine("PATCH /configs/{configurationId}/tags?action=delete")
+    @Headers("Content-Type: application/json")
+    JsonNode removeConfigTags(@Param("configurationId") String configurationId,
+                           List<String> tags);
+
+    @RequestLine("DELETE /configs/{configurationId}/tags/")
+    @Headers("Content-Type: application/json")
+    JsonNode removeAllConfigTags(@Param("configurationId") String configurationId);
+
     @RequestLine("DELETE /configs/{configurationId}")
     void deleteConfiguration(@Param("configurationId") String configurationId);
+
+    // *********** Configuration Routes *************
+    @RequestLine("GET /routes/{routeId}")
+    ConfigurationRoute getConfigurationRoute(@Param("routeId") String routeId);
+
+    @RequestLine("GET /routes/?group_id={groupId}")
+    List<ConfigurationRoute> getConfigurationRoutes(@Param("groupId") String groupId);
+
+    @RequestLine("POST /routes/?group_id={groupId}")
+    @Headers("Content-Type: application/json")
+    JsonNode configsRoutesCreate(@Param("groupId") String groupId, Map<String,Object> route);
+
+    @RequestLine("POST /routes/?group_id={groupId}")
+    @Headers("Content-Type: application/json")
+    JsonNode configsRoutesCreate( @Param("groupId") String groupId, ConfigurationRoute route);
+
+    @RequestLine("DELETE /routes/{routeId}")
+    @Headers("Content-Type: application/json")
+    JsonNode deleteConfigurationRoute(@Param("routeId") String routeId);
+
+    @RequestLine("PUT /routes/{routeId}")
+    @Headers("Content-Type: application/json")
+    JsonNode updateConfigurationRoute(@Param("routeId") String routeId,
+                                 Map<String,Object> route);
+
+    @RequestLine("PUT /routes/{routeId}")
+    @Headers("Content-Type: application/json")
+    JsonNode updateConfigurationRoute(@Param("routeId") String routeId,
+                                 ConfigurationRoute route);
+
+    @RequestLine("PATCH /routes/{routeId}/configs?action=add")
+    @Headers("Content-Type: application/json")
+    JsonNode addConfigsToRoute(@Param("routeId") String routeId,
+                           List<String> configs);
+
+    @RequestLine("PATCH /routes/{routeId}/configs?action=delete")
+    @Headers("Content-Type: application/json")
+    JsonNode removeConfigsFromRoute(@Param("routeId") String routeId,
+                              List<String> configs);
+
 
 
     // query-topics
@@ -346,6 +421,12 @@ public interface SemantriaSDK {
                                              @Param("taxonomyNodeId") String taxonomyNodeId,
                                              TaxonomyNode taxonomyNode);
 
+    @RequestLine("GET /language-templates/")
+    JsonNode getLanguageTemplates();
+
+    @RequestLine("GET /industry-packs/")
+    JsonNode getIndustryPacks();
+
     // *********** DOCS *************
 
     @RequestLine("POST /documents/")
@@ -373,14 +454,8 @@ public interface SemantriaSDK {
     @RequestLine("GET /limit-types/")
     JsonNode getLimitTypes();
 
-    @RequestLine("GET /industry-packs/")
-    JsonNode getIndustryPacks();
-
     @RequestLine("GET /languages/")
     JsonNode getLanguages();
-
-    @RequestLine("GET /language-templates/")
-    JsonNode getLanguageTemplates();
 
     @RequestLine("GET /config-settings/")
     JsonNode getConfigurationSettings();
@@ -462,6 +537,10 @@ public interface SemantriaSDK {
     @Headers("Content-Type: application/json")
     JsonNode updateUser(Map<String,Object> user, @Param("userId") String userId);
 
+    @RequestLine("PUT /users/{userId}")
+    @Headers("Content-Type: application/json")
+    JsonNode updateUser(User user, @Param("userId") String userId);
+
     @RequestLine("DELETE /users/{userId}")
     void deleteUser(@Param("userId") String userId);
 
@@ -472,4 +551,8 @@ public interface SemantriaSDK {
     @RequestLine("POST /service-users/")
     @Headers("Content-Type: application/json")
     JsonNode createServiceUser(Map<String,Object> user);
+
+    @RequestLine("POST /service-users/")
+    @Headers("Content-Type: application/json")
+    JsonNode createServiceUser(User user);
 }

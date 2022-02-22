@@ -165,7 +165,7 @@
         "maxValue": 1000
     },
     {
-        "limit_type": "TAXONOMY_TOPICS_LIMIT",
+        "limit_type": "TAXONOMY_ELEMENTS_LIMIT",
         "dependency": "TAXONOMY",
         "minValue": 0,
         "maxValue": 100000

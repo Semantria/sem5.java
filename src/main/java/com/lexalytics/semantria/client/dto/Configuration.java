@@ -49,6 +49,12 @@ public class Configuration {
 
     private Set<String> features = new HashSet<>();
 
+    private String notes;
+
+    private Set<String> tags = new HashSet<>();
+
+    private Set<ConfigurationRouteEntry> configRoutes = new HashSet<>();
+
     public String getId() {
         return id;
     }
@@ -199,6 +205,30 @@ public class Configuration {
 
     public void setTemplateConfig(String templateConfig) {
         this.templateConfig = templateConfig;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
+    }
+
+    public Set<ConfigurationRouteEntry> getConfigRoutes() {
+        return configRoutes;
+    }
+
+    public void setConfigRoutes(Set<ConfigurationRouteEntry> configRoutes) {
+        this.configRoutes = configRoutes;
     }
 
     @Override

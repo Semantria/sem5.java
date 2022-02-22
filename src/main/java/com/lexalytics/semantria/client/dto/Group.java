@@ -15,7 +15,6 @@ public class Group {
     private String externalId;
     private String accountId;
     private List<Permission> permissions = new ArrayList<>();
-    private UserBrief owner;
     private List<UserBrief> members = new ArrayList<>();
 
     public String getGroupName() {
@@ -64,14 +63,6 @@ public class Group {
 
     public void setMembers(List<UserBrief> members) {
         this.members = members;
-    }
-
-    public UserBrief getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserBrief owner) {
-        this.owner = owner;
     }
 
     @Override

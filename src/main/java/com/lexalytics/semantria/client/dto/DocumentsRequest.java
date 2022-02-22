@@ -1,10 +1,7 @@
 package com.lexalytics.semantria.client.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DocumentsRequest {
@@ -16,9 +13,16 @@ public class DocumentsRequest {
     @JsonProperty("limit")
     private int requestLimit;
 
-    public String getUsing() { return using; }
+    @JsonProperty("language_id")
+    private String languageId;
 
-    public void setUsing(String using) { this.using = using; }
+    public String getUsing() {
+        return using;
+    }
+
+    public void setUsing(String using) {
+        this.using = using;
+    }
 
     public String getJobId() {
         return jobId;
@@ -36,4 +40,11 @@ public class DocumentsRequest {
         this.requestLimit = requestLimit;
     }
 
+    public String getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(String languageId) {
+        this.languageId = languageId;
+    }
 }

@@ -1,6 +1,6 @@
 Features Service:
 The features service is for getting information about features and accounts in Semantria.
-For more information, see http://api5.semantria.com/features/swagger-ui.html#/
+For more information, see https://semantria-docs.lexalytics.com/reference/semantria-api
 
 USAGE:
 features status             Test the connection to the features service and get the health of the service. API call: /features/health

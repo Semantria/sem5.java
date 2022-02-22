@@ -158,8 +158,8 @@ public class DetailedModeExample {
                 // Because Semantria isn't a real-time solution you should wait some time
                 // before getting the processed results. A real application would likely be
                 // implemented as two separate jobs, one for queuing source data another
-                // one for retrieving results. Do not poll repeatedly without a wait. You
-                // will exceed your polling limit.
+                // one for retrieving results. Do not poll repeatedly without a wait, because
+                // you will exceed your polling limit.
                 Utils.sleep(POLLING_INTERVAL);
                 List<DocumentResult> processedDocs = getProcessedDocuments();
                 log.debug("Received {} docs from polling", processedDocs.size());
@@ -172,8 +172,8 @@ public class DetailedModeExample {
 
     List<DocumentResult> getProcessedDocuments() {
         DocumentsRequest request = new DocumentsRequest();
-        request.setUsing(getStringOption(options, "--using", null));
-        request.setJobId(getStringOption(options, "--job-id", null));
+        request.setUsing(getStringOption(options, "--using"));
+        request.setJobId(getStringOption(options, "--job-id"));
         List<DocumentResult> result = sdk.getDocumentsBatch(request);
         log.debug("received {} docs, request: {}", result.size(), request);
         return result;
@@ -181,8 +181,8 @@ public class DetailedModeExample {
 
     void queueBatch(List<Document> batch) {
         DocumentsRequest request = new DocumentsRequest();
-        request.setUsing(getStringOption(options, "--using", null));
-        request.setJobId(getStringOption(options, "--job-id", null));
+        request.setUsing(getStringOption(options, "--using"));
+        request.setJobId(getStringOption(options, "--job-id"));
         try {
             sdk.sendDocumentsBatch(batch, request);
         } catch (SemantriaClientError e) {

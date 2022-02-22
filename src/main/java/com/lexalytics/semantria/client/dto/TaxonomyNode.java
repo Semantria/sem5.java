@@ -13,7 +13,7 @@ public class TaxonomyNode extends AbstractConfigurationItem {
     private String name;
     private Boolean enforceParentMatching = false;
     private List<TaxonomyNode> children = new LinkedList<>();
-    private List<TaxonomyTopic> topics = new LinkedList<>();
+    private List<TaxonomyElement> elements = new LinkedList<>();
 
     public String getName() {
         return name;
@@ -39,11 +39,11 @@ public class TaxonomyNode extends AbstractConfigurationItem {
         this.children = children;
     }
 
-    public List<TaxonomyTopic> getTopics() {
-        return topics;
+    public List<TaxonomyElement> getElements() {
+        return elements;
     }
 
-    public void setTopics(List<TaxonomyTopic> topics) {
-        this.topics = topics;
+    public void setElements(List<TaxonomyElement> elements) {
+        this.elements = elements;
     }
 }

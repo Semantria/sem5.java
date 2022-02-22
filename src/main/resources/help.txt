@@ -14,8 +14,10 @@ USAGE:
   sem5 [options] auth users <user_id> sessions clear
   sem5 [options] auth accounts <account_id> sessions [get]
   sem5 [options] auth accounts <account_id> sessions clear
-  sem5 [options] configs [get]
+  sem5 [options] get-configs [get]
+  sem5 [options] get-configs-from-group <group_id> [get]
   sem5 [options] configs create
+  sem5 [options] configs <group_id> create-in-group
   sem5 [options] configs <configuration_id> [get]
   sem5 [options] configs <configuration_id> update
   sem5 [options] configs <configuration_id> delete
@@ -24,6 +26,18 @@ USAGE:
   sem5 [options] configs <configuration_id> <feature_name> <feature_id> [get]
   sem5 [options] configs <configuration_id> <feature_name> <feature_id> update
   sem5 [options] configs <configuration_id> <feature_name> <feature_id> delete
+  sem5 [options] config-tags <configuration_id> <tags> add
+  sem5 [options] config-tags <configuration_id> <tags> remove
+  sem5 [options] config-tags <configuration_id> <tags> set
+  sem5 [options] config-tags <configuration_id> remove-all
+  sem5 [options] config-routes create
+  sem5 [options] config-routes <group_id> create-in-group
+  sem5 [options] config-routes [get]
+  sem5 [options] config-routes <route_id> [get]
+  sem5 [options] config-routes <route_id> update
+  sem5 [options] config-routes <route_id> delete
+  sem5 [options] config-routes <route_id> <configs> add-configs-to
+  sem5 [options] config-routes <route_id> <configs> remove-configs-from
   sem5 [options] docs send
   sem5 [options] docs receive
   sem5 [options] collections send
@@ -31,9 +45,9 @@ USAGE:
   sem5 [options] features all-features [get]
   sem5 [options] features configuration-settings [get]
   sem5 [options] features limit-types [get]
-  sem5 [options] features industry-packs [get]
+  sem5 [options] industry-packs [get]
   sem5 [options] features languages [get]
-  sem5 [options] features language-templates [get]
+  sem5 [options] language-templates [get]
   sem5 [options] stats [get]
   sem5 [options] all-permissions [get]
   sem5 [options] group-permissions group <group_id> [get]

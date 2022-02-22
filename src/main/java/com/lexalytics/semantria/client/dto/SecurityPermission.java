@@ -14,6 +14,7 @@ public class SecurityPermission {
     private String configId;
     private String modelId;
     private String externalId;
+    private String groupId;
 
     public String getPermissionType() {
         return permissionType;
@@ -63,6 +64,14 @@ public class SecurityPermission {
         this.permissionId = permissionId;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,6 +100,11 @@ public class SecurityPermission {
             return false;
         }
 
+        if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) {
+            return false;
+        }
+
+
         return permissionType != null ? permissionType.equals(that.permissionType) : that.permissionType == null;
     }
 
@@ -102,6 +116,7 @@ public class SecurityPermission {
         result = 31 * result + (configId != null ? configId.hashCode() : 0);
         result = 31 * result + (modelId != null ? modelId.hashCode() : 0);
         result = 31 * result + (externalId != null ? externalId.hashCode() : 0);
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         return result;
     }
 

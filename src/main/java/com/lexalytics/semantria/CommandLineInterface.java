@@ -147,26 +147,40 @@ public class CommandLineInterface {
 		dispatcher.add(this::authSessionCreate, "auth", "sessions", "create");
 		dispatcher.add(this::authSessionsList, "auth", "sessions");
 		dispatcher.add(this::authSessionRenew, "renew-session");
-		dispatcher.add(this::configsNlpFeatureCreate,	 "configs", "<configuration_id>", "<feature_name>", "create");
-		dispatcher.add(this::configsNlpFeatureDelete,	 "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "delete");
-		dispatcher.add(this::configsNlpFeatureUpdate,	 "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "update");
-		dispatcher.add(this::configsNlpFeatureGet,		 "configs", "<configuration_id>", "<feature_name>", "<feature_id>");
-		dispatcher.add(this::configsNlpFeatureList,		 "configs", "<configuration_id>", "<feature_name>");
+        dispatcher.add(this::configsConfigurationList, "get-configs");
+        dispatcher.add(this::configsConfigurationListFromGroup, "get-configs-from-group", "<group_id>");
+		dispatcher.add(this::configsNlpFeatureCreate,    "configs", "<configuration_id>", "<feature_name>", "create");
+		dispatcher.add(this::configsNlpFeatureDelete,    "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "delete");
+		dispatcher.add(this::configsNlpFeatureUpdate,    "configs", "<configuration_id>", "<feature_name>", "<feature_id>", "update");
+		dispatcher.add(this::configsNlpFeatureGet,       "configs", "<configuration_id>", "<feature_name>", "<feature_id>");
+		dispatcher.add(this::configsNlpFeatureList,      "configs", "<configuration_id>", "<feature_name>");
 		dispatcher.add(this::configsConfigurationDelete, "configs", "<configuration_id>", "delete");
 		dispatcher.add(this::configsConfigurationUpdate, "configs", "<configuration_id>", "update");
-		dispatcher.add(this::configsConfigurationGet,	 "configs", "<configuration_id>");
+		dispatcher.add(this::configsConfigurationGet,    "configs", "<configuration_id>");
+        dispatcher.add(this::configsConfigurationCreateInGroup, "configs", "<group_id>", "create-in-group");
 		dispatcher.add(this::configsConfigurationCreate, "configs", "create");
-		dispatcher.add(this::configsConfigurationList, "configs");
+        dispatcher.add(this::configsConfigurationSetTags, "config-tags", "<configuration_id>", "<tags>", "set");
+        dispatcher.add(this::configsConfigurationAddTags, "config-tags", "<configuration_id>", "<tags>", "add");
+        dispatcher.add(this::configsConfigurationRemoveTags, "config-tags", "<configuration_id>", "<tags>", "remove");
+        dispatcher.add(this::configsConfigurationRemoveAllTags, "config-tags", "<configuration_id>", "remove-all");
+        dispatcher.add(this::configsRoutesCreate,   "config-routes", "create");
+        dispatcher.add(this::configsRoutesCreate,   "config-routes", "<group_id>", "create-in-group");
+        dispatcher.add(this::configsRoutesUpdate,   "config-routes", "<route_id>", "update");
+        dispatcher.add(this::configsRoutesDelete,   "config-routes", "<route_id>", "delete");
+        dispatcher.add(this::configsRoutesAddConfigsTo, "config-routes", "<route_id>", "<configs>", "add-configs-to");
+        dispatcher.add(this::configsRoutesRemoveConfigsFrom,    "config-routes", "<route_id>", "<configs>", "remove-configs-from");
+        dispatcher.add(this::configsRoutesGet,  "config-routes", "<route_id>");
+        dispatcher.add(this::configsRoutesGetAll,   "config-routes", "group", "<group_id>");
+        dispatcher.add(this::configsIndustryPacksGet, "industry-packs");
+        dispatcher.add(this::configsLanguageTemplatesGet, "language-templates");
 		dispatcher.add(this::docsDocumentsSend, "docs", "send");
 		dispatcher.add(this::docsDocumentsReceive, "docs", "receive");
 		dispatcher.add(this::docsCollectionsSend, "collections", "send");
 		dispatcher.add(this::docsCollectionsReceive, "collections", "receive");
 		dispatcher.add(this::featuresAllFeaturesGet, "features", "all-features");
 		dispatcher.add(this::featuresConfigurationSettingsGet, "features", "configuration-settings");
-		dispatcher.add(this::featuresIndustryPacksGet, "features", "industry-packs");
 		dispatcher.add(this::featuresLimitTypesGet, "features", "limit-types");
 		dispatcher.add(this::featuresLanguagesGet, "features", "languages");
-		dispatcher.add(this::featuresLanguageTemplatesGet, "features", "language-templates");
 		dispatcher.add(this::statsCustomStatisticsGet, "stats");
 		dispatcher.add(this::usersGroupPermissionsDelete, "group-permissions", "group", "<group_id>", "permission", "<permission_id>", "delete");
 		dispatcher.add(this::usersGroupPermissionsCreate, "group-permissions", "group", "<group_id>", "create");
@@ -175,10 +189,10 @@ public class CommandLineInterface {
 		dispatcher.add(this::usersUserPermissionsCreate, "user-permissions", "user", "<user_id>", "create");
 		dispatcher.add(this::usersUserPermissionsGet, "user-permissions", "user", "<user_id>");
 		dispatcher.add(this::usersAllPermissionsGet, "all-permissions");
-		dispatcher.add(this::usersGroupsUserDelete, "groups", "<group_id>", "members", "<user_id>", "delete");
-		dispatcher.add(this::usersGroupsUserAssign, "groups", "<group_id>", "members", "<user_id>", "assign");
+		dispatcher.add(this::usersGroupsUserDelete, "groups", "<group_id>", "members", "<user_ids>", "delete");
+		dispatcher.add(this::usersGroupsUserAssign, "groups", "<group_id>", "members", "<user_ids>", "assign");
 		dispatcher.add(this::usersGroupsUsersGet, "groups", "<group_id>", "members");
-		dispatcher.add(this::usersGroupsUpdate,	 "groups", "<group_id>", "update");
+		dispatcher.add(this::usersGroupsUpdate,  "groups", "<group_id>", "update");
 		dispatcher.add(this::usersGroupsDelete, "groups", "<group_id>", "delete");
 		dispatcher.add(this::usersGroupsGet, "groups", "<group_id>");
 		dispatcher.add(this::usersGroupsCreate, "groups", "create");
@@ -257,13 +271,13 @@ public class CommandLineInterface {
 	}
 
 	private void authSessionRenew(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		output(sdk.renewSession());
-	}
+	    connectWithAuth();
+	    output(sdk.renewSession());
+    }
 
 	private void authSessionsList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
-		output(sdk.getSessions());
+        output(sdk.getSessions());
 	}
 
 	private void authSessionGet(Map<String, Object> cmdOptions) {
@@ -306,24 +320,24 @@ public class CommandLineInterface {
 		output(sdk.getAccountSessions(accountId));
 	}
 
-	private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		String accountId = getStringOption(cmdOptions, "<account_id>");
-		AllSessionInfo response = sdk.getAccountSessions(accountId);
-		Map<String, List<String>> sessions = response.getUserSessions();
-		verbose("There are " + response.getLiveSessionCount() + " live sessions");
-		verbose("Deleting...");
-		for (String user : sessions.keySet()) {
-			for(String session :sessions.get(user))
-			{
-				if (session.contentEquals(config.getAccessToken())) {
-					continue;
-				}
-				verbose("  " + session);
-				sdk.deleteSession(session);
-			}
-		}
-	}
+   private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String accountId = getStringOption(cmdOptions, "<account_id>");
+        AllSessionInfo response = sdk.getAccountSessions(accountId);
+        Map<String, List<String>> sessions = response.getUserSessions();
+        verbose("There are " + response.getLiveSessionCount() + " live sessions");
+        verbose("Deleting...");
+        for (String user : sessions.keySet()) {
+            for(String session :sessions.get(user))
+            {
+                if (session.contentEquals(config.getAccessToken())) {
+                    continue;
+                }
+                verbose("  " + session);
+                sdk.deleteSession(session);
+            }
+        }
+    }
 
 	private void configsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("configs");
@@ -331,8 +345,14 @@ public class CommandLineInterface {
 
 	private void configsConfigurationList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
-		output(sdk.getAllConfigurations());
+		output(sdk.getAllConfigurations(""));
 	}
+
+    private void configsConfigurationListFromGroup(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String groupId = getStringOption(cmdOptions, "<group_id>");
+        output(sdk.getAllConfigurations(groupId));
+    }
 
 	private void configsConfigurationGet(Map<String, Object> cmdOptions) {
 		connectWithAuth();
@@ -340,11 +360,48 @@ public class CommandLineInterface {
 		output(sdk.getConfiguration(configurationId));
 	}
 
+    private void configsConfigurationCreateInGroup(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        Map<String,Object> item = getDataFromOptions();
+        String groupId = getStringOption(cmdOptions, "<group_id>");
+        output(sdk.createConfiguration(groupId, item));
+    }
+
 	private void configsConfigurationCreate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
-		Map<String,Object> item = getDataFromOptions();
-		output(sdk.createConfiguration(item));
+        Map<String,Object> item = getDataFromOptions();
+		output(sdk.createConfiguration("", item));
 	}
+
+    private void configsConfigurationAddTags(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        String tagString = getStringOption(cmdOptions, "<tags>");
+        List<String> tags = Arrays.asList(tagString.split(","));
+        output(sdk.addConfigTags(configurationId, tags));
+    }
+
+    private void configsConfigurationSetTags(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        String tagString = getStringOption(cmdOptions, "<tags>");
+        List<String> tags = Arrays.asList(tagString.split(","));
+        output(sdk.setConfigTags(configurationId, tags));
+    }
+
+    private void configsConfigurationRemoveTags(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        String tagString = getStringOption(cmdOptions, "<tags>");
+        List<String> tags = Arrays.asList(tagString.split(","));
+        output(sdk.removeConfigTags(configurationId, tags));
+    }
+
+    private void configsConfigurationRemoveAllTags(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        output(sdk.removeAllConfigTags(configurationId));
+    }
 
 	private void configsConfigurationUpdate(Map<String, Object> cmdOptions) {
 		connectWithAuth();
@@ -359,8 +416,61 @@ public class CommandLineInterface {
 		sdk.deleteConfiguration(configurationId);
 	}
 
+    private void configsRoutesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String routeId = getStringOption(cmdOptions, "<route_id>");
+        output(sdk.getConfigurationRoute(routeId));
+    }
 
-	private void configsNlpFeatureList(Map<String, Object> cmdOptions) {
+    private void configsRoutesGetAll(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String groupId = getStringOption(cmdOptions, "<group_id>");
+        output(sdk.getConfigurationRoutes(groupId));
+    }
+
+    private void configsRoutesCreate(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        Map<String,Object> item = getDataFromOptions();
+        output(sdk.configsRoutesCreate("", item));
+    }
+
+    private void configsRoutesCreateInGroup(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        Map<String,Object> item = getDataFromOptions();
+        String groupId = getStringOption(cmdOptions, "<group_id>");
+        output(sdk.configsRoutesCreate(groupId, item));
+    }
+
+    private void configsRoutesDelete(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String routeId = getStringOption(cmdOptions, "<route_id>");
+        sdk.deleteConfigurationRoute(routeId);
+    }
+
+    private void configsRoutesUpdate(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String routeId = getStringOption(cmdOptions, "<route_id>");
+        Map<String, Object> item = getDataFromOptions();
+        output(sdk.updateConfigurationRoute(routeId, item));
+    }
+
+    private void configsRoutesAddConfigsTo(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String routeId = getStringOption(cmdOptions, "<route_id>");
+        String configsString = getStringOption(cmdOptions, "<configs>");
+        List<String> configs = Arrays.asList(configsString.split(","));
+        output(sdk.addConfigsToRoute(routeId, configs));
+    }
+
+    private void configsRoutesRemoveConfigsFrom(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String routeId = getStringOption(cmdOptions, "<route_id>");
+        String configsString = getStringOption(cmdOptions, "<configs>");
+        List<String> configs = Arrays.asList(configsString.split(","));
+        output(sdk.removeConfigsFromRoute(routeId, configs));
+    }
+
+    private void configsNlpFeatureList(Map<String, Object> cmdOptions) {
 		connectWithAuth();
 		String configId = getStringOption(cmdOptions, "<configuration_id>");
 		String featureName = getStringOption(cmdOptions, "<feature_name>");
@@ -571,13 +681,23 @@ public class CommandLineInterface {
 		output(data);
 	}
 
+    private void configsIndustryPacksGet(Map<String, Object> cmdOptions){
+        connectWithAuth();
+        output(sdk.getIndustryPacks());
+    }
+
+    private void configsLanguageTemplatesGet(Map<String, Object> cmdOptions){
+        connectWithAuth();
+        output(sdk.getLanguageTemplates());
+    }
+
 	private void docsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("docs");
 	}
 
 	private void docsDocumentsSend(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		List<Document> documents = getDocumentsFromOptions();
+	    connectWithAuth();
+	    List<Document> documents = getDocumentsFromOptions();
 		DocumentsRequest docRequest = new DocumentsRequest();
 		if (hasAllOptions(cmdOptions, "--configuration-id")) {
 			String configuration = getStringOption(cmdOptions, "--configuration-id");
@@ -589,7 +709,7 @@ public class CommandLineInterface {
 		if (hasAllOptions(cmdOptions, "--request-limit")) {
 			docRequest.setRequestLimit(getIntOption(cmdOptions, "--request-limit"));
 		}
-		output(sdk.sendDocumentsBatch(documents, docRequest));
+	    output(sdk.sendDocumentsBatch(documents, docRequest));
 	}
 
 	private void docsDocumentsReceive(Map<String, Object> cmdOptions){
@@ -665,11 +785,6 @@ public class CommandLineInterface {
 		output(sdk.getConfigurationSettings());
 	}
 
-	private void featuresIndustryPacksGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		output(sdk.getIndustryPacks());
-	}
-
 	private void featuresLimitTypesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getLimitTypes());
@@ -678,11 +793,6 @@ public class CommandLineInterface {
 	private void featuresLanguagesGet(Map<String, Object> cmdOptions){
 		connectWithAuth();
 		output(sdk.getLanguages());
-	}
-
-	private void featuresLanguageTemplatesGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		output(sdk.getLanguageTemplates());
 	}
 
 	private void statsHelp(Map<String, Object> cmdOptions) {

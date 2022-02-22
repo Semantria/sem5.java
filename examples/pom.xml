@@ -3,10 +3,10 @@
     <groupId>com.lexalytics.semantria</groupId>
     <artifactId>sem5-sdk-examples</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.7</version>
+    <version>6.2.1</version>
     <name>Semantria Java SDK Examples - ${project.version}</name>
     <description>Simple examples of using the Semantria Java SDK</description>
-    <url>https://github.com/Semantria/sem5.java/exmaples</url>
+    <url>https://github.com/Semantria/sem5.java/examples</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -32,18 +32,8 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.0</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
@@ -52,6 +42,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -61,7 +52,9 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -79,13 +72,22 @@
     </build>
 
     <properties>
-        <semantria.sdk.version>0.5.7</semantria.sdk.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <logback.version>1.2.0</logback.version>
-        <commons.text.version>1.6</commons.text.version>
+        <semantria.sdk.version>[6.2.0,)</semantria.sdk.version>
+        <logback.version>1.2.10</logback.version>
+        <commons.text.version>1.8</commons.text.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <repositories>
+      <repository>
+        <id>semantria-ci</id>
+        <url>https://ci.semantria.com/artifactory/libs-release-local</url>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -99,18 +101,8 @@
             <version>${commons.text.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
             <version>${logback.version}</version>
         </dependency>
     </dependencies>

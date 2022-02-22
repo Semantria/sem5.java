@@ -125,7 +125,11 @@ public class Utils {
             config.setCredentials(null); // override anything in config
         }
         if (hasAllOptions(options, "--api-endpoint")) {
-            config.setApiEndpoint(getStringOption(options, "--api-endpoint"));
+            String endpoint = getStringOption(options, "--api-endpoint");
+            if (! endpoint.startsWith("http")) {
+                endpoint = "https://" + endpoint;
+            }
+            config.setApiEndpoint(endpoint);
         }
         if (! anyCredentialsSupplied(config)) {
             throw new CommandFailed("Missing credentials or access token. Use one of --config-file, --credentials, or --access-token");
@@ -160,5 +164,5 @@ public class Utils {
             super(message);
         }
     }
-    
+
 }

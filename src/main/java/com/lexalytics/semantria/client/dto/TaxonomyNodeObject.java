@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class TaxonomyNodeObject {
         this.leafs = leafs;
     }
 
-    @JsonProperty("topics")
+    @JsonProperty("elements")
     public List<TNOOutput> getBranches() {
         List<TNOOutput> res = new ArrayList<>();
 
@@ -97,6 +98,8 @@ public class TaxonomyNodeObject {
         private List<Mention> mentions;
         @JsonProperty("sentiment_polarity")
         private String sentimentPolarity;
+        @JsonProperty("entity_type")
+        private String entityType;
 
         public String getId() {
             return id;
@@ -161,6 +164,14 @@ public class TaxonomyNodeObject {
         public void setSentimentPolarity(String sentimentPolarity) {
             this.sentimentPolarity = sentimentPolarity;
         }
+
+        public String getEntityType() {
+            return entityType;
+        }
+
+        public void setEntityType(String entityType) {
+            this.entityType = entityType;
+        }
     }
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -183,6 +194,8 @@ public class TaxonomyNodeObject {
         private List<Mention> mentions;
         @JsonProperty("sentiment_polarity")
         private String sentimentPolarity;
+        @JsonProperty("entity_type")
+        private String entityType;
 
         public TNOOutput() {
 
@@ -203,6 +216,7 @@ public class TaxonomyNodeObject {
             this.strengthScore = taxonomyLeafObject.getStrengthScore();
             this.mentions = taxonomyLeafObject.getMentions();
             this.type = taxonomyLeafObject.getType();
+            this.entityType = taxonomyLeafObject.getEntityType();
         }
 
         public String getId() {
@@ -275,6 +289,14 @@ public class TaxonomyNodeObject {
 
         public void setSentimentPolarity(String sentimentPolarity) {
             this.sentimentPolarity = sentimentPolarity;
+        }
+
+        public String getEntityType() {
+            return entityType;
+        }
+
+        public void setEntityType(String entityType) {
+            this.entityType = entityType;
         }
     }
 }
