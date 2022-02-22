@@ -32,11 +32,11 @@ public class ConfigsTest {
 		String json = "[{\"callback_url\":\"http://groot.semantria.com:8880/groot/\",\"detect_language\":false,\"features\":[],\"id\":\"config-en-2\",\"is_autoresponse_enabled\":false,\"language_id\":\"en\",\"language_name\":\"English\",\"name\":\"English Config With Callback\",\"one_sentence_mode\":false,\"process_html\":false,\"updated\":\"2018-06-25T12:38:14.484Z\",\"version\":\"v2\"},{\"detect_language\":false,\"features\":[],\"id\":\"config-en-1\",\"is_autoresponse_enabled\":false,\"language_id\":\"en\",\"language_name\":\"English\",\"name\":\"Food Pack\",\"one_sentence_mode\":false,\"process_html\":false,\"updated\":\"2018-06-18T17:36:28.111Z\"}]";
 		stubFor(get(urlEqualTo("/auth/sessions/good"))
 				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody("{\"access_token\": \"good\"}")));
-		stubFor(get(urlEqualTo("/configs/?group_id="))
+		stubFor(get(urlEqualTo("/configs/?group_id"))
 				.withHeader("Authorization", equalTo("good"))
 				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(json)));
 
-		List<String> args = Arrays.asList("configs-getall", "", "-v", "--access-token", "good");
+		List<String> args = Arrays.asList("get-configs", "-v", "--access-token", "good");
 		String output = TestUtil.runNoAuth(args);
 		JSONAssert.assertEquals(json, output, false);
 	}
