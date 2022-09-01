@@ -2,6 +2,7 @@ package com.lexalytics.semantria.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -23,18 +24,20 @@ public class Topic {
     private String sentimentPolarity;
     @JsonProperty("sentiment_phrases")
     private List<SentimentMention> sentimentMentions;
+    private List<Theme> themes;
+    private JsonNode purpose;
 
     public static Topic create(int hitCount, float score, String title, String type, float sentiment, String sentimentPolarity) {
-        return create(hitCount, score, title, type, sentiment, sentimentPolarity, null, null);
+        return create(hitCount, score, title, type, sentiment, sentimentPolarity, null, null, null);
     }
 
     public static Topic create(int hitCount, float score, String title, String type, float sentiment, String sentimentPolarity,
                                List<SentimentMention> sentimentMentions) {
-        return create(hitCount, score, title, type, sentiment, sentimentPolarity, sentimentMentions, null);
+        return create(hitCount, score, title, type, sentiment, sentimentPolarity, sentimentMentions, null, null);
     }
 
     public static Topic create(int hitCount, float score, String title, String type, float sentiment, String sentimentPolarity,
-                               List<SentimentMention> sentimentMentions, List<Mention> mentions) {
+                               List<SentimentMention> sentimentMentions, List<Mention> mentions, JsonNode purpose) {
         Topic t = new Topic();
         t.hitCount = hitCount;
         t.type = type;
@@ -44,6 +47,7 @@ public class Topic {
         t.sentimentPolarity = sentimentPolarity;
         t.sentimentMentions = sentimentMentions;
         t.mentions = mentions;
+        t.purpose = purpose;
         return t;
     }
 
@@ -133,5 +137,21 @@ public class Topic {
 
     public void setSentimentMentions(List<SentimentMention> sentimentMentions) {
         this.sentimentMentions = sentimentMentions;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
+    }
+
+    public JsonNode getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(JsonNode purpose) {
+        this.purpose = purpose;
     }
 }

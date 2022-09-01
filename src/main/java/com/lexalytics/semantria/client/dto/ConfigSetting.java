@@ -30,6 +30,8 @@ public enum ConfigSetting {
     TAXONOMY,
     THEMES,
     TOPIC_STEMMING,
-    USER_ENTITIES;
+    USER_ENTITIES,
+    EIE_CLAUSE_MODELS,
+    SENTIMENT_CLAUSE_MODELS;
 
 }

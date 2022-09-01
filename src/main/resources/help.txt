@@ -19,6 +19,7 @@ USAGE:
   sem5 [options] configs create
   sem5 [options] configs <group_id> create-in-group
   sem5 [options] configs <configuration_id> [get]
+  sem5 [options] configs <configuration_id> info
   sem5 [options] configs <configuration_id> update
   sem5 [options] configs <configuration_id> delete
   sem5 [options] configs <configuration_id> <feature_name> [get]

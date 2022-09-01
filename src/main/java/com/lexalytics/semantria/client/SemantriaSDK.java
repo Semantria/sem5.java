@@ -125,9 +125,12 @@ public interface SemantriaSDK {
     @RequestLine("GET /configs/{configurationId}")
     Configuration getConfiguration(@Param("configurationId") String configurationId);
 
+    @RequestLine("GET /configs/{configurationId}/info")
+    ConfigurationInfo getConfigurationInfo(@Param("configurationId") String configurationId);
+
     @RequestLine("POST /configs/?group_id={groupId}")
     @Headers("Content-Type: application/json")
-    JsonNode createConfiguration(@Param("groupId") String groupId, Map<String,Object> configuration);
+    JsonNode createConfiguration(@Param("groupId") String groupId, Map<String, Object> configuration);
 
     @RequestLine("POST /configs/?group_id={groupId}")
     @Headers("Content-Type: application/json")

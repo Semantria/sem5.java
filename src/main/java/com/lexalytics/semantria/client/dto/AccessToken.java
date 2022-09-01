@@ -18,6 +18,7 @@ public class AccessToken {
     private String accountId;
     private String userLogin;
     private String renewalType;
+    List<String> groups;
 
     public String getKey() {
         return key;
@@ -102,5 +103,13 @@ public class AccessToken {
 
     public void setRenewalType(String renewalType) {
         this.renewalType = renewalType;
+    }
+
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 }

@@ -1,36 +1,24 @@
 package com.lexalytics.semantria;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.lexalytics.semantria.client.*;
-import com.lexalytics.semantria.client.dto.*;
-import org.docopt.Docopt;
-import org.docopt.DocoptExitException;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.lexalytics.semantria.client.*;
+import com.lexalytics.semantria.client.dto.Collection;
+import com.lexalytics.semantria.client.dto.*;
+import org.docopt.Docopt;
+import org.docopt.DocoptExitException;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.lexalytics.semantria.client.OptionHelper.*;
 
@@ -155,8 +143,9 @@ public class CommandLineInterface {
 		dispatcher.add(this::configsNlpFeatureGet,       "configs", "<configuration_id>", "<feature_name>", "<feature_id>");
 		dispatcher.add(this::configsNlpFeatureList,      "configs", "<configuration_id>", "<feature_name>");
 		dispatcher.add(this::configsConfigurationDelete, "configs", "<configuration_id>", "delete");
-		dispatcher.add(this::configsConfigurationUpdate, "configs", "<configuration_id>", "update");
-		dispatcher.add(this::configsConfigurationGet,    "configs", "<configuration_id>");
+        dispatcher.add(this::configsConfigurationUpdate, "configs", "<configuration_id>", "update");
+        dispatcher.add(this::configsConfigurationGetInfo, "configs", "<configuration_id>", "info");
+        dispatcher.add(this::configsConfigurationGet, "configs", "<configuration_id>");
         dispatcher.add(this::configsConfigurationCreateInGroup, "configs", "<group_id>", "create-in-group");
 		dispatcher.add(this::configsConfigurationCreate, "configs", "create");
         dispatcher.add(this::configsConfigurationSetTags, "config-tags", "<configuration_id>", "<tags>", "set");
@@ -343,10 +332,10 @@ public class CommandLineInterface {
 		doDocumentation("configs");
 	}
 
-	private void configsConfigurationList(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		output(sdk.getAllConfigurations(""));
-	}
+    private void configsConfigurationList(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        output(sdk.getAllConfigurations(""));
+    }
 
     private void configsConfigurationListFromGroup(Map<String, Object> cmdOptions) {
         connectWithAuth();
@@ -354,15 +343,21 @@ public class CommandLineInterface {
         output(sdk.getAllConfigurations(groupId));
     }
 
-	private void configsConfigurationGet(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		String configurationId = getStringOption(cmdOptions, "<configuration_id>");
-		output(sdk.getConfiguration(configurationId));
-	}
+    private void configsConfigurationGetInfo(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        output(sdk.getConfigurationInfo(configurationId));
+    }
+
+    private void configsConfigurationGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String configurationId = getStringOption(cmdOptions, "<configuration_id>");
+        output(sdk.getConfiguration(configurationId));
+    }
 
     private void configsConfigurationCreateInGroup(Map<String, Object> cmdOptions) {
         connectWithAuth();
-        Map<String,Object> item = getDataFromOptions();
+        Map<String, Object> item = getDataFromOptions();
         String groupId = getStringOption(cmdOptions, "<group_id>");
         output(sdk.createConfiguration(groupId, item));
     }

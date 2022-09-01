@@ -41,6 +41,8 @@ public class Configuration {
 
     private Integer entitiesThreshold;
 
+    private Integer deepModelsThreshold;
+
     private Integer summarySize;
 
     private String posTypes;
@@ -52,6 +54,8 @@ public class Configuration {
     private String notes;
 
     private Set<String> tags = new HashSet<>();
+
+    private Set<String> deepModels = new HashSet<>();
 
     private Set<ConfigurationRouteEntry> configRoutes = new HashSet<>();
 
@@ -229,6 +233,22 @@ public class Configuration {
 
     public void setConfigRoutes(Set<ConfigurationRouteEntry> configRoutes) {
         this.configRoutes = configRoutes;
+    }
+
+    public Set<String> getDeepModels() {
+        return deepModels;
+    }
+
+    public void setDeepModels(Set<String> deepModels) {
+        this.deepModels = deepModels;
+    }
+
+    public Integer getDeepModelsThreshold() {
+        return deepModelsThreshold;
+    }
+
+    public void setDeepModelsThreshold(Integer deepModelsThreshold) {
+        this.deepModelsThreshold = deepModelsThreshold;
     }
 
     @Override
