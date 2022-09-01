@@ -9,5 +9,5 @@ target
 .classpath
 .checkstyle
 bin
-http.log.*
+http.log*
 *.*~
