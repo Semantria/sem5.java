@@ -31,7 +31,7 @@
     ],
     "language_id": "en",
     "language_name": "English",
-    "updated": "2018-10-28T17:51:01.626",
+    "modification_date": "2018-10-28T17:51:01.626",
     "is_autoresponse_enabled": false,
     "alphanumeric_threshold": 45,
     "concept_topics_threshold": 0.3,

@@ -4,5 +4,5 @@
     "type": "Animal",
     "label": "Sharks",
     "normalized": "Sharks",
-    "updated": "2018-10-28T19:32:47.481"
+    "modification_date": "2018-10-28T19:32:47.481"
 }

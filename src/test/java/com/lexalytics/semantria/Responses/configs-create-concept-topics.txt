@@ -7,5 +7,5 @@
         "Great White",
         "Hammerhead"
     ],
-    "updated": "2018-10-28T19:17:21.62"
+    "modification_date": "2018-10-28T19:17:21.62"
 }

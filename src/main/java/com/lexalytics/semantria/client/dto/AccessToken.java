@@ -18,7 +18,7 @@ public class AccessToken {
     private String accountId;
     private String userLogin;
     private String renewalType;
-    List<String> groups;
+    private List<String> groups;
 
     public String getKey() {
         return key;

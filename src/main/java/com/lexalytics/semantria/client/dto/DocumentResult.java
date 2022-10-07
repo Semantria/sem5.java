@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -20,7 +21,7 @@ public class DocumentResult {
     private String jobId;
     private String tag;
     private JsonNode metadata;
-    private String creationDate;
+    private ZonedDateTime creationDate;
     private String status;
     private String summary;
 
@@ -233,11 +234,11 @@ public class DocumentResult {
         this.metadata = metadata;
     }
 
-    public String getCreationDate() {
+    public ZonedDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

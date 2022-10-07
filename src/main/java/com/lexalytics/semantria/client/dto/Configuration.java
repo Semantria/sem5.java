@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -22,8 +23,7 @@ public class Configuration {
 
     private String languageName;
     private String version;
-    @JsonProperty("updated")
-    private ZonedDateTime lastUpdated;
+    private ZonedDateTime modificationDate;
     @JsonProperty("is_autoresponse_enabled")
     private boolean autoResponseEnabled;
 
@@ -107,12 +107,18 @@ public class Configuration {
         this.version = version;
     }
 
-    public ZonedDateTime getLastUpdated() {
-        return lastUpdated;
+    public ZonedDateTime getModificationDate() {
+        return modificationDate;
     }
 
-    public void setLastUpdated(String lastUpdated) {
-        this.lastUpdated = ZonedDateTime.parse(lastUpdated);
+    // Backward compatibility with SDK v6.7 and less
+    @JsonIgnore
+    public ZonedDateTime getLastUpdated() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = ZonedDateTime.parse(modificationDate);
     }
 
     public boolean isAutoResponseEnabled() {

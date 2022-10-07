@@ -1,7 +1,7 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -20,8 +20,7 @@ public class IndustryPack {
 
     private String version;
 
-    @JsonProperty("updated")
-    private ZonedDateTime lastUpdated;
+    private ZonedDateTime modificationDate;
 
     public String getId() {
         return id;
@@ -63,12 +62,18 @@ public class IndustryPack {
         this.version = version;
     }
 
-    public ZonedDateTime getLastUpdated() {
-        return lastUpdated;
+    public ZonedDateTime getModificationDate() {
+        return modificationDate;
     }
 
-    public void setLastUpdated(ZonedDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    // Backward compatibility with SDK v6.7 and less
+    @JsonIgnore
+    public ZonedDateTime getLastUpdated() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(ZonedDateTime modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     public static IndustryPack create(String id) {

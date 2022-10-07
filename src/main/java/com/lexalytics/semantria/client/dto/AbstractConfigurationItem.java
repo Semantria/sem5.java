@@ -6,8 +6,8 @@ import java.time.ZonedDateTime;
 
 public class AbstractConfigurationItem {
     String id;
-    @JsonProperty("updated")
-    private ZonedDateTime lastUpdated;
+    @JsonProperty("modification_date")
+    private ZonedDateTime modificationDate;
 
     @JsonProperty("cloned_from")
     private String clonedFrom;
@@ -20,12 +20,12 @@ public class AbstractConfigurationItem {
         this.id = id;
     }
 
-    public ZonedDateTime getLastUpdated() {
-        return lastUpdated;
+    public ZonedDateTime getModificationDate() {
+        return modificationDate;
     }
 
-    public void setLastUpdated(ZonedDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setModificationDate(ZonedDateTime modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     public String getClonedFrom() {

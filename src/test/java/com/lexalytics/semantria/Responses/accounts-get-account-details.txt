@@ -72,7 +72,7 @@
             "name": "English Industry",
             "language_id": "en",
             "language_name": "English",
-            "updated": "2018-09-03T11:59:55.966"
+            "modification_date": "2018-09-03T11:59:55.966"
         }
     ]
 }
