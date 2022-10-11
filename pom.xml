@@ -158,8 +158,8 @@
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.6.5</powermock.version>
         <junit.version>4.13.1</junit.version>
-		<commons.lang.version>3.10</commons.lang.version>
-		<commons.text.version>1.8</commons.text.version>
+        <commons.lang.version>3.10</commons.lang.version>
+        <commons.text.version>1.8</commons.text.version>
         <jackson.version>2.13.4</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -195,7 +195,7 @@
             <artifactId>feign-okhttp</artifactId>
             <version>${openfeign.version}</version>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
             <version>${openfeign.version}</version>
