@@ -24,6 +24,11 @@ public class Account extends AccountBrief {
     @JsonProperty("job_ids")
     private Set<String> jobIds = new HashSet<>();
 
+    private Map<String, Long> balances;
+
+    @JsonProperty("balance_refresh")
+    private Map<String, Long> balanceRefresh;
+
     public Set<Language> getLanguages() {
         return languages;
     }
@@ -70,5 +75,21 @@ public class Account extends AccountBrief {
 
     public void setJobIds(Set<String> jobIds) {
         this.jobIds = jobIds;
+    }
+
+    public Map<String, Long> getBalances() {
+        return balances;
+    }
+
+    public void setBalances(Map<String, Long> balances) {
+        this.balances = balances;
+    }
+
+    public Map<String, Long> getBalanceRefresh() {
+        return balanceRefresh;
+    }
+
+    public void setBalanceRefresh(Map<String, Long> balanceRefresh) {
+        this.balanceRefresh = balanceRefresh;
     }
 }

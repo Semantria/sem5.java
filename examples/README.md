@@ -18,7 +18,7 @@ Change directory into the `examples` directory. Then compile and package the exa
 
 To run the example:
 
-    $ java -cp 'target/sem5-sdk-examples-6.11.0.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --credentials <username>:<password> ../example-data/tweets.txt
+    $ java -cp 'target/sem5-sdk-examples-6.11.2.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --credentials <username>:<password> ../example-data/tweets.txt
     Sending 100 docs...
     Retrieving processed results...
 
@@ -29,7 +29,7 @@ To run the example:
 
 To see the options supported:
 
-    $ java -cp 'target/sem5-sdk-examples-6.11.0.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --help
+    $ java -cp 'target/sem5-sdk-examples-6.11.2.jar;target/lib/*' com.lexalytics.semantria.example.DetailedModeExample --help
 
     Semantria detailed mode example
 
