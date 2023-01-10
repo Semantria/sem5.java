@@ -3,7 +3,7 @@
     <groupId>com.lexalytics.semantria</groupId>
     <artifactId>sem5-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>6.15.0-SNAPSHOT</version>
+    <version>6.15.0</version>
     <name>Semantria Java SDK - ${project.version}</name>
     <description>The Semantria Java SDK allows java applications to be easily integrated with the Semantria REST API</description>
     <url>https://github.com/Semantria/sem5.java</url>
