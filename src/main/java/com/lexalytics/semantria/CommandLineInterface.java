@@ -116,25 +116,31 @@ public class CommandLineInterface {
 	}
 
 	private boolean run() {
-		if (hasAllOptions(cmdOptions, "searchResultsGenerator-config")) {
-			output(config);
-			return true;
-		}
+        if (hasAllOptions(cmdOptions, "searchResultsGenerator-config")) {
+            output(config);
+            return true;
+        }
 
-		Dispatcher<Map<String, Object>> dispatcher = new Dispatcher<>();
-		dispatcher.add(this::accountsAccountPasswordRulesGet, "account", "password-rules");
-		dispatcher.add(this::accountsAccountDetailsGet, "account", "details");
-		dispatcher.add(this::accountsPasswordRulesGet, "password-rules", "<rule_id>");
-		dispatcher.add(this::accountsPasswordRulesTypesGet, "password-rules-types");
-		dispatcher.add(this::authUsersSessionsClear, "auth", "users", "<user_id>", "clear");
-		dispatcher.add(this::authUsersSessionsGet, "auth", "users", "<user_id>");
-		dispatcher.add(this::authAccountsSessionsClear, "auth", "accounts", "<account_id>", "clear");
-		dispatcher.add(this::authAccountsSessionsGet, "auth", "accounts", "<account_id>");
-		dispatcher.add(this::authSessionDelete, "auth", "sessions", "<session_id>", "delete");
-		dispatcher.add(this::authSessionGet, "auth", "sessions", "<session_id>");
-		dispatcher.add(this::authSessionCreate, "auth", "sessions", "create");
-		dispatcher.add(this::authSessionsList, "auth", "sessions");
-		dispatcher.add(this::authSessionRenew, "renew-session");
+        Dispatcher<Map<String, Object>> dispatcher = new Dispatcher<>();
+        dispatcher.add(this::accountsAccountPasswordRulesGet, "account", "password-rules");
+        dispatcher.add(this::accountsAccountDetailsGet, "account", "details");
+        dispatcher.add(this::accountsPasswordRulesGet, "password-rules", "<rule_id>");
+        dispatcher.add(this::accountsPasswordRulesTypesGet, "password-rules-types");
+        dispatcher.add(this::accountsLimitValuesGet, "limit-values");
+        dispatcher.add(this::accountsLimitValueGet, "limit-values", "<limit_type>");
+        dispatcher.add(this::accountsBalanceValuesGet, "balance-values");
+        dispatcher.add(this::accountsBalanceValueGet, "balance-values", "<balance_type>");
+        dispatcher.add(this::accountsBalanceRefreshesGet, "balance-refresh");
+        dispatcher.add(this::accountsBalanceRefreshGet, "balance-refresh", "<balance_type>");
+        dispatcher.add(this::authUsersSessionsClear, "auth", "users", "<user_id>", "clear");
+        dispatcher.add(this::authUsersSessionsGet, "auth", "users", "<user_id>");
+        dispatcher.add(this::authAccountsSessionsClear, "auth", "accounts", "<account_id>", "clear");
+        dispatcher.add(this::authAccountsSessionsGet, "auth", "accounts", "<account_id>");
+        dispatcher.add(this::authSessionDelete, "auth", "sessions", "<session_id>", "delete");
+        dispatcher.add(this::authSessionGet, "auth", "sessions", "<session_id>");
+        dispatcher.add(this::authSessionCreate, "auth", "sessions", "create");
+        dispatcher.add(this::authSessionsList, "auth", "sessions");
+        dispatcher.add(this::authSessionRenew, "renew-session");
         dispatcher.add(this::configsConfigurationList, "get-configs");
         dispatcher.add(this::configsConfigurationListFromGroup, "get-configs-from-group", "<group_id>");
 		dispatcher.add(this::configsNlpFeatureCreate,    "configs", "<configuration_id>", "<feature_name>", "create");
@@ -233,26 +239,59 @@ public class CommandLineInterface {
 		output(sdk.getAccountDetails());
 	}
 
-	private void accountsPasswordRulesGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		String ruleId = getStringOption(cmdOptions, "<rule_id>");
-		output(sdk.getPasswordRules(ruleId));
-	}
+    private void accountsPasswordRulesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String ruleId = getStringOption(cmdOptions, "<rule_id>");
+        output(sdk.getPasswordRules(ruleId));
+    }
 
-	private void accountsPasswordRulesTypesGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		output(sdk.getPasswordRuleTypes());
-	}
+    private void accountsPasswordRulesTypesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        output(sdk.getPasswordRuleTypes());
+    }
 
-	private void authHelp(Map<String, Object> cmdOptions) {
-		doDocumentation("auth");
-	}
+    private void accountsLimitValuesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        output(sdk.getAccountLimitValues());
+    }
 
-	private void authSessionCreate(Map<String, Object> cmdOptions) {
-		UserCredentials userCreds = getUserCredentials();
-		String policy = getStringOption(cmdOptions, "--expiration");
-		if (policy.toLowerCase().contentEquals("custom")) {
-			int expirationMinutes = getIntOption(cmdOptions, "--expire-after-minutes");
+    private void accountsLimitValueGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String limitType = getStringOption(cmdOptions, "<limit_type>");
+        output(sdk.getAccountLimitValue(limitType));
+    }
+
+    private void accountsBalanceValuesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        output(sdk.getAccountBalanceValues());
+    }
+
+    private void accountsBalanceValueGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String balanceType = getStringOption(cmdOptions, "<balance_type>");
+        output(sdk.getAccountBalanceValue(balanceType));
+    }
+
+    private void accountsBalanceRefreshesGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        output(sdk.getAccountBalanceRefreshes());
+    }
+
+    private void accountsBalanceRefreshGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        String balanceType = getStringOption(cmdOptions, "<balance_type>");
+        output(sdk.getAccountBalanceRefresh(balanceType));
+    }
+
+    private void authHelp(Map<String, Object> cmdOptions) {
+        doDocumentation("auth");
+    }
+
+    private void authSessionCreate(Map<String, Object> cmdOptions) {
+        UserCredentials userCreds = getUserCredentials();
+        String policy = getStringOption(cmdOptions, "--expiration");
+        if (policy.toLowerCase().contentEquals("custom")) {
+            int expirationMinutes = getIntOption(cmdOptions, "--expire-after-minutes");
 			output(sdk.createSession(userCreds, policy, expirationMinutes));
 		} else {
 			output(sdk.createSession(userCreds, policy, 0));

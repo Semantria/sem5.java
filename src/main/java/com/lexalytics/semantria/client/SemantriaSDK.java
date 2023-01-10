@@ -117,6 +117,24 @@ public interface SemantriaSDK {
     @RequestLine("GET /password/password-rules/types/")
     JsonNode getPasswordRuleTypes();
 
+    @RequestLine("GET /limit-values/")
+    JsonNode getAccountLimitValues();
+
+    @RequestLine("GET /limit-values/{limitType}")
+    JsonNode getAccountLimitValue(@Param("limitType") String limitType);
+
+    @RequestLine("GET /balance-values/")
+    JsonNode getAccountBalanceValues();
+
+    @RequestLine("GET /balance-values/{balanceType}")
+    JsonNode getAccountBalanceValue(@Param("balanceType") String balanceType);
+
+    @RequestLine("GET /balance-refresh/")
+    JsonNode getAccountBalanceRefreshes();
+
+    @RequestLine("GET /balance-refresh/{balanceType}")
+    JsonNode getAccountBalanceRefresh(@Param("balanceType") String balanceType);
+
     // *********** CONFIGS *************
 
     @RequestLine("GET /configs/?group_id={groupId}")

@@ -5,6 +5,12 @@ USAGE:
   sem5 [options] account password-rules [get]
   sem5 [options] password-rules-types
   sem5 [options] password-rules <rule_id> [get]
+  sem5 [options] limit-values [get]
+  sem5 [options] limit-values <limit_type> [get]
+  sem5 [options] balance-values [get]
+  sem5 [options] balance-values <balance_type> [get]
+  sem5 [options] balance-refresh [get]
+  sem5 [options] balance-refresh <balance_type> [get]
   sem5 [options] auth renew-session
   sem5 [options] auth sessions create
   sem5 [options] auth sessions [get]
