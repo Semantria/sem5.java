@@ -11,6 +11,7 @@ import org.docopt.DocoptExitException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,9 +64,9 @@ public class DetailedModeExample {
 
         setLogLevelFromOptions(opts);
 
-        List<String> data = Utils.readTextFile((String) opts.get("<file-or-text>"));
+        List<String> data = getData(opts);
         if (data.isEmpty()) {
-            System.err.format("Data file, %s, is empty or missing%n%nUsage:%n", opts.get("<file-or-text>"));
+            // File error, so print usage message
             System.err.println(doc);
             return false;
         }
@@ -75,6 +76,19 @@ public class DetailedModeExample {
 
         app.deleteTempAccessToken();
         return result;
+    }
+
+    private static List<String> getData(Map<String, Object> opts) {
+        String fileOrText = (String) opts.get("<file-or-text>");
+        if (new File(fileOrText).exists()) {
+            List<String> data = Utils.readTextFile((String) opts.get("<file-or-text>"));
+            if (data.isEmpty()) {
+                System.err.format("Data file, %s, is empty or missing%n%nUsage:%n", opts.get("<file-or-text>"));
+            }
+            return data;
+        } else {
+            return Arrays.asList(fileOrText);
+        }
     }
 
     // control logging using command line options rather than a log config file
@@ -113,7 +127,7 @@ public class DetailedModeExample {
 
     boolean processDocs(List<String> data) {
         try {
-            sendDocs(data);
+            sendDocs(data.subList(0, Math.min(data.size(), getIntOption(options, "--limit"))));
             pollForResults();
             printResults();
             return true;
@@ -121,7 +135,7 @@ public class DetailedModeExample {
             log.error("Error: {}", e.getReason());
             System.exit(1);
         } catch (Exception e) {
-            log.error("Error: {}", e.getMessage());
+            log.error("Error: {}", e);
             System.exit(1);
         }
         return false;
@@ -207,6 +221,7 @@ public class DetailedModeExample {
             showMetaData(doc);
             showEntities(doc);
             showQueryTopics(doc);
+            showTaxonomy(doc);
             showThemes(doc);
             showAutoCategories(doc);
             System.out.println();
@@ -253,6 +268,30 @@ public class DetailedModeExample {
                                     .collect(Collectors.joining(", ")));
                 }
             }
+        }
+    }
+
+    private void showTaxonomy(DocumentResult doc) {
+        if (doc.getTaxonomies() == null) {
+            return;
+        }
+        System.out.println("Taxonomy:");
+        for (TaxonomyNodeObject node : doc.getTaxonomies()) {
+            showTaxonomyNode(node, 0);
+        }
+    }
+
+    private void showTaxonomyNode(TaxonomyNodeObject node, int level) {
+        System.out.format("    %s%s %s%n",
+                StringUtils.repeat("  ", level),
+                node.getType(), node.getName());
+        for (TaxonomyNodeObject.TaxonomyLeafObject leaf : node.getLeafs()) {
+            System.out.format("    %s%s %s%n",
+                    StringUtils.repeat("  ", level + 1),
+                    leaf.getType(), leaf.getTitle());
+        }
+        for (TaxonomyNodeObject child : node.getNodes()) {
+            showTaxonomyNode(child, level + 1);
         }
     }
 
