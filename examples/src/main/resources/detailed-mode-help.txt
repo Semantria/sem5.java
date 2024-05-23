@@ -11,8 +11,8 @@ OPTIONS:
   --api-endpoint URL     Semantria API endpoint [default: api5.semantria.com]
   --using CONFIG         Language or configuration to be used when processing documents
   --job-id S             Identifier for a job
-  --batch-size N         Number of document to submit in a batch [default: 100]
-  -n --limit N           Number of docs to send (default: all)
+  --batch-size N         Number of documents to submit in a batch [default: 100]
+  -n --limit N           Max number of documents to process [default: 100]
   --sections             File is a single doc of multiple sections one per line -- "section_name: section text"
   -h --help              Show this help text
   --version              Print version
@@ -21,8 +21,9 @@ OPTIONS:
 
 DESCRIPTION
 
-  This example reads data from a file, one document per line, processes
-  it through the Semantria API, and prints some of the results.
+  This example reads data from a file, one document per line, or a literal
+  text string from the command line; processes it through the Semantria API;
+  and prints some of the results.
 
   There are two options for authentication:
 

@@ -1,10 +1,28 @@
 # Semantria SDK for Java
 
-The [Semantria](https://www.lexalytics.com/semantria) SDKs are a convenient way to integrate with the Semantria 5 API to build a continuous or high-volume application. The SDKs implement all available Semantria features and include some simple examples of their use. However, the examples are not intended to demonstrate the best practices for processing large volumes of data. Please contact Lexalytics for guidance if you plan to build your own application.
+You can use any REST client you choose to integrate
+[Semantria 5](https://www.lexalytics.com/semantria) into your application.
+We provide this SDK as a convenience.
+The SDK implements most Semantria features and includes a simple
+example of its use. However, the example is not intended to demonstrate the
+best practices for processing large volumes of data. Please contact Lexalytics
+for guidance if you plan to build your own application.
+
+One note on this Java SDK and versioning. The SDK version will match the
+Semantria API version at the time of release. In general we will only publish an
+SDK update if there is an API change. The [Semantria
+API](https://semantria.readme.io/docs/) version numbers follow [Semantic
+Versioning](https://semver.org/). So, for
+example, customer application code using the 6.2.2 SDK will still work with
+Semantria API 6.6.0.
+
+If we need to make an incompatible API change then we will notify all customers beforehand.
 
 See [semantria.readme.io](https://semantria.readme.io/docs/) for complete API documentation.
 
-If you find a bug or have suggestions let us know: support@lexaltyics.com. Or fork this repo, make your changes, and submit a pull request.
+If you find a bug or have suggestions let us know: support@lexaltyics.com. Or
+fork this repo, make your changes, and submit a pull request!
+
 
 ## Installation using Maven Central
 
@@ -15,6 +33,7 @@ The simplest way to use the SDK is to import it from Maven Central via your `pom
             <artifactId>sem5-sdk</artifactId>
         </dependency>
 
+
 ## Installation from source
 
 Alternatively, you can download the SDK and build it locally. These instructions show how to build the SDK using maven. You should be able to build and run the examples in your Java IDE as well.
@@ -24,6 +43,12 @@ First, clone or download the SDK from [https://github.com/Semantria/sem5.java](h
 Change directory into the Java directory. Then compile and install the SDK and examples:
 
     $ mvn clean install
+
+
+## Example Program
+
+See [DetailedModeExample](examples/README.md) for a simple example program that uses this SDK.
+
 
 ## Command Line Application
 
@@ -52,6 +77,7 @@ You can then relocate/install this by copying the contents of `build/install/sem
 
     $ cp -r build/install/sem5-shadow/* /usr/local/
 
+
 ## Configuration File
 
 To use an environment variable (with both the SDK or CLI), define an environment variable `SEM5_CONFIG` with the path to the configuration file.  Configuration files can be in YAML or Json format.   The sem5 CLI can also be used to generate a config file, in this case with credentials:
@@ -73,12 +99,12 @@ Note that these credentials are stored in plain text.  Running the `sem5` CLI wi
 
     $ sem5 auth sessions create --credentials user-1:sekret --expiration forever \
        | jq .access_token -r
-    3346f82d-ecd1-4bd4-b7cd-4acd25360c81
+    3346f82d-ecd1-4bd4-b7cd-4abcdef09876
     $ vi $SEM5_CONFIG # edit the file
     $ cat $SEM5_CONFIG
     {
       "apiEndpoint" : "https://api5.semantria.com",
-      "accessToken": "3346f82d-ecd1-4bd4-b7cd-4acd25360c81",
+      "accessToken": "3346f82d-ecd1-4bd4-b7cd-4abcdef09876",
       "apiVersion" : "5.0",
       "appName" : "sem5-sdk",
       "logfile" : null
@@ -88,7 +114,7 @@ In YAML the config file would look like
 
     ---
     apiEndpoint: https://api5.semantria.com
-    accessToken: 3346f82d-ecd1-4bd4-b7cd-4acd25360c81
+    accessToken: 3346f82d-ecd1-4bd4-b7cd-4abcdef09876
     apiVersion: '5.0'
     appName: sem5-sdk
     logfile: 
