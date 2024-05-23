@@ -1,9 +1,11 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.ZonedDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AbstractConfigurationItem {
     String id;
     @JsonProperty("modification_date")

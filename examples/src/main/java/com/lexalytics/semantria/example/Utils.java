@@ -32,12 +32,11 @@ public class Utils {
     /**
      * Reads contents of {@code filename} and returns a list of lines.
      */
-    public static List<String> readTextFile(String filename) {
+    public static List<String> readData(String file_or_text) {
 
-        File file = new File(filename);
+        File file = new File(file_or_text);
         if (!file.exists()) {
-            log.error("Can't find data file: {}", filename);
-            return Collections.emptyList();
+            return Collections.singletonList(file_or_text);
         }
 
         try {

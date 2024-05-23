@@ -1,6 +1,9 @@
 package com.lexalytics.semantria.example;
 
 import ch.qos.logback.classic.Level;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.lexalytics.semantria.client.SemantriaClientConfiguration;
 import com.lexalytics.semantria.client.SemantriaClientError;
 import com.lexalytics.semantria.client.SemantriaSDK;
@@ -12,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static com.lexalytics.semantria.client.OptionHelper.*;
@@ -63,11 +68,15 @@ public class DetailedModeExample {
 
         setLogLevelFromOptions(opts);
 
-        List<String> data = Utils.readTextFile((String) opts.get("<file-or-text>"));
+        List<String> data = Utils.readData((String) opts.get("<file-or-text>"));
         if (data.isEmpty()) {
             System.err.format("Data file, %s, is empty or missing%n%nUsage:%n", opts.get("<file-or-text>"));
             System.err.println(doc);
             return false;
+        }
+
+        if (getIntOption(opts, "--limit", -1) > 0) {
+            data = data.subList(0, Math.min(data.size(), getIntOption(opts, "--limit")));
         }
 
         DetailedModeExample app = new DetailedModeExample(opts);
@@ -81,7 +90,7 @@ public class DetailedModeExample {
     private static void setLogLevelFromOptions(Map<String, Object> opts) {
         ch.qos.logback.classic.Logger logger
                 = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("com.lexalytics.semantria.example");
-        if ((boolean) opts.get("--debug")) {
+        if (getBooleanOption(opts, "--debug")) {
             logger.setLevel(Level.DEBUG);
         } else if (hasAllOptions(opts, "--verbose")) {
             logger.setLevel(Level.INFO);
@@ -113,21 +122,26 @@ public class DetailedModeExample {
 
     boolean processDocs(List<String> data) {
         try {
-            sendDocs(data);
+            if (getBooleanOption(options, "--sections")) {
+                sendSectionDoc(data);
+            } else {
+                sendDocs(data);
+            }
             pollForResults();
             printResults();
             return true;
         } catch (SemantriaClientError e) {
-            log.error("Error: {}", e.getReason());
+            log.error("Error: {} {}", e.getReason(), e.getMessage());
             System.exit(1);
         } catch (Exception e) {
-            log.error("Error: {}", e.getMessage());
+            log.error("Error: {}", e);
             System.exit(1);
         }
         return false;
     }
 
     private void sendDocs(List<String> data) {
+
         System.out.format("Sending %d docs...%n", data.size());
 
         int batchSize = getIntOption(options, "--batch-size");
@@ -140,21 +154,49 @@ public class DetailedModeExample {
             outgoingBatch.add(doc);
             if (outgoingBatch.size() == batchSize) {
                 queueBatch(outgoingBatch);
+                outgoingBatch.clear();
             }
         }
 
         // Send last partial batch
         if (!outgoingBatch.isEmpty()) {
             queueBatch(outgoingBatch);
+            outgoingBatch.clear();
         }
 
         log.info("Sent {} docs", data.size());
     }
 
+    private void sendSectionDoc(List<String> data) {
+        List<DocumentSection> sections = data.stream()
+                .map(DetailedModeExample::makeSection)
+                .collect(Collectors.toList());
+        System.out.format("Sending a single doc with %d sections...%n", sections.size());
+        Document doc = new Document(UUID.randomUUID().toString(), sections)
+                .withMetadata("doc-metdata-1", random.nextFloat() * -100)
+                .withMetadata("doc-metdata-2", String.format("random-category-%d", random.nextInt(25)))
+                .withMetadata("complex-metadata", Arrays.asList("valid", "only", "at", "document", "level", 100));
+        queueBatch(Collections.singletonList(doc));
+    }
+
+    private static DocumentSection makeSection(String text) {
+        int i = text.indexOf(":");
+        String name = (i < 0) ? "" : text.substring(0, i);
+        String value = (i < 0) ? text : text.substring(i + 1);
+        return new DocumentSection(name, value)
+                .withMetadata("random-string", String.format("x%d", random.nextInt(99)))
+                .withMetadata("random-number", random.nextInt(999))
+                .withMetadata("random-float", random.nextFloat() * 99.0f)
+                .withAlias(String.format("random-alias-%d", random.nextInt(10)))
+                .withAlias(String.format("random-alias-%d", random.nextInt(10)));
+    }
+
+    private final static Random random = new Random();
+
     private void pollForResults() {
         System.out.format("Retrieving processed results...%n");
         try {
-            while (nDocsSent != resultsReceived.size()) {
+            while (nDocsSent > resultsReceived.size()) {
                 // Because Semantria isn't a real-time solution you should wait some time
                 // before getting the processed results. A real application would likely be
                 // implemented as two separate jobs, one for queuing source data another
@@ -192,7 +234,6 @@ public class DetailedModeExample {
         log.debug("sent {} docs, request: {}", batch.size(), request);
         nDocsSent += batch.size();
         log.info("{} documents queued successfully", batch.size());
-        batch.clear();
     }
 
     private void printResults() {
@@ -205,11 +246,30 @@ public class DetailedModeExample {
                             + "Sentiment score: %.2f%n",
                     doc.getId(), doc.getSentimentPolarity(), doc.getScore());
             showMetaData(doc);
+            showSections(doc);
             showEntities(doc);
             showQueryTopics(doc);
             showThemes(doc);
             showAutoCategories(doc);
+            showJson(doc);
             System.out.println();
+        }
+    }
+
+    private void showSections(DocumentResult doc) {
+        if (doc.getSections() == null) {
+            return;
+        }
+        System.out.println("Sections:");
+        for (SectionResult section : doc.getSections()) {
+            System.out.format("    Section %s: Name: %s, Aliases: %s%n",
+                    section.getSectionId(), section.getName(), section.getAliases());
+            System.out.format("        Value: %s%n", section.getValue());
+            System.out.format("        Redacted: %s%n", section.getRedactedValue());
+            System.out.format("        zzz:      %s%n", substring(doc.getSourceText(), section.getCharOffset(), section.getCharLength()));
+            if (section.getMetadata() != null) {
+                System.out.format("        Metadata: %s%n", section.getMetadata());
+            }
         }
     }
 
@@ -219,8 +279,9 @@ public class DetailedModeExample {
         }
         System.out.println("Entities:");
         for (Entity entity : doc.getEntities()) {
-            System.out.format("    %s\t  sentiment polarity: %s, sentiment: %.2f%n",
-                    entity.getNormalized(), entity.getSentimentPolarity(), entity.getSentimentScore());
+            System.out.format("    %s    type: %s, label: %s, sentiment: %.2f%n",
+                    entity.getNormalized(), entity.getEntityType(), entity.getLabel(), entity.getSentimentScore());
+            showMentions(doc, entity.getMentions());
         }
     }
 
@@ -230,7 +291,7 @@ public class DetailedModeExample {
         }
         System.out.println("Document themes:");
         for (Theme theme : doc.getThemes()) {
-            System.out.format("    %s\t  normalized: %s, stemmed: %s, sentiment: %.2f%n",
+            System.out.format("    %s    normalized: %s, stemmed: %s, sentiment: %.2f%n",
                     theme.getTitle(), theme.getNormalized(), theme.getStemmed(), theme.getSentimentScore());
         }
     }
@@ -241,17 +302,23 @@ public class DetailedModeExample {
         }
         System.out.println("Query topics:");
         for (Topic topic : doc.getTopics()) {
-            System.out.format("    %s\t  Sentiment score: %.2f%n",
+            System.out.format("    %s    Sentiment score: %.2f%n",
                     topic.getTitle(), topic.getSentimentScore());
-            if ((topic.getMentions() != null) && !topic.getMentions().isEmpty()) {
-                System.out.format("        Mentions:%n");
-                for (Mention mention : topic.getMentions()) {
-                    System.out.format("            %s    locations: %s%n",
-                            mention.getLabel(),
-                            mention.getLocations().stream()
-                                    .map(l -> Integer.toString(l.getCharOffset()))
-                                    .collect(Collectors.joining(", ")));
-                }
+            showMentions(doc, topic.getMentions());
+        }
+    }
+
+    private static void showMentions(DocumentResult doc, List<Mention> mentions) {
+        if ((mentions != null) && !mentions.isEmpty()) {
+            System.out.format("        Mentions:%n");
+            for (Mention mention : mentions) {
+                System.out.format("            %s    locations: %s%n",
+                        mention.getLabel(),
+                        mention.getLocations().stream()
+                                .map(l -> String.format("@%d:%d section %d: '%s'",
+                                                l.getCharOffset(), l.getCharLength(), l.getSection(),
+                                        DetailedModeExample.substring(doc.getSourceText(), l.getCharOffset(), l.getCharLength())))
+                                .collect(Collectors.joining(", ")));
             }
         }
     }
@@ -260,7 +327,7 @@ public class DetailedModeExample {
         if (doc.getAutoCategories() != null) {
             System.out.println("Document categories:");
             for (Topic category : doc.getAutoCategories()) {
-                System.out.format("    %s\t  Strength score: %.2f%n",
+                System.out.format("    %s    Strength score: %.2f%n",
                         category.getTitle(), category.getStrengthScore());
             }
         }
@@ -270,6 +337,22 @@ public class DetailedModeExample {
         if (doc.getMetadata() != null) {
             System.out.format("Metadata: %s%n", doc.getMetadata().toString());
         }
+    }
+
+    private void showJson(DocumentResult doc) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        // not gonna fight with jackson over date serialization rn
+        doc.setCreationDate(null);
+        try {
+            System.out.format("JSON:%n%s%n", mapper.writeValueAsString(doc));
+        } catch (JsonProcessingException e) {
+            System.err.format("ERROR writing json: %s%n", e);
+        }
+    }
+
+    public static String substring(String str, int offset, int length) {
+        return str.substring(offset, offset + length);
     }
 
 }

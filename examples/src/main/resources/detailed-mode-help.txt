@@ -12,6 +12,8 @@ OPTIONS:
   --using CONFIG         Language or configuration to be used when processing documents
   --job-id S             Identifier for a job
   --batch-size N         Number of document to submit in a batch [default: 100]
+  -n --limit N           Number of docs to send (default: all)
+  --sections             File is a single doc of multiple sections one per line -- "section_name: section text"
   -h --help              Show this help text
   --version              Print version
   -v --verbose           More messages

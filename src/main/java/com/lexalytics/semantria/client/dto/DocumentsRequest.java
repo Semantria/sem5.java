@@ -1,9 +1,11 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DocumentsRequest {
     private String using;
 
@@ -15,6 +17,9 @@ public class DocumentsRequest {
 
     @JsonProperty("language_id")
     private String languageId;
+
+    @JsonProperty("return_source_text")
+    private boolean returnSourceText;
 
     public String getUsing() {
         return using;
@@ -46,5 +51,13 @@ public class DocumentsRequest {
 
     public void setLanguageId(String languageId) {
         this.languageId = languageId;
+    }
+
+    public boolean getReturnSourceText() {
+        return returnSourceText;
+    }
+
+    public void setReturnSourceText(boolean returnSourceText) {
+        this.returnSourceText = returnSourceText;
     }
 }

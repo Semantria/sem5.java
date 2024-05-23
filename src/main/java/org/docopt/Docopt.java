@@ -30,7 +30,7 @@ import org.docopt.Python.Re;
  * Parses arguments based on the same POSIX-style usage pattern that would be
  * displayed when using the --help option. Simplifies handling command line
  * arguments and ensures that the parser is consistent with the documentation.
- * <h3>Example</h3>
+ * <h2>Example</h2>
  *
  * <pre>
  * class NavalFate {

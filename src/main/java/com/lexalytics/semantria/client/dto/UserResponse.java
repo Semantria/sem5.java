@@ -8,19 +8,16 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class UserResponse {
     private String userId;
     private String login;
 
     private String accountId;
-    private String password;
     private String email;
     private String alternateEmail;
     private String firstName;
@@ -33,7 +30,7 @@ public class User {
     private LocalDate passwordModified;
     private ZonedDateTime lastLogin;
 
-    private java.util.Collection<Group> userGroups = new LinkedHashSet<>();
+    private List<String> userGroups = new ArrayList<>();
     private List<Permission> permissions = new ArrayList<>();
 
     public String getUserId() {
@@ -50,14 +47,6 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -108,11 +97,11 @@ public class User {
         this.accountId = accountId;
     }
 
-    public java.util.Collection<Group> getUserGroups() {
+    public List<String> getUserGroups() {
         return userGroups;
     }
 
-    public void setUserGroups(Collection<Group> userGroups) {
+    public void setUserGroups(List<String> userGroups) {
         this.userGroups = userGroups;
     }
 

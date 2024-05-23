@@ -1,6 +1,6 @@
 Authentication Service:
 Authentication service is used to facilitate username/password account validation in Semantria. Create a session using ""auth sessions create"" and use
-the authentication token that is returned to authenicate any call to Semantria after using the --access-token option.
+the authentication token that is returned to authenticate any call to Semantria after using the --access-token option.
 
 For more information, see https://semantria-docs.lexalytics.com/reference/semantria-api
 
@@ -11,12 +11,12 @@ auth sessions <session_id>        Get a detailed description of a Semantria sess
 auth sessions <session_id> delete        Delete a Semantria session. API call: DELETE /auth/sessions/{sessionId}
 auth users <user_id> sessions         Get all active Semantria sessions for a user. API call: GET /auth/users/{userId}/sessions/
 auth users <user_id> sessions clear        Deletes all sessions under a user. API call: Loops calling DELETE /auth/sessions/{sessionsId} on all but current session for a user
-auth accounts <account_id> sessions        Get all active Semantria sessions for an account. API call: GET /auth/accounts/{accountId}/sessions/
-auth accounts <account_id> sessions clear       Delete all Semantria sessions for an account. API call: Loops calling DELETE /auth/sessions/{sessionsId} on all but current session for account
 
 AUTH OPTIONS:
   --expiration POLICY     Expiration policy- default|forever|custom. [default: default] - used when creating a new session.
   --expire-after-minutes N  For custom expiration policy, after how many minutes should the session expire. - used when creating a new session.
+  --renewal-type TYPE    How expiration time is updated - auto|manual. [default: auto] - used when creating a new session.
+  --notes S              Purpose or use of this session. - used when creating a new session.
 
 PARAMETERS:
 <session_id>             Description. A Semantria session ID is also acts as an authentication token.

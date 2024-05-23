@@ -1,12 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lexalytics.semantria</groupId>
     <artifactId>sem5-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>6.15.1-SNAPSHOT</version>
+    <version>6.24.0-SNAPSHOT</version>
     <name>Semantria Java SDK - ${project.version}</name>
-    <description>The Semantria Java SDK allows java applications to be easily integrated with the Semantria REST API</description>
+    <description>Semantria Java SDK simplifies using the Semantria REST API in Java</description>
     <url>https://github.com/Semantria/sem5.java</url>
+
     <licenses>
         <license>
             <name>MIT License</name>
@@ -27,11 +33,12 @@
             <organizationUrl>https://www.lexalytics.com</organizationUrl>
         </developer>
     </developers>
+
     <scm>
         <connection>scm:git:git://github.com/Semantria/sem5.java.git</connection>
         <developerConnection>scm:git:https://github.com/Semantria/sem5.java.git</developerConnection>
         <url>http://github.com/Semantria/sem5.java/tree/master</url>
-        <tag>sem5-sdk-6.15.0</tag>
+        <tag>sem5-sdk-6.20.0</tag>
     </scm>
 
     <distributionManagement>
@@ -44,6 +51,7 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -91,8 +99,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -140,7 +147,11 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>3.3.2</version>
+              <version>3.6.0</version>
+              <configuration>
+                  <legacyMode>true</legacyMode>
+                  <doclint>all,-missing</doclint>
+              </configuration>
               <executions>
                 <execution>
                   <id>attach-javadocs</id>
@@ -152,18 +163,22 @@
             </plugin>
         </plugins>
     </build>
+
     <properties>
-        <openfeign.version>11.8</openfeign.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <java.version>17</java.version>
+        <openfeign.version>12.5</openfeign.version>
         <wiremock.version>2.17.0</wiremock.version>
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.6.5</powermock.version>
         <junit.version>4.13.1</junit.version>
 		<commons.lang.version>3.10</commons.lang.version>
 		<commons.text.version>1.10.0</commons.text.version>
-        <jackson.version>2.13.4</jackson.version>
+        <jackson.version>2.15.3</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -236,4 +251,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>

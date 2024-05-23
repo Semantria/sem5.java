@@ -134,8 +134,6 @@ public class CommandLineInterface {
         dispatcher.add(this::accountsBalanceRefreshGet, "balance-refresh", "<balance_type>");
         dispatcher.add(this::authUsersSessionsClear, "auth", "users", "<user_id>", "clear");
         dispatcher.add(this::authUsersSessionsGet, "auth", "users", "<user_id>");
-        dispatcher.add(this::authAccountsSessionsClear, "auth", "accounts", "<account_id>", "clear");
-        dispatcher.add(this::authAccountsSessionsGet, "auth", "accounts", "<account_id>");
         dispatcher.add(this::authSessionDelete, "auth", "sessions", "<session_id>", "delete");
         dispatcher.add(this::authSessionGet, "auth", "sessions", "<session_id>");
         dispatcher.add(this::authSessionCreate, "auth", "sessions", "create");
@@ -290,12 +288,12 @@ public class CommandLineInterface {
     private void authSessionCreate(Map<String, Object> cmdOptions) {
         UserCredentials userCreds = getUserCredentials();
         String policy = getStringOption(cmdOptions, "--expiration");
-        if (policy.toLowerCase().contentEquals("custom")) {
-            int expirationMinutes = getIntOption(cmdOptions, "--expire-after-minutes");
-			output(sdk.createSession(userCreds, policy, expirationMinutes));
-		} else {
-			output(sdk.createSession(userCreds, policy, 0));
-		}
+        String renwalType = getStringOption(cmdOptions, "--renewal-type");
+        String notes = getStringOption(cmdOptions, "--notes");
+        int expirationMinutes = ((policy.toLowerCase().contentEquals("custom"))
+                ? getIntOption(cmdOptions, "--expire-after-minutes")
+                : 0);
+        output(sdk.createSession(userCreds, policy, expirationMinutes, renwalType, notes));
 	}
 
 	private void authSessionRenew(Map<String, Object> cmdOptions) {
@@ -341,31 +339,6 @@ public class CommandLineInterface {
 			sdk.deleteSession(session);
 		}
 	}
-
-	private void authAccountsSessionsGet(Map<String, Object> cmdOptions) {
-		connectWithAuth();
-		String accountId = getStringOption(cmdOptions, "<account_id>");
-		output(sdk.getAccountSessions(accountId));
-	}
-
-   private void authAccountsSessionsClear(Map<String, Object> cmdOptions) {
-        connectWithAuth();
-        String accountId = getStringOption(cmdOptions, "<account_id>");
-        AllSessionInfo response = sdk.getAccountSessions(accountId);
-        Map<String, List<String>> sessions = response.getUserSessions();
-        verbose("There are " + response.getLiveSessionCount() + " live sessions");
-        verbose("Deleting...");
-        for (String user : sessions.keySet()) {
-            for(String session :sessions.get(user))
-            {
-                if (session.contentEquals(config.getAccessToken())) {
-                    continue;
-                }
-                verbose("  " + session);
-                sdk.deleteSession(session);
-            }
-        }
-    }
 
 	private void configsHelp(Map<String, Object> cmdOptions) {
 		doDocumentation("configs");
@@ -923,10 +896,18 @@ public class CommandLineInterface {
 	}
 
 	private void usersGroupsGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		String groupId = getStringOption(cmdOptions, "<group_id>");
-		output(sdk.getAccountGroup(groupId));
-	}
+        connectWithAuth();
+        String groupId = getStringOption(cmdOptions, "<group_id>");
+        boolean users = true;
+        boolean permissions = true;
+        if (cmdOptions.containsKey("--include-users")) {
+            users = getBooleanOption(cmdOptions, "--include-users");
+        }
+        if (cmdOptions.containsKey("--include-users")) {
+            permissions = getBooleanOption(cmdOptions, "--include-permissions");
+        }
+        output(sdk.getAccountGroup(groupId, users, permissions));
+    }
 
 	private void usersGroupsCreate(Map<String, Object> cmdOptions){
 		connectWithAuth();
@@ -934,10 +915,19 @@ public class CommandLineInterface {
 		output(sdk.createAccountGroup(item));
 	}
 
-	private void usersAllGroupsGet(Map<String, Object> cmdOptions){
-		connectWithAuth();
-		output(sdk.getAllAccountGroups());
-	}
+	private void usersAllGroupsGet(Map<String, Object> cmdOptions) {
+        connectWithAuth();
+        boolean users = true;
+        boolean permissions = true;
+        if (cmdOptions.containsKey("--include-users")) {
+            users = getBooleanOption(cmdOptions, "--include-users");
+        }
+        if (cmdOptions.containsKey("--include-permissions")) {
+            permissions = getBooleanOption(cmdOptions, "--include-permissions");
+        }
+
+        output(sdk.getAllAccountGroups(users, permissions));
+    }
 
 	private void usersUserPasswordUpdate(Map<String, Object> cmdOptions){
 		connectWithAuth();

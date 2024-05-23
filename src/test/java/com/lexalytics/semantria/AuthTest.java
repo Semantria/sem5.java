@@ -33,8 +33,8 @@ public class AuthTest {
 
 	@Test
 	public void testSessionCreateDefault() throws Exception {
-		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\",\"renewal_type\":\"AUTO\"}";
-		stubFor(post(urlEqualTo("/auth/sessions/?expiration=default&expire_after_minutes=0"))
+		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\"}";
+		stubFor(post(urlEqualTo("/auth/sessions/?expiration=default&expire_after_minutes=0&renewal_type=auto"))
 				.withRequestBody(equalToJson("{ \"login\": \"foo\", \"password\": \"bar\" }"))
 				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(json)));
 
@@ -45,8 +45,8 @@ public class AuthTest {
 
 	@Test
 	public void testSessionCreateForever() throws Exception {
-		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\",\"renewal_type\":\"NONE\"}";
-		stubFor(post(urlEqualTo("/auth/sessions/?expiration=forever&expire_after_minutes=0"))
+		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\"}";
+		stubFor(post(urlEqualTo("/auth/sessions/?expiration=forever&expire_after_minutes=0&renewal_type=auto"))
 				.withRequestBody(equalToJson("{ \"login\": \"foo\", \"password\": \"bar\" }"))
 				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(json)));
 
@@ -58,8 +58,8 @@ public class AuthTest {
 
 	@Test
 	public void testSessionCreateCustom() throws Exception {
-		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\",\"renewal_type\":\"NONE\"}";
-		stubFor(post(urlEqualTo("/auth/sessions/?expiration=custom&expire_after_minutes=10"))
+		String json = "{\"permissions\":[{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"1d3a9ff96c090e17c821706b0594a9b5\"},{\"permission_type\":\"CONFIGURATION\",\"permission_id\":\"LEGACY\",\"config_id\":\"58c247add7e031058633431103716794\"}],\"expiration\":\"2019-01-21T17:05:35.699Z\",\"authenticated\":\"2019-01-21T16:05:35.699Z\",\"access_token\":\"0120488b-7777-41a3-b23b-75422c7b8fac\",\"user_id\":\"973a5f0ccbc4ee3524ccf035d35b284b\",\"account_id\":\"1b06de18-a304-4fc0-a8f0-8407643ec320\",\"user_login\":\"ericw\"}";
+		stubFor(post(urlEqualTo("/auth/sessions/?expiration=custom&expire_after_minutes=10&renewal_type=auto"))
 				.withRequestBody(equalToJson("{ \"login\": \"foo\", \"password\": \"bar\" }"))
 				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(json)));
 
@@ -133,16 +133,4 @@ public class AuthTest {
 		JSONAssert.assertEquals(json, output, false);
 	}
 
-	@Test
-	public void testAccountSessionsGet() throws Exception {
-		String json = "{\n" + "  \"live_session_count\" : 3,\n" + "  \"user_sessions\" : {\n"
-				+ "    \"jporter\" : [ \"da969785-5fdc-4565-82b1-2d227f5875ab\", \"329645ed-ef89-4326-ba7a-e717d4462207\", \"6d145c91-711d-46d5-8c72-ec5511b1d295\" ]\n"
-				+ "  }\n" + "}";
-
-		stubFor(get(urlEqualTo("/auth/accounts/account-1/sessions/")).withHeader("Authorization", equalTo("good"))
-				.willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(json)));
-		List<String> args = Arrays.asList("auth", "accounts", "account-1", "sessions");
-		String output = TestUtil.run(args);
-		JSONAssert.assertEquals(json, output, false);
-	}
 }

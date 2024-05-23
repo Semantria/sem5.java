@@ -1,18 +1,21 @@
 package com.lexalytics.semantria.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Configuration {
     private String id;
     private String name;
@@ -58,6 +61,10 @@ public class Configuration {
     private Set<String> deepModels = new HashSet<>();
 
     private Set<ConfigurationRouteEntry> configRoutes = new HashSet<>();
+
+    private List<String> parents = new ArrayList<>();
+
+    private boolean layer;
 
     public String getId() {
         return id;
@@ -255,6 +262,22 @@ public class Configuration {
 
     public void setDeepModelsThreshold(Integer deepModelsThreshold) {
         this.deepModelsThreshold = deepModelsThreshold;
+    }
+
+    public List<String> getParents() {
+        return parents;
+    }
+
+    public void setParents(List<String> parents) {
+        this.parents = parents;
+    }
+
+    public boolean isLayer() {
+        return layer;
+    }
+
+    public void setLayer(boolean layer) {
+        this.layer = layer;
     }
 
     @Override

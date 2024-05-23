@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Phrase {
     private String title;
     private Float sentimentScore;
@@ -19,10 +21,18 @@ public class Phrase {
     private String intensifyingPhrase;
     private Integer offset;
     private Integer length;
+    private Integer section;
     private String sentimentPolarity;
 
     public static Phrase create(String title, Float score, Boolean negated, String supportingPhrase, Boolean intensified, String intensifyingPhrase,
                                 String type, int offset, int length, String polarity) {
+        return create(title, score, negated, supportingPhrase, intensified, intensifyingPhrase,
+                type, offset, length, 0, polarity);
+    }
+
+    public static Phrase create(String title, Float score, Boolean negated, String supportingPhrase, Boolean intensified, String intensifyingPhrase,
+                                String type, int offset, int length, int section, String polarity)
+    {
         Phrase phrase = new Phrase();
         phrase.title = title;
         phrase.sentimentScore = score;
@@ -32,6 +42,7 @@ public class Phrase {
         phrase.intensifyingPhrase = intensifyingPhrase;
         phrase.offset = offset;
         phrase.length = length;
+        phrase.section = section;
         phrase.type = type;
         phrase.sentimentPolarity = polarity;
         return phrase;

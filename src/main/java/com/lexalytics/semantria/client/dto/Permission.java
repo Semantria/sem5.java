@@ -1,11 +1,13 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Permission {
     private String userId;
     private String groupId;
@@ -13,8 +15,11 @@ public class Permission {
     private String configId;
     private String modelId;
     private String permissionType;
+    private Boolean evaluation;
 
     private String permissionId;
+
+    private Boolean removed;
 
     public String getPermissionId() {
         return permissionId;
@@ -70,6 +75,22 @@ public class Permission {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public Boolean getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(Boolean evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public Boolean getRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
     }
 
     @Override

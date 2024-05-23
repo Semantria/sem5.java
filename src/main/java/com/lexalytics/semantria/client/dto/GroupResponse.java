@@ -11,13 +11,13 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Group {
+public class GroupResponse {
     private String groupId;
     private String groupName;
     private String externalId;
     private String accountId;
     private List<Permission> permissions = new ArrayList<>();
-    private List<UserBrief> members = new ArrayList<>();
+    private List<String> members = new ArrayList<>();
 
     public String getGroupName() {
         return groupName;
@@ -59,11 +59,11 @@ public class Group {
         this.permissions = permissions;
     }
 
-    public List<UserBrief> getMembers() {
+    public List<String> getMembers() {
         return members;
     }
 
-    public void setMembers(List<UserBrief> members) {
+    public void setMembers(List<String> members) {
         this.members = members;
     }
 
@@ -81,7 +81,7 @@ public class Group {
             return false;
         }
 
-        Group group = (Group) o;
+        GroupResponse group = (GroupResponse) o;
 
         return (accountId != null ? accountId.equals(group.accountId) : group.accountId == null)
                 && (groupId != null ? groupId.equals(group.groupId) : group.groupId == null)
@@ -94,4 +94,5 @@ public class Group {
         result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
         result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
         return result;
-    }}
+    }
+}

@@ -1,17 +1,17 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountCreation {
     @JsonProperty("account_name")
     private String accountName;
     private String email;
     private String edition;
 
-    @JsonProperty("user_name")
-    private String userName;
     private String password;
     @JsonProperty("first_name")
     private String firstName;
@@ -30,6 +30,12 @@ public class AccountCreation {
     private Boolean withUser;
     @JsonProperty("with_confirmation")
     private Boolean withConfirmation;
+
+    @JsonProperty("external_id")
+    private String externalId;
+
+    @JsonProperty("alternate_email")
+    private String alternateEmail;
 
     public String getAccountName() {
         return accountName;
@@ -53,14 +59,6 @@ public class AccountCreation {
 
     public void setEdition(String edition) {
         this.edition = edition;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -151,4 +149,23 @@ public class AccountCreation {
     @JsonProperty("create_user")
     public boolean isCreateUser() {
         return !Boolean.FALSE.equals(withUser);
-    }}
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
+
+    public void setAlternateEmail(String alternateEmail) {
+        this.alternateEmail = alternateEmail;
+    }
+}
+
+

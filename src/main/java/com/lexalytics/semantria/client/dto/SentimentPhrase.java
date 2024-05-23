@@ -1,5 +1,8 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SentimentPhrase extends AbstractConfigurationItem {
     private String name;
     private Float weight;

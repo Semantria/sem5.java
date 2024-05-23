@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account extends AccountBrief {
     private Set<Language> languages;
 
@@ -17,6 +19,9 @@ public class Account extends AccountBrief {
 
     @JsonProperty("industry_packs")
     private Set<IndustryPack> industryPacks;
+
+    @JsonProperty("job_templates")
+    private Set<JobTemplate> jobTemplates = new HashSet<>();
 
     @JsonProperty("application_seats")
     private Set<String> applicationSeats = new HashSet<>();
@@ -28,6 +33,15 @@ public class Account extends AccountBrief {
 
     @JsonProperty("balance_refresh")
     private Map<String, Long> balanceRefresh;
+
+    @JsonProperty("external_id")
+    private String externalId;
+
+    @JsonProperty("alternate_email")
+    private String alternateEmail;
+
+    @JsonProperty("external_resources")
+    private Set<ExternalResource> externalResources = new HashSet<>();
 
     public Set<Language> getLanguages() {
         return languages;
@@ -61,6 +75,14 @@ public class Account extends AccountBrief {
         this.industryPacks = industryPacks;
     }
 
+    public Set<JobTemplate> getJobTemplates() {
+        return jobTemplates;
+    }
+
+    public void setJobTemplates(Set<JobTemplate> jobTemplates) {
+        this.jobTemplates = jobTemplates;
+    }
+
     public Set<String> getApplicationSeats() {
         return applicationSeats;
     }
@@ -91,5 +113,29 @@ public class Account extends AccountBrief {
 
     public void setBalanceRefresh(Map<String, Long> balanceRefresh) {
         this.balanceRefresh = balanceRefresh;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
+
+    public void setAlternateEmail(String alternateEmail) {
+        this.alternateEmail = alternateEmail;
+    }
+
+    public Set<ExternalResource> getExternalResources() {
+        return externalResources;
+    }
+
+    public void setExternalResources(Set<ExternalResource> externalResources) {
+        this.externalResources = externalResources;
     }
 }

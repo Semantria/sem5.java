@@ -1,14 +1,18 @@
 package com.lexalytics.semantria.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IndustryPack {
     private String id;
 
@@ -21,6 +25,10 @@ public class IndustryPack {
     private String version;
 
     private ZonedDateTime modificationDate;
+
+    private List<String> parents = new ArrayList<>();
+
+    private boolean layer;
 
     public String getId() {
         return id;
@@ -74,6 +82,22 @@ public class IndustryPack {
 
     public void setModificationDate(ZonedDateTime modificationDate) {
         this.modificationDate = modificationDate;
+    }
+
+    public List<String> getParents() {
+        return parents;
+    }
+
+    public void setParents(List<String> parents) {
+        this.parents = parents;
+    }
+
+    public boolean isLayer() {
+        return layer;
+    }
+
+    public void setLayer(boolean layer) {
+        this.layer = layer;
     }
 
     public static IndustryPack create(String id) {

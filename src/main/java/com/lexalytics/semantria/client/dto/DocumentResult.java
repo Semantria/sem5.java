@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -8,10 +9,13 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DocumentResult {
     private String id;
     private String configId;
@@ -21,15 +25,19 @@ public class DocumentResult {
     private String jobId;
     private String tag;
     private JsonNode metadata;
+    private Map<String, MetadataValue> metadataDetails = new HashMap<>();
     private ZonedDateTime creationDate;
     private String status;
     private String summary;
+    private List<SectionResult> sections;
 
     @JsonProperty("taxonomy")
     @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
     private List<TaxonomyNodeObject> taxonomies;
 
     private String sourceText;
+    private String redactedSourceText;
+    private Boolean hasRedactions;
 
     @JsonProperty("sentiment_score")
     private Float score;
@@ -234,6 +242,14 @@ public class DocumentResult {
         this.metadata = metadata;
     }
 
+    public Map<String, MetadataValue> getMetadataDetails() {
+        return metadataDetails;
+    }
+
+    public void setMetadataDetails(Map<String, MetadataValue> metadataDetails) {
+        this.metadataDetails = metadataDetails;
+    }
+
     public ZonedDateTime getCreationDate() {
         return creationDate;
     }
@@ -250,12 +266,36 @@ public class DocumentResult {
         this.status = status;
     }
 
+    public String getRedactedSourceText() {
+        return redactedSourceText;
+    }
+
+    public void setRedactedSourceText(String redactedSourceText) {
+        this.redactedSourceText = redactedSourceText;
+    }
+
+    public Boolean getHasRedactions() {
+        return hasRedactions;
+    }
+
+    public void setHasRedactions(Boolean hasRedactions) {
+        this.hasRedactions = hasRedactions;
+    }
+
     public String getSummary() {
         return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public List<SectionResult> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<SectionResult> sections) {
+        this.sections = sections;
     }
 
     public List<TaxonomyNodeObject> getTaxonomies() {

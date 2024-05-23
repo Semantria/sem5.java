@@ -1,8 +1,11 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConceptTopic extends AbstractConfigurationItem {
     private String name;
     private Float weight;

@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,6 +8,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccessToken {
     private String key;
     private String secret;
@@ -19,6 +21,7 @@ public class AccessToken {
     private String userLogin;
     private String renewalType;
     private List<String> groups;
+    private String externalResourceId;
 
     public String getKey() {
         return key;
@@ -111,5 +114,14 @@ public class AccessToken {
 
     public void setGroups(List<String> groups) {
         this.groups = groups;
+    }
+
+    @JsonProperty("external_resource_id")
+    public String getExternalResourceId() {
+        return externalResourceId;
+    }
+
+    public void setExternalResourceId(String externalResourceId) {
+        this.externalResourceId = externalResourceId;
     }
 }

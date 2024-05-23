@@ -3,6 +3,7 @@ package com.lexalytics.semantria.client;
 import java.util.Map;
 
 public class OptionHelper {
+
     /**
      * Test that all of the supplied options are set.
      * Strings must be non-null.
@@ -30,7 +31,18 @@ public class OptionHelper {
     }
 
     public static int getIntOption(Map<String, Object> opts, String name) {
-        return Integer.parseInt(getStringOption(opts, name));
+        return getIntOption(opts, name, null);
+    }
+
+    public static int getIntOption(Map<String, Object> opts, String name, Integer defaultValue) {
+        String optionValue = getStringOption(opts, name);
+        if (optionValue != null) {
+            return Integer.parseInt(optionValue);
+        } else if (defaultValue == null) {
+            throw new RuntimeException("Missing value for option " + name);
+        } else {
+            return defaultValue;
+        }
     }
 
     public static boolean getBooleanOption(Map<String, Object> opts, String name) {

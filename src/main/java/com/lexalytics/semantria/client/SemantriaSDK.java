@@ -10,11 +10,10 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lexalytics.semantria.client.dto.*;
 import feign.*;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +44,8 @@ public interface SemantriaSDK {
         mapper.setDateFormat(new StdDateFormat());
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new Jdk8Module());
-        JacksonDecoder decoder = new JacksonDecoder(mapper);
-        JacksonEncoder encoder = new JacksonEncoder(mapper);
+        SemantriaDecoder decoder = new SemantriaDecoder(mapper);
+        SemantriaEncoder encoder = new SemantriaEncoder(mapper);
         SemantriaRequestInterceptor requestInterceptor =
                 new SemantriaRequestInterceptor(accessToken, apiVersion, appName);
         Feign.Builder builder = Feign.builder()
@@ -70,14 +69,31 @@ public interface SemantriaSDK {
     @Headers("Content-Type: application/json")
     AccessToken createImpersonationSession(@Param("userId") String userId);
 
+    @RequestLine("POST /auth/impersonate-sessions/{userId}?expiration={expiration}&expire_after_minutes={expire-after-minutes}&renewal_type={renewal-type}&notes={notes}")
+    @Headers("Content-Type: application/json")
+    AccessToken createImpersonationSession(@Param("userId") String userId,
+                                           @Param("expiration") String expirationPolicy,
+                                           @Param("expire-after-minutes") int expireAfterMinutes,
+                                           @Param("renewal-type") String renewalType,
+                                           @Param("notes") String notes);
+
     @RequestLine("POST /auth/sessions/")
     @Headers("Content-Type: application/json")
     AccessToken createSession(UserCredentials userCredentials);
 
     @RequestLine("POST /auth/sessions/?expiration={expiration}&expire_after_minutes={expire-after-minutes}")
     @Headers("Content-Type: application/json")
-    AccessToken createSession(UserCredentials userCredentials, @Param("expiration") String expirationPolicy,
+    AccessToken createSession(UserCredentials userCredentials,
+                              @Param("expiration") String expirationPolicy,
                               @Param("expire-after-minutes") int expireAfterMinutes);
+
+    @RequestLine("POST /auth/sessions/?expiration={expiration}&expire_after_minutes={expire-after-minutes}&renewal_type={renewal-type}&notes={notes}")
+    @Headers("Content-Type: application/json")
+    AccessToken createSession(UserCredentials userCredentials,
+                              @Param("expiration") String expirationPolicy,
+                              @Param("expire-after-minutes") int expireAfterMinutes,
+                              @Param("renewal-type") String renewalType,
+                              @Param("notes") String notes);
 
     @RequestLine("GET /auth/sessions/")
     AllSessionInfo getSessions();
@@ -93,12 +109,6 @@ public interface SemantriaSDK {
 
     @RequestLine("DELETE /auth/sessions/user/{userId}/")
     void deleteUserSessions(@Param("userId") String userId);
-
-    @RequestLine("GET /auth/accounts/{accountId}/sessions/")
-    AllSessionInfo getAccountSessions(@Param("accountId") String accountId);
-
-    @RequestLine("DELETE /auth/sessions/account/{accountId}/")
-    void deleteAccountSessions(@Param("accountId") String accountId);
 
     @RequestLine("POST /auth/renew")
     AccessToken renewSession();
@@ -157,7 +167,7 @@ public interface SemantriaSDK {
     @RequestLine("PUT /configs/{configurationId}")
     @Headers("Content-Type: application/json")
     JsonNode updateConfiguration(@Param("configurationId") String configurationId,
-                                 Map<String,Object> configuration);
+                                 Map<String, Object> configuration);
 
     @RequestLine("PUT /configs/{configurationId}")
     @Headers("Content-Type: application/json")
@@ -167,17 +177,17 @@ public interface SemantriaSDK {
     @RequestLine("PUT /configs/{configurationId}/tags/")
     @Headers("Content-Type: application/json")
     JsonNode setConfigTags(@Param("configurationId") String configurationId,
-                                 List<String> tags);
+                           List<String> tags);
 
     @RequestLine("PATCH /configs/{configurationId}/tags?action=add")
     @Headers("Content-Type: application/json")
     JsonNode addConfigTags(@Param("configurationId") String configurationId,
-                              List<String> tags);
+                           List<String> tags);
 
     @RequestLine("PATCH /configs/{configurationId}/tags?action=delete")
     @Headers("Content-Type: application/json")
     JsonNode removeConfigTags(@Param("configurationId") String configurationId,
-                           List<String> tags);
+                              List<String> tags);
 
     @RequestLine("DELETE /configs/{configurationId}/tags/")
     @Headers("Content-Type: application/json")
@@ -195,11 +205,11 @@ public interface SemantriaSDK {
 
     @RequestLine("POST /routes/?group_id={groupId}")
     @Headers("Content-Type: application/json")
-    JsonNode configsRoutesCreate(@Param("groupId") String groupId, Map<String,Object> route);
+    JsonNode configsRoutesCreate(@Param("groupId") String groupId, Map<String, Object> route);
 
     @RequestLine("POST /routes/?group_id={groupId}")
     @Headers("Content-Type: application/json")
-    JsonNode configsRoutesCreate( @Param("groupId") String groupId, ConfigurationRoute route);
+    JsonNode configsRoutesCreate(@Param("groupId") String groupId, ConfigurationRoute route);
 
     @RequestLine("DELETE /routes/{routeId}")
     @Headers("Content-Type: application/json")
@@ -208,22 +218,22 @@ public interface SemantriaSDK {
     @RequestLine("PUT /routes/{routeId}")
     @Headers("Content-Type: application/json")
     JsonNode updateConfigurationRoute(@Param("routeId") String routeId,
-                                 Map<String,Object> route);
+                                      Map<String, Object> route);
 
     @RequestLine("PUT /routes/{routeId}")
     @Headers("Content-Type: application/json")
     JsonNode updateConfigurationRoute(@Param("routeId") String routeId,
-                                 ConfigurationRoute route);
+                                      ConfigurationRoute route);
 
     @RequestLine("PATCH /routes/{routeId}/configs?action=add")
     @Headers("Content-Type: application/json")
     JsonNode addConfigsToRoute(@Param("routeId") String routeId,
-                           List<String> configs);
+                               List<String> configs);
 
     @RequestLine("PATCH /routes/{routeId}/configs?action=delete")
     @Headers("Content-Type: application/json")
     JsonNode removeConfigsFromRoute(@Param("routeId") String routeId,
-                              List<String> configs);
+                                    List<String> configs);
 
 
 
@@ -499,25 +509,28 @@ public interface SemantriaSDK {
 
     @RequestLine("POST /groups/{groupId}/permissions/")
     @Headers("Content-Type: application/json")
-    JsonNode createAccountGroupPermissions(Map<String,Object> permission , @Param("groupId") String groupId);
+    JsonNode createAccountGroupPermissions(Map<String, Object> permission, @Param("groupId") String groupId);
 
     @RequestLine("DELETE /groups/{groupId}/permissions/{permissionId}")
     void deleteAccountGroupPermission(@Param("groupId") String groupId,
                                       @Param("permissionId") String permissionId);
 
-    @RequestLine("GET /groups/")
-    JsonNode getAllAccountGroups();
+    @RequestLine("GET /groups/?include_users={includeUsers}&include_permissions={includePermissions}")
+    JsonNode getAllAccountGroups(@Param("includeUsers") boolean includeUsers,
+                                 @Param("includePermissions") boolean includePermissions);
 
     @RequestLine("POST /groups/")
     @Headers("Content-Type: application/json")
-    JsonNode createAccountGroup(Map<String,Object> accountGroup);
+    JsonNode createAccountGroup(Map<String, Object> accountGroup);
 
-    @RequestLine("GET /groups/{groupId}")
-    JsonNode getAccountGroup(@Param("groupId") String groupId);
+    @RequestLine("GET /groups/{groupId}?include_users={includeUsers}&include_permissions={includePermissions}")
+    JsonNode getAccountGroup(@Param("groupId") String groupId,
+                             @Param("includeUsers") boolean includeUsers,
+                             @Param("includePermissions") boolean includePermissions);
 
     @RequestLine("PUT /groups/{groupId}")
     @Headers("Content-Type: application/json")
-    JsonNode updateAccountGroup(Map<String,Object> accountGroup, @Param("groupId") String groupId);
+    JsonNode updateAccountGroup(Map<String, Object> accountGroup, @Param("groupId") String groupId);
 
     @RequestLine("DELETE /groups/{groupId}")
     void deleteAccountGroup(@Param("groupId") String groupId);
@@ -545,18 +558,18 @@ public interface SemantriaSDK {
     void deleteUserPermissions(@Param("userId") String userId, @Param("permissionId") String permissionId);
 
     @RequestLine("GET /users/")
-    List<User> getAllUsers();
+    List<UserResponse> getAllUsers();
 
     @RequestLine("POST /users/")
     @Headers("Content-Type: application/json")
-    User createUser(User user);
+    UserResponse createUser(User user);
 
     @RequestLine("GET /users/{userId}")
-    User getUser(@Param("userId") String userId);
+    UserResponse getUser(@Param("userId") String userId);
 
     @RequestLine("PUT /users/{userId}")
     @Headers("Content-Type: application/json")
-    JsonNode updateUser(Map<String,Object> user, @Param("userId") String userId);
+    JsonNode updateUser(Map<String, Object> user, @Param("userId") String userId);
 
     @RequestLine("PUT /users/{userId}")
     @Headers("Content-Type: application/json")
@@ -567,13 +580,197 @@ public interface SemantriaSDK {
 
     @RequestLine("PUT /users/{userId}/password/")
     @Headers("Content-Type: application/json")
-    JsonNode updateUserPassword(Map<String,Object> password, @Param("userId") String userId);
+    JsonNode updateUserPassword(Map<String, Object> password, @Param("userId") String userId);
 
     @RequestLine("POST /service-users/")
     @Headers("Content-Type: application/json")
-    JsonNode createServiceUser(Map<String,Object> user);
+    JsonNode createServiceUser(Map<String, Object> user);
 
     @RequestLine("POST /service-users/")
     @Headers("Content-Type: application/json")
     JsonNode createServiceUser(User user);
+
+    // *********** ASSEMBLER *************
+
+    @RequestLine("GET /job-templates/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<JobTemplate> listJobTemplates(@Param("pageNumber") int pageNumber,
+                                        @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /job-templates/{jobTemplateId}/")
+    JobTemplate getJobTemplate(@Param("pageNumber") String jobTemplateId);
+
+    @RequestLine("POST /directories/?path={path}")
+    @Headers("Content-Type: application/json")
+    FileMetadata createDirectory(@Param("path") String path,
+                                 FileMetadata metadata);
+
+    @RequestLine("GET /directories/?path={path}&page_number={pageNumber}&page_size={pageSize}")
+    Paged<FileMetadata> listDirectory(@Param("path") String path,
+                                      @Param("pageNumber") int pageNumber,
+                                      @Param("pageSize") int pageSize);
+
+    @RequestLine("PUT /directories/?path={path}")
+    @Headers("Content-Type: application/json")
+    FileMetadata updateDirectory(@Param("path") String path,
+                                 FileMetadata metadata);
+
+    @RequestLine("DELETE /directories/?path={path}")
+    void deleteDirectory(@Param("path") String path);
+
+    @RequestLine("POST /files/?path={path}")
+    @Headers("Content-Type: application/octet-stream")
+    FileMetadata createFile(@Param("path") String path,
+                            InputStream inputStream);
+
+    @RequestLine("GET /files/?path={path}&metadata=true")
+    FileMetadata getFileMetadata(@Param("path") String path);
+
+    @RequestLine("GET /files/?path={path}&metadata=false")
+    InputStream getFileContent(@Param("path") String path);
+
+    @RequestLine("PUT /files/?path={path}&metadata=true")
+    @Headers("Content-Type: application/json")
+    FileMetadata updateFileMetadata(@Param("path") String path,
+                                    FileMetadata metadata);
+
+    @RequestLine("PUT /files/?path={path}&metadata=false")
+    @Headers("Content-Type: application/octet-stream")
+    FileMetadata updateFileContent(@Param("path") String path,
+                                   InputStream inputStream);
+
+    @RequestLine("DELETE /files/?path={path}")
+    void deleteFile(@Param("path") String path);
+
+    @RequestLine("POST /projects/")
+    @Headers("Content-Type: application/json")
+    Project createProject(Project project);
+
+    @RequestLine("GET /projects/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<Project> listProjects(@Param("pageNumber") int pageNumber,
+                                @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/?name={nameFilter}&page_number={pageNumber}&page_size={pageSize}")
+    Paged<Project> listProjects(@Param("nameFilter") String nameFilter,
+                                @Param("pageNumber") int pageNumber,
+                                @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/")
+    Project getProject(@Param("projectId") String projectId);
+
+    @RequestLine("PUT /projects/{projectId}/")
+    @Headers("Content-Type: application/json")
+    Project updateProject(@Param("projectId") String projectId,
+                          Project project);
+
+    @RequestLine("DELETE /projects/{projectId}/")
+    void deleteProject(@Param("projectId") String projectId);
+
+    @RequestLine("POST /projects/{projectId}/jobs/")
+    @Headers("Content-Type: application/json")
+    Job createJob(@Param("projectId") String projectId,
+                  Job job);
+
+    @RequestLine("GET /projects/{projectId}/jobs/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<JobBrief> listJobs(@Param("projectId") String projectId,
+                             @Param("pageNumber") int pageNumber,
+                             @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/jobs/?name={nameFilter}&page_number={pageNumber}&page_size={pageSize}")
+    Paged<JobBrief> listJobs(@Param("projectId") String projectId,
+                        @Param("nameFilter") String nameFilter,
+                        @Param("pageNumber") int pageNumber,
+                        @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/?brief={brief}")
+    Job getJob(@Param("projectId") String projectId,
+               @Param("jobId") String jobId,
+               @Param("brief") boolean brief);
+
+    @RequestLine("DELETE /projects/{projectId}/jobs/{jobId}/")
+    void deleteJob(@Param("projectId") String projectId,
+                   @Param("jobId") String jobId);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<JsonNode> listDatasourceProjects(@Param("projectId") String projectId,
+                                           @Param("jobId") String jobId,
+                                           @Param("pageNumber") int pageNumber,
+                                           @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/")
+    JsonNode getDatasourceProject(@Param("projectId") String projectId,
+                                  @Param("jobId") String jobId,
+                                  @Param("datasourceProjectId") String datasourceProjectId);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/results/?path={path}")
+    Paged<FileMetadata> listDatasourceProjectResults(@Param("projectId") String projectId,
+                                                     @Param("jobId") String jobId,
+                                                     @Param("datasourceProjectId") String datasourceProjectId,
+                                                     @Param("path") String path);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/results/download/?path={path}&compress={compress}")
+    InputStream downloadDatasourceProjectResults(@Param("projectId") String projectId,
+                                            @Param("jobId") String jobId,
+                                            @Param("datasourceProjectId") String datasourceProjectId,
+                                            @Param("path") String path,
+                                            @Param("compress") boolean compress);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<JsonNode> listExperiments(@Param("projectId") String projectId,
+                                    @Param("jobId") String jobId,
+                                    @Param("datasourceProjectId") String datasourceProjectId,
+                                    @Param("pageNumber") int pageNumber,
+                                    @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/")
+    JsonNode getExperiment(@Param("projectId") String projectId,
+                           @Param("jobId") String jobId,
+                           @Param("datasourceProjectId") String datasourceProjectId,
+                           @Param("experimentId") String experimentId);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/results/?path={path}")
+    Paged<FileMetadata> listExperimentResults(@Param("projectId") String projectId,
+                                              @Param("jobId") String jobId,
+                                              @Param("datasourceProjectId") String datasourceProjectId,
+                                              @Param("experimentId") String experimentId,
+                                              @Param("path") String path);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/results/download/?path={path}&compress={compress}")
+    InputStream downloadExperimentResults(@Param("projectId") String projectId,
+                                          @Param("jobId") String jobId,
+                                          @Param("datasourceProjectId") String datasourceProjectId,
+                                          @Param("experimentId") String experimentId,
+                                          @Param("path") String path,
+                                          @Param("compress") boolean compress);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/hpos/?page_number={pageNumber}&page_size={pageSize}")
+    Paged<JsonNode> listHpos(@Param("projectId") String projectId,
+                             @Param("jobId") String jobId,
+                             @Param("datasourceProjectId") String datasourceProjectId,
+                             @Param("experimentId") String experimentId,
+                             @Param("pageNumber") int pageNumber,
+                             @Param("pageSize") int pageSize);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/hpos/{hpoId}/")
+    JsonNode getHpo(@Param("projectId") String projectId,
+                    @Param("jobId") String jobId,
+                    @Param("datasourceProjectId") String datasourceProjectId,
+                    @Param("experimentId") String experimentId,
+                    @Param("hpoId") String hpoId);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/hpos/{hpoId}/results/?path={path}")
+    Paged<FileMetadata> listHpoResults(@Param("projectId") String projectId,
+                                       @Param("jobId") String jobId,
+                                       @Param("datasourceProjectId") String datasourceProjectId,
+                                       @Param("experimentId") String experimentId,
+                                       @Param("hpoId") String hpoId,
+                                       @Param("path") String path);
+
+    @RequestLine("GET /projects/{projectId}/jobs/{jobId}/datasource-projects/{datasourceProjectId}/experiments/{experimentId}/hpos/{hpoId}/results/download/?path={path}&compress={compress}")
+    InputStream downloadHpoResults(@Param("projectId") String projectId,
+                                   @Param("jobId") String jobId,
+                                   @Param("datasourceProjectId") String datasourceProjectId,
+                                   @Param("experimentId") String experimentId,
+                                   @Param("hpoId") String hpoId,
+                                   @Param("path") String path,
+                                   @Param("compress") boolean compress);
 }

@@ -1,5 +1,8 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserEntity extends AbstractConfigurationItem {
     private String name;
     private String type;

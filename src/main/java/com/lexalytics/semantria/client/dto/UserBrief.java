@@ -1,23 +1,19 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.List;
-
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserBrief {
     private String userId;
     private String login;
     private String accountId;
     private String email;
+    private String alternateEmail;
     private String firstName;
     private String lastName;
     private String title;
@@ -85,5 +81,13 @@ public class UserBrief {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
+
+    public void setAlternateEmail(String alternateEmail) {
+        this.alternateEmail = alternateEmail;
     }
 }

@@ -1,5 +1,6 @@
 package com.lexalytics.semantria.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
     // Using simply "offset" and "length" for compatibility
     @JsonProperty("offset")
@@ -15,6 +17,7 @@ public class Location {
     private Integer byteLength;
     private Integer charOffset;
     private Integer charLength;
+    private Integer section;
     private Integer index;
     private Integer sentence;
     private Integer tokenIndex;
@@ -69,6 +72,14 @@ public class Location {
     public Location setCharLength(Integer charLength) {
         this.charLength = charLength;
         return this;
+    }
+
+    public Integer getSection() {
+        return section;
+    }
+
+    public void setSection(Integer section) {
+        this.section = section;
     }
 
     public Integer getIndex() {
