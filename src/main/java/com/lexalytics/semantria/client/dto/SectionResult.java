@@ -20,6 +20,7 @@ public class SectionResult {
     private String name;
     private Set<String> aliases = new HashSet<>();
     private String value;
+    private String originalValue;
     private String redactedValue;
     private boolean processAsText = false;
     private Integer charOffset;
@@ -67,6 +68,14 @@ public class SectionResult {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getOriginalValue() {
+        return originalValue;
+    }
+
+    public void setOriginalValue(String originalValue) {
+        this.originalValue = originalValue;
     }
 
     public String getRedactedValue() {

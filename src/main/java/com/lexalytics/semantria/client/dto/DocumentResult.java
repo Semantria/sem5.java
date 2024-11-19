@@ -38,6 +38,9 @@ public class DocumentResult {
     private String sourceText;
     private String redactedSourceText;
     private Boolean hasRedactions;
+    private String translationId;
+    private String originalText;
+    private String originalLanguageId;
 
     @JsonProperty("sentiment_score")
     private Float score;
@@ -280,6 +283,30 @@ public class DocumentResult {
 
     public void setHasRedactions(Boolean hasRedactions) {
         this.hasRedactions = hasRedactions;
+    }
+
+    public String getTranslationId() {
+        return translationId;
+    }
+
+    public void setTranslationId(String translationId) {
+        this.translationId = translationId;
+    }
+
+    public String getOriginalText() {
+        return originalText;
+    }
+
+    public void setOriginalText(String originalText) {
+        this.originalText = originalText;
+    }
+
+    public String getOriginalLanguageId() {
+        return originalLanguageId;
+    }
+
+    public void setOriginalLanguageId(String originalLanguageId) {
+        this.originalLanguageId = originalLanguageId;
     }
 
     public String getSummary() {

@@ -13,7 +13,9 @@ OPTIONS:
   --job-id S             Identifier for a job
   --batch-size N         Number of documents to submit in a batch [default: 100]
   -n --limit N           Max number of documents to process [default: 100]
+  --skip N               Don't process first N docs [default: 0]
   --sections             File is a single doc of multiple sections one per line -- "section_name: section text"
+  -j --json              Write JSON representation of result as well as "pretty" version
   -h --help              Show this help text
   --version              Print version
   -v --verbose           More messages
