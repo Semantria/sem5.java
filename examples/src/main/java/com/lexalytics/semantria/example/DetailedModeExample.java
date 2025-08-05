@@ -74,9 +74,6 @@ public class DetailedModeExample {
             return false;
         }
 
-        if (getIntOption(opts, "--skip", -1) > 0) {
-            data = data.subList(getIntOption(opts, "--skip"), data.size());
-        }
         if (getIntOption(opts, "--limit", -1) > 0) {
             data = data.subList(0, Math.min(data.size(), getIntOption(opts, "--limit")));
         }
@@ -107,7 +104,6 @@ public class DetailedModeExample {
                 = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("com.lexalytics.semantria.example");
         if (getBooleanOption(opts, "--debug")) {
             logger.setLevel(Level.DEBUG);
-            logger.setLevel(Level.TRACE);
         } else if (hasAllOptions(opts, "--verbose")) {
             logger.setLevel(Level.INFO);
         } else {
@@ -157,6 +153,7 @@ public class DetailedModeExample {
     }
 
     private void sendDocs(List<String> data) {
+
         System.out.format("Sending %d docs...%n", data.size());
 
         int batchSize = getIntOption(options, "--batch-size");
@@ -229,6 +226,7 @@ public class DetailedModeExample {
 
     List<DocumentResult> getProcessedDocuments() {
         DocumentsRequest request = new DocumentsRequest();
+        request.setUsing(getStringOption(options, "--using"));
         request.setJobId(getStringOption(options, "--job-id"));
         List<DocumentResult> result = sdk.getDocumentsBatch(request);
         log.debug("received {} docs, request: {}", result.size(), request);
@@ -239,12 +237,6 @@ public class DetailedModeExample {
         DocumentsRequest request = new DocumentsRequest();
         request.setUsing(getStringOption(options, "--using"));
         request.setJobId(getStringOption(options, "--job-id"));
-        log.trace("queuing: {}", batch.stream()
-                .map(d -> d.getText()
-                        + ((d.getSections() == null)
-                        ? ""
-                        : d.getSections().stream().map(s -> s.getValue()).collect(Collectors.joining(" :: "))))
-                .collect(Collectors.joining(" || ")));
         try {
             sdk.sendDocumentsBatch(batch, request);
         } catch (SemantriaClientError e) {
@@ -285,12 +277,12 @@ public class DetailedModeExample {
         for (SectionResult section : doc.getSections()) {
             System.out.format("    Section %s: Name: %s, Aliases: %s%n",
                     section.getSectionId(), section.getName(), section.getAliases());
-            System.out.format("        Value:         %s%n", section.getValue());
-            System.out.format("        Original:      %s%n", section.getOriginalValue());
-            System.out.format("        Redacted:      %s%n", section.getRedactedValue());
-            System.out.format("        From src text: %s%n", substring(doc.getSourceText(), section.getCharOffset(), section.getCharLength()));
+            System.out.format("        Value: %s%n", section.getValue());
+            System.out.format("        Sentiment: %s%n", section.getSentimentScore());
+            System.out.format("        Redacted: %s%n", section.getRedactedValue());
+            System.out.format("        zzz:      %s%n", substring(doc.getSourceText(), section.getCharOffset(), section.getCharLength()));
             if (section.getMetadata() != null) {
-                System.out.format("        Metadata:      %s%n", section.getMetadata());
+                System.out.format("        Metadata: %s%n", section.getMetadata());
             }
         }
     }
@@ -334,11 +326,11 @@ public class DetailedModeExample {
         if ((mentions != null) && !mentions.isEmpty()) {
             System.out.format("        Mentions:%n");
             for (Mention mention : mentions) {
-                System.out.format("            %s%n", mention.getLabel());
-                System.out.format("                locations: %s%n",
+                System.out.format("            %s    locations: %s%n",
+                        mention.getLabel(),
                         mention.getLocations().stream()
-                                .map(l -> String.format("section %d @%d:%d @@%d: '%s'",
-                                        l.getSection(), l.getSectionCharOffset(), l.getCharLength(), l.getCharOffset(),
+                                .map(l -> String.format("@%d:%d section %d: '%s'",
+                                                l.getCharOffset(), l.getCharLength(), l.getSection(),
                                         DetailedModeExample.substring(doc.getSourceText(), l.getCharOffset(), l.getCharLength())))
                                 .collect(Collectors.joining(", ")));
             }
@@ -386,9 +378,6 @@ public class DetailedModeExample {
     }
 
     private void showJson(DocumentResult doc) {
-        if (! getBooleanOption(options, "--json")) {
-            return;
-        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         // not gonna fight with jackson over date serialization rn

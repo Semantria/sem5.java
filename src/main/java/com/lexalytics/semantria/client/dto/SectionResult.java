@@ -20,6 +20,7 @@ public class SectionResult {
     private String name;
     private Set<String> aliases = new HashSet<>();
     private String value;
+    private Float sentimentScore;
     private String originalValue;
     private String redactedValue;
     private boolean processAsText = false;
@@ -76,6 +77,14 @@ public class SectionResult {
 
     public void setOriginalValue(String originalValue) {
         this.originalValue = originalValue;
+    }
+
+    public Float getSentimentScore() {
+        return sentimentScore;
+    }
+
+    public void setSentimentScore(Float sentimentScore) {
+        this.sentimentScore = sentimentScore;
     }
 
     public String getRedactedValue() {

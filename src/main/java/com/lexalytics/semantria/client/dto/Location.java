@@ -17,7 +17,6 @@ public class Location {
     private Integer byteLength;
     private Integer charOffset;
     private Integer charLength;
-    private Integer sectionCharOffset;
     private Integer section;
     private Integer index;
     private Integer sentence;
@@ -25,20 +24,15 @@ public class Location {
     private Integer tokenCount;
 
     public static Location create(Integer byteOffset, Integer byteLength, Integer charOffset, Integer charLength) {
-        return create(byteOffset, byteLength, charOffset, charLength, null, null, null, null, null);
+        return create(byteOffset, byteLength, charOffset, charLength, null, null, null, null);
     }
 
     public static Location create(Integer byteOffset, Integer byteLength, Integer charOffset, Integer charLength, Integer index, Integer sentence, Integer tokenIndex, Integer tokenCount) {
-        return create(byteOffset, byteLength, charOffset, charLength, index, sentence, tokenIndex, tokenCount, null);
-    }
-
-    public static Location create(Integer byteOffset, Integer byteLength, Integer charOffset, Integer charLength, Integer index, Integer sentence, Integer tokenIndex, Integer tokenCount, Integer sectionCharOffset) {
         Location location = new Location();
         location.byteOffset = byteOffset;
         location.byteLength = byteLength;
         location.charOffset = charOffset;
         location.charLength = charLength;
-        location.sectionCharOffset = sectionCharOffset;
         location.index = index;
         location.sentence = sentence;
         location.tokenIndex = tokenIndex;
@@ -78,14 +72,6 @@ public class Location {
     public Location setCharLength(Integer charLength) {
         this.charLength = charLength;
         return this;
-    }
-
-    public Integer getSectionCharOffset() {
-        return sectionCharOffset;
-    }
-
-    public void setSectionCharOffset(Integer sectionCharOffset) {
-        this.sectionCharOffset = sectionCharOffset;
     }
 
     public Integer getSection() {
