@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -41,6 +42,9 @@ public class AccountBrief {
 
     @JsonProperty("current_balance")
     private Long currentBalance;
+
+    @JsonProperty("properties")
+    private Map<String, String> properties;
 
     public String getId() {
         return id;
@@ -137,4 +141,13 @@ public class AccountBrief {
     public void setCurrentBalance(Long currentBalance) {
         this.currentBalance = currentBalance;
     }
+
+    public Map<String, String> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.time.ZonedDateTime;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DocumentResult {
@@ -41,6 +41,7 @@ public class DocumentResult {
 
     @JsonProperty("sentiment_score")
     private Float score;
+    private List<SectionSentiment> sectionSentiment;
     private String sentimentPolarity;
     private String language;
     private Float languageScore;
@@ -64,6 +65,14 @@ public class DocumentResult {
 
     public void setScore(Float score) {
         this.score = score;
+    }
+
+    public List<SectionSentiment> getSectionSentiment() {
+        return sectionSentiment;
+    }
+
+    public void setSectionSentiment(List<SectionSentiment> sectionSentiment) {
+        this.sectionSentiment = sectionSentiment;
     }
 
     public String getSentimentPolarity() {

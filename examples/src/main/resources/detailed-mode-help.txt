@@ -7,13 +7,14 @@ USAGE:
 OPTIONS:
   --credentials CREDS    User credentials user:pass
   --access-token TOKEN   Session token to use
-  --config-file FILE     Load configuration from this file (default uses SEM5_CONFIG env var)
+  --config-file FILE     Load access configuration from this file (default uses SEM5_CONFIG env var)
   --api-endpoint URL     Semantria API endpoint [default: api5.semantria.com]
-  --using CONFIG         Language or configuration to be used when processing documents
+  --using CONFIG         Language, configuration, or industry pack to use when processing documents
   --job-id S             Identifier for a job
   --batch-size N         Number of documents to submit in a batch [default: 100]
   -n --limit N           Max number of documents to process [default: 100]
   --sections             File is a single doc of multiple sections one per line -- "section_name: section text"
+  --show-account         Show account info in addition to document results
   -h --help              Show this help text
   --version              Print version
   -v --verbose           More messages

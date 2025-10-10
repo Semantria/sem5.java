@@ -45,7 +45,7 @@ public class DetailedModeExample {
 
     private int nDocsSent = 0;
     private List<DocumentResult> resultsReceived = new ArrayList<>();
-
+    private static int aliasCount = 0;
 
     public static void main(String[] args) throws Exception {
         boolean success = run(Arrays.asList(args));
@@ -67,6 +67,8 @@ public class DetailedModeExample {
 
         setLogLevelFromOptions(opts);
 
+        log.debug("Options: {}", opts);
+
         List<String> data = getData(opts);
         if (data.isEmpty()) {
             // File error, so print usage message
@@ -79,6 +81,9 @@ public class DetailedModeExample {
         }
 
         DetailedModeExample app = new DetailedModeExample(opts);
+        if (getBooleanOption(opts, "--show-account")) {
+            app.showAccountInfo();
+        }
         boolean result = app.processDocs(data);
 
         app.deleteTempAccessToken();
@@ -132,6 +137,24 @@ public class DetailedModeExample {
         }
     }
 
+    private void showAccountInfo() {
+        System.out.println("=== Account Information ===");
+        Account account = sdk.getAccountDetails();
+        System.out.format("ID: %s%n", account.getId());
+        System.out.format("Name: %s%n", account.getName());
+        System.out.format("Email: %s%n", account.getEmail());
+        System.out.format("Balances: %s%n", account.getBalances());
+        System.out.format("Languages: %s%n", account.getLanguages().stream()
+                .map(l -> l.getName())
+                .collect(Collectors.joining(", ")));
+        System.out.format("Features: %s%n", account.getFeatures());
+        System.out.format("Industry Packs: %s%n", account.getIndustryPacks().stream()
+                .map(ip -> ip.getName())
+                .collect(Collectors.joining(", ")));
+        System.out.format("Properties: %s%n", account.getProperties());
+        System.out.println("========================");
+    }
+
     boolean processDocs(List<String> data) {
         try {
             if (getBooleanOption(options, "--sections")) {
@@ -182,6 +205,7 @@ public class DetailedModeExample {
     private void sendSectionDoc(List<String> data) {
         List<DocumentSection> sections = data.stream()
                 .map(DetailedModeExample::makeSection)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         System.out.format("Sending a single doc with %d sections...%n", sections.size());
         Document doc = new Document(UUID.randomUUID().toString(), sections)
@@ -192,15 +216,17 @@ public class DetailedModeExample {
     }
 
     private static DocumentSection makeSection(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return null;
+        }
         int i = text.indexOf(":");
-        String name = (i < 0) ? "" : text.substring(0, i);
+        String name = (i < 0) ? "<blank>" : text.substring(0, i);
         String value = (i < 0) ? text : text.substring(i + 1);
         return new DocumentSection(name, value)
                 .withMetadata("random-string", String.format("x%d", random.nextInt(99)))
                 .withMetadata("random-number", random.nextInt(999))
                 .withMetadata("random-float", random.nextFloat() * 99.0f)
-                .withAlias(String.format("random-alias-%d", random.nextInt(10)))
-                .withAlias(String.format("random-alias-%d", random.nextInt(10)));
+                .withAlias(String.format("alias-for-%s-%d", name, ++aliasCount));
     }
 
     private final static Random random = new Random();
@@ -280,9 +306,15 @@ public class DetailedModeExample {
             System.out.format("        Value: %s%n", section.getValue());
             System.out.format("        Sentiment: %s%n", section.getSentimentScore());
             System.out.format("        Redacted: %s%n", section.getRedactedValue());
-            System.out.format("        zzz:      %s%n", substring(doc.getSourceText(), section.getCharOffset(), section.getCharLength()));
             if (section.getMetadata() != null) {
                 System.out.format("        Metadata: %s%n", section.getMetadata());
+            }
+        }
+        if (doc.getSectionSentiment() != null) {
+            System.out.println("Section Sentiment:");
+            for (SectionSentiment sectionSentiment : doc.getSectionSentiment()) {
+                System.out.format("    Name: %s, Sentiment: %s%n",
+                        sectionSentiment.getName(), sectionSentiment.getSentimentScore());
             }
         }
     }

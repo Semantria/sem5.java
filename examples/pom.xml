@@ -3,7 +3,7 @@
     <groupId>com.lexalytics.semantria</groupId>
     <artifactId>sem5-sdk-examples</artifactId>
     <packaging>jar</packaging>
-    <version>6.32.0</version>
+    <version>6.34.0</version>
     <name>Semantria Java SDK Examples - ${project.version}</name>
     <description>Simple examples of using the Semantria Java SDK</description>
     <url>https://github.com/Semantria/sem5.java/examples</url>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.14.0</version>
                 <configuration>
                     <release>${java.version}</release>
                 </configuration>
@@ -41,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -53,7 +53,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.8.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -73,9 +73,9 @@
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
         <java.version>17</java.version>
-        <semantria.sdk.version>[6.32.0,)</semantria.sdk.version>
-        <logback.version>1.2.10</logback.version>
-        <commons.text.version>1.10.0</commons.text.version>
+        <semantria.sdk.version>[6.34.0-SNAPSHOT,)</semantria.sdk.version>
+        <logback.version>1.5.13</logback.version>
+        <commons.text.version>1.12.0</commons.text.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
